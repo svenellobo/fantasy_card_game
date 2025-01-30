@@ -1,8 +1,17 @@
 class Card():
-  def __init__(self, name, base_power, suit):
+  def __init__(self, name, power, suit, card_nmb):
     self.name = name
-    self.base_power = base_power
+    self.power = power
     self.suit = suit
+    self.card_nmb = card_nmb
+    self.hand = None
 
   def __str__(self):
-    return f"Card {self.name} belongs to {self.suit} suit and has base power of {self.base_power}"
+    return f"Card {self.card_nmb} {self.name} belongs to {self.suit} suit and has base power of {self.power}"
+  
+  
+  def calculate_bonus(self):
+    pass
+
+  def calculate_penalty(self):
+    pass
