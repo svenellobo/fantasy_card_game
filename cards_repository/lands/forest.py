@@ -6,7 +6,7 @@ class Forest(Card):
     super().__init__("Forest", 7, "Land", 4)
     
 
-
+  @Card.not_blank
   def condition(self, hand):
     for card in hand:
       if card.suit == "Beast" or card.name == "Elven Archers":

@@ -6,7 +6,7 @@ class Cavern(Card):
     super().__init__("Cavern", 6, "Land", 2)
     
 
-
+  @Card.not_blank
   def condition(self, hand):
     if any(card.name in {"Dwarvish Infantry", "Dragon"} for card in hand):
       self.total_power += 25

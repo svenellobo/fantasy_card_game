@@ -6,7 +6,7 @@ class Swamp(Card):
     self.penalty = True
     
 
-
+  @Card.not_blank
   def condition(self, hand):
     if self.penalty:
       count = sum(1 for card in hand if card.suit in {"Army", "Flame"})

@@ -6,7 +6,7 @@ class GreatFlood(Card):
     self.penalty = True
     
 
-
+  @Card.not_blank
   def condition(self, hand):
     if self.penalty:
       for card in hand:
