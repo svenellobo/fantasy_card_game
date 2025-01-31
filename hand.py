@@ -5,6 +5,6 @@ class Hand():
     self.cards_in_hand = []
 
   def calculate_total_points(self):    
-    return sum(card.power for card in self.cards_in_hand)
+    return sum(card.total_power for card in self.cards_in_hand)
   
   

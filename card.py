@@ -6,7 +6,8 @@ class Card():
     self.suit = suit
     self.card_nmb = card_nmb    
     self.penalty = False
-    self.blanked_card = False
+    self.has_clear = False
+    self.is_blanked = False
 
     self.original_state = {
             "name": name,
@@ -15,7 +16,8 @@ class Card():
             "card_nmb": card_nmb,
             "total_power": self.total_power,
             "penalty": self.penalty,
-            "blanked_card": self.blanked_card
+            "has_clear": self.has_clear,
+            "is_blanked": self.is_blanked
         }
 
   def __str__(self):
@@ -28,6 +30,7 @@ class Card():
     self.base_power = 0
     self.total_power = 0    
     self.penalty = False
+    self.is_blanked = True
 
    
   def reset(self):        
@@ -37,12 +40,12 @@ class Card():
     self.card_nmb = self.original_state["card_nmb"]
     self.total_power = self.original_state["total_power"]
     self.penalty = self.original_state["penalty"]
-    self.blanked_card = self.original_state["blanked_card"]
+    self.is_blanked = self.original_state["is_blanked"]
 
   #decorator for checking if card is blanked
   def not_blank(func):
     def wrapper(self, *args, **kwargs):
-      if self.blank:
+      if self.is_blanked:
           return 
       return func(self, *args, **kwargs)
     return wrapper

@@ -7,6 +7,6 @@ class FountainOfLife(Card):
 
   @Card.not_blank
   def condition(self, hand):
-    max_power = max(card.power for card in hand if card.suit in {"Weapon", "Flood", "Flame", "Land", "Weather"})
+    max_power = max(card.base_power for card in hand if card.suit in {"Weapon", "Flood", "Flame", "Land", "Weather"})
     self.total_power += max_power
     

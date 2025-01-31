@@ -4,7 +4,7 @@ from card import Card
 class Cavern(Card):
   def __init__(self):
     super().__init__("Cavern", 6, "Land", 2)
-    
+    self.has_clear = True
 
   @Card.not_blank
   def condition(self, hand):
