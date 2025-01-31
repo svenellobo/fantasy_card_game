@@ -1,4 +1,4 @@
-from cards_repository.mountain import Mountain
+from cards_repository.lands.mountain import Mountain
 from hand import Hand
 from deck import Deck
 
@@ -6,7 +6,7 @@ def main():
   print("Game started")
   test = Mountain()
   print(test)
-  print(test.hand)
+  print(test.total_power)
   
   
 
