@@ -7,6 +7,6 @@ class Candle(Card):
 
   @Card.not_blank
   def condition(self, hand):    
-    card_combo = {card.name for card in hand}
-    if {"Book of Changes", "Bell Tower"}.issubset(card_combo) and any(card.suit == WIZARD for card in hand):
+    bonus = {card.name for card in hand}
+    if {"Book of Changes", "Bell Tower"}.issubset(bonus) and any(card.suit == WIZARD for card in hand):
       self.total_power += 100

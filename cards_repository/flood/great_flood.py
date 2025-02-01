@@ -12,3 +12,5 @@ class GreatFlood(Card):
       for card in hand:
         if card.suit == ARMY or (card.suit == LAND and card.name != "Mountain") or (card.suit == FLAME and card.name != "Lightning"):
           card.blank()
+
+  
