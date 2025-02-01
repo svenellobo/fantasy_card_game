@@ -1,3 +1,6 @@
+from constants import *
+
+
 class Card():
   def __init__(self, name, power, suit, card_nmb):
     self.name = name

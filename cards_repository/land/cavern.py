@@ -1,9 +1,9 @@
-from card import Card
+from card import *
 
 
 class Cavern(Card):
   def __init__(self):
-    super().__init__("Cavern", 6, "Land", 2)
+    super().__init__("Cavern", 6, LAND, 2)
     self.has_clear = True
 
   @Card.not_blank
@@ -12,5 +12,5 @@ class Cavern(Card):
       self.total_power += 25
                 
     for card in hand:
-      if card.suit == "Weather":
+      if card.suit == WEATHER:
           card.penalty = False

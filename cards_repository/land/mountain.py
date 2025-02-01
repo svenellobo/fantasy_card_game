@@ -1,9 +1,9 @@
-from card import Card
+from card import *
 
 
 class Mountain(Card):
   def __init__(self):
-    super().__init__("Mountain", 9, "Land", 1)
+    super().__init__("Mountain", 9, LAND, 1)
     self.has_clear = True
 
   @Card.not_blank
@@ -12,6 +12,6 @@ class Mountain(Card):
     if {"Smoke", "Wildfire"}.issubset(card_names):
       self.total_power += 50
     for card in hand:
-      if card.suit == "Flood":
+      if card.suit == FLOOD:
           card.penalty = False
     

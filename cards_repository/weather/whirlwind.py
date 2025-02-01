@@ -1,9 +1,9 @@
-from card import Card
+from card import *
 
 
 class Whirlwind(Card):
   def __init__(self):
-    super().__init__("Whirlwind", 13, "Weather", 14)
+    super().__init__("Whirlwind", 13, WEATHER, 14)
         
 
   @Card.not_blank

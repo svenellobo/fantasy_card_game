@@ -1,8 +1,8 @@
-from card import Card
+from card import *
 
 class Wildfire(Card):
   def __init__(self):
-    super().__init__("Wildfire", 40, "Flame", 16)
+    super().__init__("Wildfire", 40, FLAME, 16)
     self.penalty = True
     
 
@@ -10,5 +10,5 @@ class Wildfire(Card):
   def condition(self, hand):    
     if self.penalty:
       for card in hand:        
-        if card.suit not in {"Flame", "Wizard", "Weather", "Weapon", "Artifact"} and card.name not in {"Mountain", "Great Flood", "Island", "Unicorn", "Dragon"}:
+        if card.suit not in {FLAME, WIZARD, WEATHER, WEAPON, } and card.name not in {"Mountain", "Great Flood", "Island", "Unicorn", "Dragon"}:
           card.blank()
