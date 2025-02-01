@@ -13,8 +13,8 @@ class Rangers(Card):
 
   def clear(self, hand):
     for card in hand:
-      if card.name != "War Dirigible" and card.has_penalty == True:
-        
+      if card.name != "War Dirigible" and card.has_penalty:
+        card.penalties_suits.discard(ARMY)
 
 
 

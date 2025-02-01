@@ -11,7 +11,8 @@ class Card():
     self.has_penalty = False
     self.has_clear = False
     self.is_blanked = False
-    self.penalties = {}
+    self.penalties_names = {}
+    self.penalties_suits = {}
 
     self.original_state = {
             "name": name,
@@ -22,7 +23,8 @@ class Card():
             "has_penalty": self.has_penalty,
             "has_clear": self.has_clear,
             "is_blanked": self.is_blanked,
-            "penalties": self.penalties
+            "penalties_names": self.penalties_names,
+            "penalties_suits": self.penalties_suits
         }
 
   def __str__(self):
@@ -54,6 +56,9 @@ class Card():
     self.total_power = self.original_state["total_power"]
     self.has_penalty = self.original_state["penalty"]
     self.is_blanked = self.original_state["is_blanked"]
+    self.has_clear = self.original_state["has_clear"]
+    self.penalties_suits = self.original_state["penalties_suits"]
+    self.penalties_names = self.original_state["penalties_names"]
 
   #decorator for checking if card is blanked
   def not_blank(func):

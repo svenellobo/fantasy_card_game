@@ -13,4 +13,4 @@ class Cavern(Card):
                 
     for card in hand:
       if card.suit == WEATHER:
-          card.penalty = False
+          card.has_penalty = False
