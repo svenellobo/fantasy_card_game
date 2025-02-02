@@ -12,10 +12,12 @@ class Empress(Card):
         army_count = 0
         leader_count = -1
         for card in hand:
+            if self.has_penalty:
+                if card.suit in self.penalties_suits:
+                    leader_count += 1
             if card.suit == ARMY:                
                 army_count += 1
-            if card.suit in self.penalties_suits:
-                leader_count += 1
+            
         self.total_power += (army_count * 10) + (leader_count * -5)
              
            

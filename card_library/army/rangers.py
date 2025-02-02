@@ -8,7 +8,7 @@ class Rangers(Card):
 
     @Card.not_blank
     def condition(self, hand):    
-        count_lands = sum(1 for card in hand if card.suit)
+        count_lands = sum(1 for card in hand if card.suit == LAND)
         self.total_power += count_lands * 10
 
     def clear(self, hand):

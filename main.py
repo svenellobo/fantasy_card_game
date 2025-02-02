@@ -1,7 +1,7 @@
-from cards_repository.land.mountain import Mountain
+from card_library.land.mountain import Mountain
 from hand import Hand
 from deck import Deck
-from cards_repository.weather.smoke import Smoke
+from card_library.weather.smoke import Smoke
 
 def main():
     print("Game started")
@@ -9,6 +9,7 @@ def main():
     print(test)
     print(test.total_power)
     test2 = Smoke()
+    print(test2)
     
     
 
