@@ -28,7 +28,7 @@ class Card():
         }
 
   def __str__(self):
-    return f"Card {self.card_nmb} {self.name} belongs to {self.suit} suit and has base power of {self.base_power}" 
+    return f"Card {self.card_nmb} {self.name} belongs to {self.suit} suit, has base power of {self.base_power} and total power of {self.total_power}" 
   
 
   def blank(self):

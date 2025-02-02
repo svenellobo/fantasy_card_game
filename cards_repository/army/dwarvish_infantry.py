@@ -9,6 +9,7 @@ class DwarvishInfantry(Card):
 
 
   @Card.not_blank
-  def condition(self, hand):    
-    count_army = sum(1 for card in hand if card.suit in self.penalties_suits) -1
-    self.total_power += count_army * -2
+  def condition(self, hand):
+    if self.has_penalty:    
+      count_army = sum(1 for card in hand if card.suit in self.penalties_suits) -1
+      self.total_power += count_army * -2
