@@ -8,5 +8,5 @@ class BellTower(Card):
   @Card.not_blank
   def condition(self, hand):
     if any(card.suit == WIZARD for card in hand):
-      self.total_power += 15
+        self.total_power += 15
     

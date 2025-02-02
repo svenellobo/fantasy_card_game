@@ -2,16 +2,16 @@ from card import *
 
 
 class Mountain(Card):
-  def __init__(self):
-    super().__init__("Mountain", 9, LAND, 1)
-    self.has_clear = True
+    def __init__(self):
+        super().__init__("Mountain", 9, LAND, 1)
+        self.has_clear = True
 
-  @Card.not_blank
-  def condition(self, hand):
-    card_names = {card.name for card in hand}
-    if {"Smoke", "Wildfire"}.issubset(card_names):
-      self.total_power += 50
-    for card in hand:
-      if card.suit == FLOOD:
-          card.penalty = False
+    @Card.not_blank
+    def condition(self, hand):
+        card_names = {card.name for card in hand}
+        if {"Smoke", "Wildfire"}.issubset(card_names):
+            self.total_power += 50
+        for card in hand:
+            if card.suit == FLOOD:
+                card.penalty = False
     
