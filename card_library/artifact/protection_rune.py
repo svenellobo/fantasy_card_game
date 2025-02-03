@@ -6,7 +6,6 @@ class ProtectionRune(Card):
         
         
         
-    @Card.not_blank   
-    def condition(self, hand):        
+    def clear_penalties(self, hand):              
         for card in hand:
             card.has_penalty = False

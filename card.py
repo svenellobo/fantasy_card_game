@@ -32,6 +32,15 @@ class Card():
     def __str__(self):
         return f"Card {self.card_nmb} {self.name} belongs to {self.suit} suit, has base power of {self.base_power} and total power of {self.total_power}" 
     
+    
+    #decorator for checking if card is blanked
+    @staticmethod
+    def not_blank(func):
+        def wrapper(self, *args, **kwargs):
+            if self.is_blanked:
+                return 
+            return func(self, *args, **kwargs)
+        return wrapper
 
     def blank(self):
         self.name = None
@@ -41,7 +50,9 @@ class Card():
         self.has_penalty = False
         self.is_blanked = True
         self.impact = 0
-
+        
+        
+    @not_blank
     def condition(self, hand):
         pass
 
@@ -63,10 +74,4 @@ class Card():
         self.penalties_suits = self.original_state["penalties_suits"]
         self.penalties_names = self.original_state["penalties_names"]
 
-    #decorator for checking if card is blanked
-    def not_blank(func):
-        def wrapper(self, *args, **kwargs):
-            if self.is_blanked:
-                return 
-            return func(self, *args, **kwargs)
-        return wrapper
+    

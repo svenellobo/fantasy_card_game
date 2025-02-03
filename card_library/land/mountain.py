@@ -11,7 +11,9 @@ class Mountain(Card):
         card_names = {card.name for card in hand}
         if {"Smoke", "Wildfire"}.issubset(card_names):
             self.total_power += 50
+        
+    
+    def clear_penalties(self, hand):
         for card in hand:
             if card.suit == FLOOD:
                 card.penalty = False
-    
