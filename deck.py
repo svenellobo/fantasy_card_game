@@ -11,7 +11,7 @@ class Deck():
     def shuffle_deck(self):
         random.shuffle(self.__cards)
 
-    def deal_card(self):
+    def draw_card(self):
         if len(self.__cards) == 0:
             return
         return self.__cards.pop(0)
