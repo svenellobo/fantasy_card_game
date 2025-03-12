@@ -6,32 +6,25 @@ class CPUPlayer(Hand):
           super().__init__()
               
 
-
-    def remove_worst_card(self, hand:list):    
+            
+    def remove_worst_card(self, hand: list):    
         hand_total_power = sum(card.total_power for card in hand)
-        worst_card = None
-        worst_impact = float('inf')    
-        
-        
-        for card in hand: 
-            hand_copy = copy.deepcopy(hand)       
-            hand_copy.remove(card)
+
+        def calculate_impact(card_to_remove):
+            hand_copy = copy.deepcopy(hand)
+            hand_copy.remove(next(c for c in hand_copy if c.name == card_to_remove.name))
             
             for card_copy in hand_copy:
                 card_copy.clear_penalties()
             for card_copy in hand_copy:
                 card_copy.condition()
-                    
-            copy_total_power = sum(card_copy.total_power for card_copy in hand_copy)
-            card.impact = hand_total_power - copy_total_power
-            
-            if card.impact < worst_impact:
-                worst_impact = card.impact
-                worst_card = card
-                
+
+            return hand_total_power - sum(card_copy.total_power for card_copy in hand_copy)
+
+        worst_card = min(hand, key=calculate_impact, default=None)
+
         if worst_card:
             hand.remove(worst_card)
-            
         
             
         

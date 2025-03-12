@@ -13,7 +13,7 @@ class Card():
         self.is_blanked = False
         self.penalties_names = {}
         self.penalties_suits = {}
-        self.impact = 0
+        
 
         self.original_state = {
                 "name": name,
@@ -25,8 +25,8 @@ class Card():
                 "has_clear": self.has_clear,
                 "is_blanked": self.is_blanked,
                 "penalties_names": self.penalties_names,
-                "penalties_suits": self.penalties_suits,
-                "impact": self.impact
+                "penalties_suits": self.penalties_suits
+                
             }
 
     def __str__(self):
@@ -49,7 +49,7 @@ class Card():
         self.total_power = 0    
         self.has_penalty = False
         self.is_blanked = True
-        self.impact = 0
+        
         
         
     @not_blank
