@@ -11,8 +11,8 @@ class Card():
         self.has_penalty = False
         self.has_clear = False
         self.is_blanked = False
-        self.penalties_names = {}
-        self.penalties_suits = {}
+        self.penalties_names = set()
+        self.penalties_suits = set()
         
 
         self.original_state = {

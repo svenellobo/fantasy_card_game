@@ -25,6 +25,14 @@ class CPUPlayer(Hand):
 
         if worst_card:
             hand.remove(worst_card)
+            return worst_card
         
             
+    def take_turn(self, deck, discard_area):        
+        self.cards_in_hand.append(deck.draw_card())
         
+        self.penalties_and_conditions(self.cards_in_hand)
+        
+        removed_card = self.remove_worst_card(self.cards_in_hand)
+
+        discard_area.cards.append(removed_card)
