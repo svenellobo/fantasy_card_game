@@ -1,6 +1,6 @@
 
 
-class Hand():
+class Player():
     def __init__(self):
         self.cards_in_hand = []
 
@@ -14,8 +14,11 @@ class Hand():
             
     def penalties_and_conditions(self, hand):
         for card in hand:
-            if card.has_clear == True:
-                card.clear_penalties(hand)
-            
+                card.reset()
+                
+        for card in hand:
+            if card.has_clear:
+                card.clear_penalties(hand)  
+                          
         for card in hand:
             card.condition(hand)

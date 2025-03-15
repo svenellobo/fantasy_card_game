@@ -14,5 +14,5 @@ class Blizzard(Card):
                 if card.suit == FLOOD:
                     card.blank()
             
-        count = sum(1 for card in hand if card.suit in self.penalties_suits)
-        self.total_power += count * -5
+            count = sum(1 for card in hand if card.suit in self.penalties_suits)
+            self.total_power += count * -5

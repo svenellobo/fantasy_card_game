@@ -1,38 +1,61 @@
-from hand import Hand
+from player import Player
 import copy
 
-class CPUPlayer(Hand):
+class CPUPlayer(Player):
     def __init__(self):
           super().__init__()
               
 
             
-    def remove_worst_card(self, hand: list):    
+    def remove_worst_card(self, hand: list):
         hand_total_power = sum(card.total_power for card in hand)
-
-        def calculate_impact(card_to_remove):
-            hand_copy = copy.deepcopy(hand)
-            hand_copy.remove(next(c for c in hand_copy if c.name == card_to_remove.name))
+        worst_impact = float("inf")
+        worst_card = None
+        
+        for card in hand:
+            temp_hand = copy.deepcopy(hand)
+            temp_hand.remove(card)
+            self.penalties_and_conditions(temp_hand)
+            new_power = hand_total_power - sum(card.total_power for card in temp_hand)
             
-            for card_copy in hand_copy:
-                card_copy.clear_penalties()
-            for card_copy in hand_copy:
-                card_copy.condition()
-
-            return hand_total_power - sum(card_copy.total_power for card_copy in hand_copy)
-
-        worst_card = min(hand, key=calculate_impact, default=None)
-
+            if new_power < worst_impact:
+                worst_impact = new_power
+                worst_card = card
+        
         if worst_card:
             hand.remove(worst_card)
-            return worst_card
+            return worst_card          
+    
         
-            
-    def take_turn(self, deck, discard_area):        
-        self.cards_in_hand.append(deck.draw_card())
-        
-        self.penalties_and_conditions(self.cards_in_hand)
+    def take_turn(self, deck, discard_area):
+        best_discard_card = None
+        best_impact = -float("inf")  
+        hand_total_power = sum(card.total_power for card in self.cards_in_hand)
+
+        if discard_area:
+            for discard_card in discard_area:
+                temp_hand = copy.deepcopy(self.cards_in_hand)
+                temp_hand.append(discard_card)  
+                
+                removed_card = self.remove_worst_card(temp_hand)
+                new_total_power = sum(card.total_power for card in temp_hand)
+                impact = new_total_power - hand_total_power
+
+                if impact > best_impact:
+                    best_discard_card = discard_card
+                    best_impact = impact
+
+        if best_discard_card and best_impact >= 25:
+            self.cards_in_hand.append(best_discard_card)
+            discard_area.remove(best_discard_card)
+        else:
+            self.cards_in_hand.append(deck.draw_card())
         
         removed_card = self.remove_worst_card(self.cards_in_hand)
+        discard_area.append(removed_card)
+        
+        
 
-        discard_area.cards.append(removed_card)
+        
+            
+        

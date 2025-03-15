@@ -12,4 +12,4 @@ class WarlockLord(Card):
     def condition(self, hand):    
         if self.has_penalty:
             count = sum(1 for card in hand if card.suit in self.penalties_suits) -1
-        self.total_power += count * -10
+            self.total_power += count * -10

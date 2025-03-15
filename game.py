@@ -1,5 +1,5 @@
 from deck import Deck
-from hand import Hand
+from player import Player
 from cpu_player import CPUPlayer
 from discard_area import DiscardArea
 
@@ -32,16 +32,15 @@ class Game():
             if self.is_game_over():  
                 break
         
-        #calculate score
+        """for card in self.player1.cards_in_hand:
+            if card.name == "Necromancer":"""
+                
         
-        self.player1.cards_in_hand.append(self.deck.draw_card())        
-        self.player1.penalties_and_conditions(self.player1.cards_in_hand)
-        remove_card = self.player1.remove_worst_card(self.player1.cards_in_hand)
-        self.discard_area.cards.append(remove_card)
-        
-        
-        
-        
+        player1_score = self.player1.calculate_total_points(self.player1.cards_in_hand) 
+        player2_score = self.player2.calculate_total_points(self.player2.cards_in_hand)
+        print(f"Player 1 Score: {player1_score}") 
+        print(f"Player 2 Score: {player2_score}") 
+    
         
         #draw a card
         #select a card to discard

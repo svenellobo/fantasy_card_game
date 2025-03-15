@@ -68,7 +68,7 @@ class Card():
         self.suit = self.original_state["suit"]
         self.card_nmb = self.original_state["card_nmb"]
         self.total_power = self.original_state["total_power"]
-        self.has_penalty = self.original_state["penalty"]
+        self.has_penalty = self.original_state["has_penalty"]
         self.is_blanked = self.original_state["is_blanked"]
         self.has_clear = self.original_state["has_clear"]
         self.penalties_suits = self.original_state["penalties_suits"]

@@ -9,3 +9,4 @@ class Necromancer(Card):
     @Card.not_blank
     def condition(self, hand):    
         pass
+            
