@@ -2,7 +2,10 @@ from card import *
 
 class ElvenArchers(Card):
     def __init__(self):
-        super().__init__("Elven Archers", 10, ARMY, 22)   
+        super().__init__("Elven Archers", 10, ARMY, 22)
+        self.save_original_state()
+        
+       
         
 
 

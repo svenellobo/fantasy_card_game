@@ -4,7 +4,8 @@ class Knights(Card):
     def __init__(self):
         super().__init__("Knights", 20, ARMY, 21)
         self.has_penalty = True
-        self.penalties_suits = {LEADER}   
+        self.penalties_suits = {LEADER} 
+        self.save_original_state()  
         
 
 

@@ -3,6 +3,7 @@ from card import *
 class SwordOfKeth(Card):
     def __init__(self):
         super().__init__("Sword of Keth", 7, WEAPON, 43)
+        self.save_original_state()
         
         
         

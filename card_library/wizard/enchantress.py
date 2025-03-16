@@ -2,7 +2,8 @@ from card import *
 
 class Enchantress(Card):
     def __init__(self):
-        super().__init__("Enchantress", 5, WIZARD, 30)      
+        super().__init__("Enchantress", 5, WIZARD, 30) 
+        self.save_original_state()     
         
 
 

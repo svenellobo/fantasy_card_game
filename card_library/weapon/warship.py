@@ -5,6 +5,7 @@ class Warship(Card):
         super().__init__("Warship", 23, WEAPON, 41)
         self.has_penalty = True
         self.penalties_suits = {FLOOD}
+        self.save_original_state()
         
         
     @Card.not_blank   

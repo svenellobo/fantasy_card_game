@@ -4,8 +4,8 @@ class LightCavalry(Card):
     def __init__(self):
         super().__init__("Light Cavalry", 17, ARMY, 23)
         self.has_penalty = True
-        self.penalties_suits = {LAND}   
-        
+        self.penalties_suits = {LAND} 
+        self.save_original_state()        
 
 
     @Card.not_blank

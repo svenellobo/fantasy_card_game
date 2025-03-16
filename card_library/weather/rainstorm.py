@@ -7,6 +7,7 @@ class Rainstorm(Card):
         self.has_penalty = True
         self.penalties_suits = {FLAME}    
         self.penalties_names = {"Lightning"}
+        self.save_original_state()
 
     @Card.not_blank
     def condition(self, hand):

@@ -3,6 +3,7 @@ from card import *
 class GemOfOrder(Card):
     def __init__(self):
         super().__init__("Gem of Order", 5, ARTIFACT, 47)
+        self.save_original_state()
         
         
         

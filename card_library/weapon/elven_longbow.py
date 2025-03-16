@@ -3,6 +3,7 @@ from card import *
 class ElvenLongbow(Card):
     def __init__(self):
         super().__init__("Elven Longbow", 3, WEAPON, 44)
+        self.save_original_state()
         
         
         

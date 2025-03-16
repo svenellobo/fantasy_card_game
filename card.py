@@ -11,26 +11,28 @@ class Card():
         self.has_penalty = False
         self.has_clear = False
         self.is_blanked = False
+        self.has_blank = False
         self.penalties_names = set()
-        self.penalties_suits = set()
+        self.penalties_suits = set()  
         
 
+    def __str__(self):
+        return f"Card {self.card_nmb} {self.name} belongs to {self.suit} suit, has base power of {self.base_power} and total power of {self.total_power}" 
+    
+    def save_original_state(self):
         self.original_state = {
-                "name": name,
-                "base_power": power,
-                "suit": suit,
-                "card_nmb": card_nmb,
+                "name": self.name,
+                "base_power": self.base_power,
+                "suit": self.suit,
+                "card_nmb": self.card_nmb,
                 "total_power": self.total_power,
                 "has_penalty": self.has_penalty,
                 "has_clear": self.has_clear,
                 "is_blanked": self.is_blanked,
-                "penalties_names": self.penalties_names,
-                "penalties_suits": self.penalties_suits
+                "penalties_names": self.penalties_names.copy(),
+                "penalties_suits": self.penalties_suits.copy()
                 
             }
-
-    def __str__(self):
-        return f"Card {self.card_nmb} {self.name} belongs to {self.suit} suit, has base power of {self.base_power} and total power of {self.total_power}" 
     
     
     #decorator for checking if card is blanked
@@ -58,6 +60,10 @@ class Card():
 
 
     def clear_penalties(self, hand):
+        pass
+    
+    
+    def activate_blank(self,hand):
         pass
 
 

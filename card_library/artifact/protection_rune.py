@@ -3,6 +3,8 @@ from card import *
 class ProtectionRune(Card):
     def __init__(self):
         super().__init__("Protection Rune", 1, ARTIFACT, 50)
+        self.has_clear = True
+        self.save_original_state()
         
         
         

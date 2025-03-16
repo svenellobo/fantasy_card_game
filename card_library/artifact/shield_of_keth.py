@@ -3,6 +3,7 @@ from card import *
 class ShieldOfKeth(Card):
     def __init__(self):
         super().__init__("Shield of Keth", 4, ARTIFACT, 46)
+        self.save_original_state()
         
         
         

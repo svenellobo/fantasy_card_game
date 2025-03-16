@@ -3,7 +3,8 @@ from card import *
 
 class King(Card):
     def __init__(self):
-        super().__init__("King", 8, LEADER, 31)   
+        super().__init__("King", 8, LEADER, 31)
+        self.save_original_state()   
 
     @Card.not_blank
     def condition(self, hand):    

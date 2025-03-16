@@ -6,6 +6,7 @@ class GreatFlood(Card):
         self.has_penalty = True
         self.penalties_suits = {ARMY, LAND, FLAME}
         self.penalties_names = {"Mountain", "Lightning"}
+        self.save_original_state()
         
 
     @Card.not_blank

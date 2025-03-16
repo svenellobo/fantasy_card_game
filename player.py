@@ -18,7 +18,12 @@ class Player():
                 
         for card in hand:
             if card.has_clear:
-                card.clear_penalties(hand)  
+                card.clear_penalties(hand)
                           
         for card in hand:
+            if card.has_blank:
+                card.condition(hand)
+        
+        for card in hand:           
             card.condition(hand)
+            

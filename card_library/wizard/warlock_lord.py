@@ -4,7 +4,8 @@ class WarlockLord(Card):
     def __init__(self):
         super().__init__("Warlock Lord", 25, WIZARD, 29)
         self.has_penalty = True
-        self.penalties_suits = {LEADER, WIZARD}   
+        self.penalties_suits = {LEADER, WIZARD}
+        self.save_original_state()   
         
 
 

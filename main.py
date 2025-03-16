@@ -24,7 +24,7 @@ def main():
         print(card)
     for card in player.cards_in_hand:
         print(card.has_penalty)
-    ttt = player.calculate_total_points    
+    ttt = player.calculate_total_points()   
     print(ttt)
     
     

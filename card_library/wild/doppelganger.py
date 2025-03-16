@@ -3,6 +3,7 @@ from card import *
 class Doppelganger(Card):
     def __init__(self):
         super().__init__("Doppelganger", 0, WILD, 53)
+        self.save_original_state()
         
         
         

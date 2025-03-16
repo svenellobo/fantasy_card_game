@@ -5,6 +5,7 @@ class Dragon(Card):
         super().__init__("Dragon", 30, BEAST, 39)
         self.has_penalty = True
         self.penalties_suits = {WIZARD}
+        self.save_original_state()
         
     @Card.not_blank   
     def condition(self, hand):

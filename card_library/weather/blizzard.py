@@ -5,7 +5,8 @@ class Blizzard(Card):
     def __init__(self):
         super().__init__("Blizzard", 30, WEATHER, 12)
         self.has_penalty = True
-        self.penalties_suits = {ARMY, LEADER, BEAST, FLAME}    
+        self.penalties_suits = {ARMY, LEADER, BEAST, FLAME}
+        self.save_original_state()    
 
     @Card.not_blank
     def condition(self, hand):  

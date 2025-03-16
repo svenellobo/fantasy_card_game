@@ -3,7 +3,8 @@ from card import *
 
 class WaterElemental(Card):
     def __init__(self):
-        super().__init__("Water Elemental", 4, FLOOD, 10)    
+        super().__init__("Water Elemental", 4, FLOOD, 10) 
+        self.save_original_state()   
 
     @Card.not_blank
     def condition(self, hand):

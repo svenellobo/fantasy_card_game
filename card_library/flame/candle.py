@@ -2,7 +2,8 @@ from card import *
 
 class Candle(Card):
     def __init__(self):
-        super().__init__("Candle", 2, FLAME, 17)    
+        super().__init__("Candle", 2, FLAME, 17)
+        self.save_original_state()    
         
 
     @Card.not_blank

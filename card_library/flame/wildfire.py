@@ -6,6 +6,7 @@ class Wildfire(Card):
         self.has_penalty = True
         self.penalties_names = {"Mountain", "Great Flood", "Island", "Unicorn", "Dragon"}
         self.penalties_suits = {FLAME, WIZARD, WEATHER, WEAPON, }
+        self.save_original_state()
         
 
     @Card.not_blank
