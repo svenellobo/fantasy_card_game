@@ -56,7 +56,7 @@ class Card():
         
         
     @not_blank
-    def condition(self, hand):
+    def condition(self, hand, discard_area=None):
         pass
 
 

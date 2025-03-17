@@ -32,8 +32,15 @@ class Game():
             if self.is_game_over():  
                 break
         
-        """for card in self.player1.cards_in_hand:
-            if card.name == "Necromancer":"""
+        
+        for card in self.player1.cards_in_hand:
+            if card.name == "Necromancer":
+                card.condition(self.player1.cards_in_hand, discard_area=self.discard_area.discard_area_cards)
+                
+        for card in self.player2.cards_in_hand:
+            if card.name == "Necromancer":
+                card.condition(self.player2.cards_in_hand, discard_area=self.discard_area.discard_area_cards)
+        
                 
         
         player1_score = self.player1.calculate_total_points(self.player1.cards_in_hand) 

@@ -8,6 +8,7 @@ class CPUPlayer(Player):
 
             
     def remove_worst_card(self, hand: list):
+        self.penalties_and_conditions(hand)
         hand_total_power = sum(card.total_power for card in hand)
         worst_impact = float("inf")
         worst_card = None
@@ -22,14 +23,14 @@ class CPUPlayer(Player):
                 worst_impact = new_power
                 worst_card = card
         
-        if worst_card:
+        if worst_card:            
             hand.remove(worst_card)
             return worst_card          
     
         
-    def take_turn(self, deck, discard_area):
+    def take_turn(self, deck, discard_area):        
         best_discard_card = None
-        best_impact = -float("inf")  
+        best_impact = -float("inf")          
         hand_total_power = sum(card.total_power for card in self.cards_in_hand)
 
         if discard_area:
@@ -44,15 +45,23 @@ class CPUPlayer(Player):
                 if impact > best_impact:
                     best_discard_card = discard_card
                     best_impact = impact
+            
+            
 
-        if best_discard_card and best_impact >= 25:
+        if best_discard_card and best_impact >= 25:            
             self.cards_in_hand.append(best_discard_card)
             discard_area.remove(best_discard_card)
+        
         else:
             self.cards_in_hand.append(deck.draw_card())
         
-        removed_card = self.remove_worst_card(self.cards_in_hand)
+        removed_card = self.remove_worst_card(self.cards_in_hand)        
         discard_area.append(removed_card)
+        for card in discard_area:
+                card.reset()
+        
+    
+        
         
         
 

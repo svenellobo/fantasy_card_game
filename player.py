@@ -1,4 +1,4 @@
-
+from card_library.wizard.necromancer import Necromancer
 class Player():
     def __init__(self):
         self.cards_in_hand = []
@@ -6,8 +6,10 @@ class Player():
     def calculate_total_points(self):    
         return sum(card.total_power for card in self.cards_in_hand)
   
-    def deal_hand(self, deck):      
-        for i in range(7):
+    def deal_hand(self, deck):
+        wt = Necromancer()
+        self.cards_in_hand.append(wt)      
+        for i in range(6):
             card = deck.draw_card()
             self.cards_in_hand.append(card)        
     

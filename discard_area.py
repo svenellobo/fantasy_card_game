@@ -1,6 +1,4 @@
-from deck import Deck
-
-class DiscardArea(Deck):
+class DiscardArea():
     def __init__(self):
-        super().__init__()
+        self.discard_area_cards = []
         
