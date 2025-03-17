@@ -12,6 +12,7 @@ class Card():
         self.has_clear = False
         self.is_blanked = False
         self.has_blank = False
+        self.blanks_self=False
         self.penalties_names = set()
         self.penalties_suits = set()  
         
@@ -71,9 +72,9 @@ class Card():
     def reset(self):        
         self.name = self.original_state["name"]
         self.base_power = self.original_state["base_power"]
-        self.suit = self.original_state["suit"]
-        self.card_nmb = self.original_state["card_nmb"]
         self.total_power = self.original_state["total_power"]
+        self.suit = self.original_state["suit"]
+        self.card_nmb = self.original_state["card_nmb"]        
         self.has_penalty = self.original_state["has_penalty"]
         self.is_blanked = self.original_state["is_blanked"]
         self.has_clear = self.original_state["has_clear"]

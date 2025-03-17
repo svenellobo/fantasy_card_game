@@ -8,13 +8,12 @@ class WorldTree(Card):
         
         
     @Card.not_blank   
-    def condition(self, hand):        
-        set_of_suits = set()
-        set_of_names = set()
-        len_of_suits = len({item for item in set_of_suits if item is not None})
-        len_of_names = len({item for item in set_of_suits if item is not None})
+    def condition(self, hand):
+        card_count = 0
+        set_of_suits = set()   
         for card in hand:
-            set_of_suits.add(card.suit)
-            set_of_names.add(card.name)
-        if len_of_suits == len_of_names:
+            if card.suit != None:
+                set_of_suits.add(card.suit)
+                card_count += 1
+        if len(set_of_suits) == card_count:
             self.total_power += 50
