@@ -1,4 +1,4 @@
-from card_library.wizard.necromancer import Necromancer
+from card_library.artifact.book_of_changes import BookOfChanges
 class Player():
     def __init__(self):
         self.cards_in_hand = []
@@ -7,7 +7,7 @@ class Player():
         return sum(card.total_power for card in self.cards_in_hand)
   
     def deal_hand(self, deck):
-        wt = Necromancer()
+        wt = BookOfChanges()
         self.cards_in_hand.append(wt)      
         for i in range(6):
             card = deck.draw_card()
@@ -15,6 +15,9 @@ class Player():
     
             
     def penalties_and_conditions(self, hand):
+        cards_with_blank = []
+        cards_with_self_blanking = []
+        
         for card in hand:
                 card.reset()
                 
@@ -22,10 +25,13 @@ class Player():
             if card.has_clear:
                 card.clear_penalties(hand)
         
-        cards_with_blank = []
+        
         for card in hand:
-            if card.has_blank and not card.blanks_self: 
-                cards_with_blank.append(card)
+            if card.has_blank:
+                if not card.blanks_self: 
+                    cards_with_blank.append(card)
+                if card.blanks_self:
+                    cards_with_self_blanking.append(card)
                      
         if len(cards_with_blank) > 1:
             for card in cards_with_blank:            
@@ -37,9 +43,15 @@ class Player():
                 
         for card in hand:
             if card.has_blank:
-                card.activate_blank(hand)
+                card.activate_blank(hand)        
         
-        for card in hand:           
+        
+        for card in hand:
+            if card not in cards_with_self_blanking:         
+                card.condition(hand)
+        
+        for card in cards_with_self_blanking:
             card.condition(hand)
+            
             
     

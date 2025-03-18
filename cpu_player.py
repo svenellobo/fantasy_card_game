@@ -28,7 +28,8 @@ class CPUPlayer(Player):
             return worst_card          
     
         
-    def take_turn(self, deck, discard_area):        
+    def take_turn(self, deck, discard_area): 
+        self.penalties_and_conditions(deck)       
         best_discard_card = None
         best_impact = -float("inf")          
         hand_total_power = sum(card.total_power for card in self.cards_in_hand)

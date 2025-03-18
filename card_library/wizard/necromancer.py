@@ -1,6 +1,5 @@
 from card import *
 import copy
-from player import *
 
 class Necromancer(Card):
     def __init__(self):
