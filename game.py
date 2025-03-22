@@ -34,11 +34,11 @@ class Game():
         
         
         for card in self.player1.cards_in_hand:
-            if card.name == "Necromancer":
+            if any(card.name == "Necromancer"):
                 card.condition(self.player1.cards_in_hand, discard_area=self.discard_area.discard_area_cards)
                 
         for card in self.player2.cards_in_hand:
-            if card.name == "Necromancer":
+            if any(card.name == "Necromancer"):
                 card.condition(self.player2.cards_in_hand, discard_area=self.discard_area.discard_area_cards)
         
                 

@@ -17,4 +17,4 @@ class Mountain(Card):
     def clear_penalties(self, hand):
         for card in hand:
             if card.suit == FLOOD:
-                card.penalty = False
+                card.has_penalty = False

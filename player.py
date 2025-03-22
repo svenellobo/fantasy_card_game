@@ -1,4 +1,3 @@
-from card_library.artifact.book_of_changes import BookOfChanges
 class Player():
     def __init__(self):
         self.cards_in_hand = []
@@ -6,10 +5,8 @@ class Player():
     def calculate_total_points(self):    
         return sum(card.total_power for card in self.cards_in_hand)
   
-    def deal_hand(self, deck):
-        wt = BookOfChanges()
-        self.cards_in_hand.append(wt)      
-        for i in range(6):
+    def deal_hand(self, deck):                   
+        for i in range(0):
             card = deck.draw_card()
             self.cards_in_hand.append(card)        
     
@@ -43,15 +40,24 @@ class Player():
                 
         for card in hand:
             if card.has_blank:
-                card.activate_blank(hand)        
-        
-        
+                card.activate_blank(hand)  
+
         for card in hand:
+            if card.priority == 1:
+                card.condition(hand)
+
+        for card in hand:
+            if card.priority == 3:
+                card.condition(hand)
+            
+        
+        
+        """for card in hand:
             if card not in cards_with_self_blanking:         
                 card.condition(hand)
         
         for card in cards_with_self_blanking:
-            card.condition(hand)
+            card.condition(hand)"""
             
             
     

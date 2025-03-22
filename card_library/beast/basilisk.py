@@ -11,6 +11,6 @@ class Basilisk(Card):
     @Card.not_blank   
     def activate_blank(self,hand):
         if self.has_penalty:
-            for card in hand:
-                if card.suit in self.penalties_suits and card.name != "Basilisk":
+            for card in hand:                
+                if card.suit in self.penalties_suits and card is not self:
                     card.blank()

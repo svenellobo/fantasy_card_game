@@ -13,6 +13,7 @@ class Card():
         self.is_blanked = False
         self.has_blank = False
         self.blanks_self=False
+        self.priority = 1
         self.penalties_names = set()
         self.penalties_suits = set()  
         
