@@ -81,18 +81,18 @@ def main():
 
     
     
-    boc = BookOfChanges()
+    """boc = BookOfChanges()
     player.cards_in_hand.append(boc)
-    """bell = BellTower()
+    bell = BellTower()
     player.cards_in_hand.append(bell)"""
     """necro = Necromancer() 
     player.cards_in_hand.append(necro)"""
-    candle = Candle()
+    """candle = Candle()
     player.cards_in_hand.append(candle)
     fe = FireElemental()
     player.cards_in_hand.append(fe)
     hyd = Hydra()
-    player.cards_in_hand.append(hyd)
+    player.cards_in_hand.append(hyd)"""
 
 
 
