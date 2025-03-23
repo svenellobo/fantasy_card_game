@@ -8,7 +8,7 @@ class EarthElemental(Card):
 
     @Card.not_blank
     def condition(self, hand):
-        land_count = sum(1 for card in hand if card.suit == LAND) - 1
+        land_count = sum(1 for card in hand if card.suit == LAND and card is not self)
         self.total_power += land_count * 15
     
     

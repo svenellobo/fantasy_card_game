@@ -19,6 +19,8 @@ from card_library.wizard.necromancer import Necromancer
 from card_library.flood.water_elemental import WaterElemental
 from card_library.beast.hydra import Hydra
 from card_library.flame.candle import Candle
+from card_library.army.light_cavalry import LightCavalry
+from card_library.leader.princess import Princess
 
 
 
@@ -81,18 +83,29 @@ def main():
 
     
     
-    """boc = BookOfChanges()
+    boc = BookOfChanges()
     player.cards_in_hand.append(boc)
-    bell = BellTower()
-    player.cards_in_hand.append(bell)"""
-    """necro = Necromancer() 
-    player.cards_in_hand.append(necro)"""
-    """candle = Candle()
-    player.cards_in_hand.append(candle)
+    
+    lcavl = LightCavalry()
+    player.cards_in_hand.append(lcavl)
+    
     fe = FireElemental()
     player.cards_in_hand.append(fe)
-    hyd = Hydra()
-    player.cards_in_hand.append(hyd)"""
+    
+    forge = Forge()
+    player.cards_in_hand.append(forge)
+    
+    candle = Candle()
+    player.cards_in_hand.append(candle)
+    
+    princess = Princess()
+    player.cards_in_hand.append(princess)
+    
+    dw = DwarvishInfantry()
+    player.cards_in_hand.append(dw)
+    
+    
+    
 
 
 
@@ -111,9 +124,7 @@ def main():
     
     player.penalties_and_conditions(player.cards_in_hand)
     for card in player.cards_in_hand:
-        print(card)
-    for card in player.cards_in_hand:
-        print(card.has_penalty)
+        print(card)    
     ttt = player.calculate_total_points()   
     print(ttt)   
     
