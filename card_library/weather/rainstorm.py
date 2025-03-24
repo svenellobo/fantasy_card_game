@@ -19,5 +19,5 @@ class Rainstorm(Card):
     def activate_blank(self,hand):
         if self.has_penalty:
             for card in hand:
-                if card.name not in self.penalties_names and card.suit in self.penalties_suits:
+                if card.suit in self.penalties_suits and card.name not in self.penalties_names:
                     card.blank()  

@@ -64,7 +64,7 @@ class Card():
     def clear_penalties(self, hand):
         pass
     
-    
+    @not_blank
     def activate_blank(self,hand):
         pass
 

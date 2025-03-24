@@ -12,8 +12,7 @@ class Player():
     
             
     def penalties_and_conditions(self, hand):
-        cards_with_blank = []
-        cards_with_self_blanking = []
+        cards_with_blank = []        
         
         for card in hand:
                 card.reset()
@@ -24,11 +23,8 @@ class Player():
         
         
         for card in hand:
-            if card.has_blank:
-                if not card.blanks_self: 
-                    cards_with_blank.append(card)
-                if card.blanks_self:
-                    cards_with_self_blanking.append(card)
+            if card.has_blank and not card.blanks_self:                
+                cards_with_blank.append(card)                
                      
         if len(cards_with_blank) > 1:
             for card in cards_with_blank:            
@@ -48,16 +44,7 @@ class Player():
 
         for card in hand:
             if card.priority == 3:
-                card.condition(hand)
-            
-        
-        
-        """for card in hand:
-            if card not in cards_with_self_blanking:         
-                card.condition(hand)
-        
-        for card in cards_with_self_blanking:
-            card.condition(hand)"""
-            
+                card.condition(hand)          
+
             
     

@@ -43,8 +43,7 @@ class BookOfChanges(Card):
         for card in hand:
             if card.priority == 1:
                 card.condition(hand)
-            """if card.priority == 3:
-                card.condition(hand)"""       
+                  
         
         
         

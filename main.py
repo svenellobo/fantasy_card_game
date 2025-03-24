@@ -21,6 +21,9 @@ from card_library.beast.hydra import Hydra
 from card_library.flame.candle import Candle
 from card_library.army.light_cavalry import LightCavalry
 from card_library.leader.princess import Princess
+from card_library.army.rangers import Rangers
+from card_library.weather.rainstorm import Rainstorm
+from card_library.wizard.collector import Collector
 
 
 
@@ -79,6 +82,7 @@ def main():
     player.cards_in_hand.append(hyd)
     candle = Candle()
     player.cards_in_hand.append(candle)
+    
     """
 
     
@@ -87,40 +91,26 @@ def main():
     player.cards_in_hand.append(boc)
     
     lcavl = LightCavalry()
-    player.cards_in_hand.append(lcavl)
-    
-    fe = FireElemental()
-    player.cards_in_hand.append(fe)
-    
-    forge = Forge()
-    player.cards_in_hand.append(forge)
-    
-    candle = Candle()
-    player.cards_in_hand.append(candle)
-    
-    princess = Princess()
-    player.cards_in_hand.append(princess)
-    
+    player.cards_in_hand.append(lcavl)  
+        
     dw = DwarvishInfantry()
     player.cards_in_hand.append(dw)
     
+    rangers = Rangers()
+    player.cards_in_hand.append(rangers)
+    
+    kn = Knights()
+    player.cards_in_hand.append(kn)    
     
     
-
-
-
-
-
-
-    #TESTIRATI BOOK OF CHANGES S DRUGIM KARTAMA KOJE IMAJU SLIČAN SUSTAV KO DWARVEN INFANTRY
+    collector = Collector()
+    player.cards_in_hand.append(collector)
     
+    arch = ElvenArchers()
+    player.cards_in_hand.append(arch) 
+   
+
     
-     
-    
-    """player.penalties_and_conditions(player.cards_in_hand)
-    for card in player.cards_in_hand:
-        if card.name == "Necromancer":
-            card.condition(player.cards_in_hand, discard_area=discard_area.discard_area_cards)"""
     
     player.penalties_and_conditions(player.cards_in_hand)
     for card in player.cards_in_hand:
