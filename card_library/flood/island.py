@@ -11,4 +11,4 @@ class Island(Card):
         filtered_hand = [card for card in hand if card.suit in {FLOOD, FLAME}]
         if filtered_hand:
             max_power_card = max(filtered_hand, key=lambda card: card.base_power)
-            max_power_card.penalty = False
+            max_power_card.has_penalty = False

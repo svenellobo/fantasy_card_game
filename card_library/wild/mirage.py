@@ -8,6 +8,6 @@ class Mirage(Card):
         
         
     @Card.not_blank   
-    def condition(self, hand):        
+    def effect(self, hand):        
         
         pass

@@ -8,11 +8,11 @@ class Rangers(Card):
 
 
     @Card.not_blank
-    def condition(self, hand):    
+    def bonus(self, hand):    
         count_lands = sum(1 for card in hand if card.suit == LAND)
         self.total_power += count_lands * 10
-
-    def clear_penalties(self, hand):
+        
+    def clear_penalties(self, hand):        
         for card in hand:
             if card.name != "War Dirigible" and card.has_penalty:
                 card.penalties_suits.discard(ARMY)

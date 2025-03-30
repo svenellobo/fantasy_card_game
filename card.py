@@ -31,6 +31,7 @@ class Card():
                 "has_penalty": self.has_penalty,
                 "has_clear": self.has_clear,
                 "is_blanked": self.is_blanked,
+                "priority": self.priority,
                 "penalties_names": self.penalties_names.copy(),
                 "penalties_suits": self.penalties_suits.copy()
                 
@@ -57,15 +58,22 @@ class Card():
         
         
     @not_blank
-    def condition(self, hand, discard_area=None):
+    def effect(self, hand):
         pass
-
 
     def clear_penalties(self, hand):
         pass
     
     @not_blank
-    def activate_blank(self,hand):
+    def activate_blank(self, hand):
+        pass
+    
+    @not_blank
+    def bonus(self, hand, discard_area=None):
+        pass
+    
+    @not_blank
+    def penalty(self, hand):
         pass
 
 

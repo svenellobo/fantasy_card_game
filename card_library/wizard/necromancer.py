@@ -44,7 +44,7 @@ class Necromancer(Card):
 
 
     @Card.not_blank
-    def condition(self, hand,discard_area=None):    
+    def bonus(self, hand,discard_area=None):    
         if discard_area:    
             best_discard_card = None
             best_impact = -float("inf")  

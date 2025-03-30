@@ -8,11 +8,10 @@ class Mountain(Card):
         self.save_original_state()
 
     @Card.not_blank
-    def condition(self, hand):
+    def bonus(self, hand):
         card_names = {card.name for card in hand}
         if {"Smoke", "Wildfire"}.issubset(card_names):
-            self.total_power += 50
-        
+            self.total_power += 50     
     
     def clear_penalties(self, hand):
         for card in hand:

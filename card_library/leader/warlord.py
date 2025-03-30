@@ -7,6 +7,6 @@ class Warlord(Card):
         self.save_original_state()   
 
     @Card.not_blank
-    def condition(self, hand): 
+    def bonus(self, hand): 
         self.total_power += sum(card.base_power for card in hand if card.suit == ARMY)   
     

@@ -7,7 +7,7 @@ class FountainOfLife(Card):
 
 
     @Card.not_blank
-    def condition(self, hand):
+    def bonus(self, hand):
         filtered_hand = [card for card in hand if card.suit in {WEAPON, FLOOD, FLAME, LAND, WEATHER}]
         if filtered_hand:
             max_power_card = max(filtered_hand, key=lambda card: card.base_power)

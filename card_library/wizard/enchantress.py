@@ -8,6 +8,6 @@ class Enchantress(Card):
 
 
     @Card.not_blank
-    def condition(self, hand):    
+    def bonus(self, hand):    
         count = sum(1 for card in hand if card.suit in {LAND, WEATHER, FLOOD, FLAME})
         self.total_power += count * 5

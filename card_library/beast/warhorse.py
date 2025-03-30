@@ -7,6 +7,6 @@ class Warhorse(Card):
         
         
     @Card.not_blank   
-    def condition(self, hand):
+    def bonus(self, hand):
         if any(card.suit in (LEADER, WIZARD) for card in hand):
             self.total_power += 14

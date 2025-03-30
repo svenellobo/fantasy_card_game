@@ -10,7 +10,7 @@ class Knights(Card):
 
 
     @Card.not_blank
-    def condition(self, hand):
+    def penalty(self, hand):
         if self.has_penalty:    
             if not any(card.suit in self.penalties_suits for card in hand):
                 self.total_power -= 8

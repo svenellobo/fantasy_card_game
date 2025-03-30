@@ -7,6 +7,6 @@ class FireElemental(Card):
         
 
     @Card.not_blank
-    def condition(self, hand):   
+    def bonus(self, hand):   
         flame_count = sum(1 for card in hand if card.suit == FLAME and card is not self)
         self.total_power += flame_count * 15

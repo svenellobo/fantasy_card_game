@@ -24,6 +24,9 @@ from card_library.leader.princess import Princess
 from card_library.army.rangers import Rangers
 from card_library.weather.rainstorm import Rainstorm
 from card_library.wizard.collector import Collector
+from card_library.wild.doppelganger import Doppelganger
+from card_library.weather.blizzard import Blizzard
+from card_library.land.cavern import Cavern
 
 
 
@@ -87,10 +90,10 @@ def main():
 
     
     
-    boc = BookOfChanges()
-    player.cards_in_hand.append(boc)
+    """boc = BookOfChanges()
+    player.cards_in_hand.append(boc)"""
     
-    lcavl = LightCavalry()
+    """lcavl = LightCavalry()
     player.cards_in_hand.append(lcavl)  
         
     dw = DwarvishInfantry()
@@ -100,14 +103,29 @@ def main():
     player.cards_in_hand.append(rangers)
     
     kn = Knights()
-    player.cards_in_hand.append(kn)    
+    player.cards_in_hand.append(kn)  """  
     
     
-    collector = Collector()
+    """collector = Collector()
+    player.cards_in_hand.append(collector)"""
+    
+    """arch = ElvenArchers()
+    player.cards_in_hand.append(arch)
+    
+    doppel = Doppelganger() 
+    player.cards_in_hand.append(doppel)"""
+    
+    """collector = Collector()
     player.cards_in_hand.append(collector)
     
-    arch = ElvenArchers()
-    player.cards_in_hand.append(arch) 
+    blizzard = Blizzard()
+    player.cards_in_hand.append(blizzard)
+    
+    lcavl = LightCavalry()
+    player.cards_in_hand.append(lcavl)  
+    
+    cavern = Cavern()
+    player.cards_in_hand.append(cavern)"""
    
 
     

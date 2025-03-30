@@ -42,14 +42,17 @@ class BookOfChanges(Card):
 
         for card in hand:
             if card.priority == 1:
-                card.condition(hand)
+                card.bonus(hand)
+                card.effect(hand)
+                card.penalty(hand)  
                   
         
         
         
         
     @Card.not_blank   
-    def condition(self, hand):
+    def bonus(self, hand):
+        self.card_reset(hand)
         self.penalties_and_conditions(hand)
         best_suit_option = None
         best_card_to_change = None
@@ -82,6 +85,6 @@ class BookOfChanges(Card):
             if card.name == best_card_to_change:
                 card.suit = best_suit_option
                 print(f"CHANGED CARD == {best_card_to_change} and SUIT CHANGED {best_suit_option}")
-        self.penalties_and_conditions(hand)                       
+        #self.penalties_and_conditions(hand)                       
         
                 

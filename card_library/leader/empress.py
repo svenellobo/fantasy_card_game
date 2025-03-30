@@ -9,13 +9,15 @@ class Empress(Card):
         self.save_original_state()
 
     @Card.not_blank
-    def condition(self, hand):
+    def bonus(self, hand):
         army_count = sum(1 for card in hand if card.suit == ARMY)
-        leader_count = 0
+        self.total_power += army_count * 10        
+        
+    @Card.not_blank
+    def penalty(self,hand):    
         if self.has_penalty:
-            leader_count = sum(1 for card in hand if card.suit in self.penalties_suits and card is not self)       
-            
-        self.total_power += (army_count * 10) + (leader_count * -5)
+            leader_count = sum(1 for card in hand if card.suit in self.penalties_suits and card is not self)            
+            self.total_power += leader_count * -5
              
            
            

@@ -11,11 +11,11 @@ class WarDirigible(Card):
        
     
                 
-    @Card.not_blank    
-    def activate_blank(self,hand):        
-            if self.has_penalty:                
-                if not any(card.suit == ARMY for card in hand):
-                    self.blank()
-                if any(card.suit == WEATHER for card in hand):
-                    self.blank()
+    @Card.not_blank
+    def activate_blank(self,hand):       
+        if self.has_penalty:                
+            if not any(card.suit == ARMY for card in hand):
+                self.blank()
+            if any(card.suit == WEATHER for card in hand):
+                self.blank()
                 

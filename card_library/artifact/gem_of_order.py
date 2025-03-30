@@ -8,7 +8,7 @@ class GemOfOrder(Card):
         
         
     @Card.not_blank   
-    def condition(self, hand):        
+    def bonus(self, hand):        
         base_powers = sorted({card.base_power for card in hand})
         max_run = 0
         current_run = 1

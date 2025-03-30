@@ -10,6 +10,6 @@ class ElvenArchers(Card):
 
 
     @Card.not_blank
-    def condition(self, hand):    
+    def bonus(self, hand):    
         if not any(card.suit == WEATHER for card in hand):
             self.total_power += 5

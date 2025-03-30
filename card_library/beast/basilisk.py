@@ -8,7 +8,7 @@ class Basilisk(Card):
         self.penalties_suits = {ARMY, LEADER, BEAST}
         self.save_original_state()
         
-    @Card.not_blank   
+    @Card.not_blank
     def activate_blank(self,hand):
         if self.has_penalty:
             for card in hand:                

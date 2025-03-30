@@ -8,7 +8,7 @@ class WorldTree(Card):
         
         
     @Card.not_blank   
-    def condition(self, hand):
+    def bonus(self, hand):
         card_count = 0
         set_of_suits = set()   
         for card in hand:

@@ -11,13 +11,13 @@ class Warship(Card):
         self.save_original_state()
         
         
-    @Card.not_blank   
+    @Card.not_blank
     def activate_blank(self,hand):
         if self.has_penalty:                        
             if not any(card.suit in self.penalties_suits for card in hand):
                 self.blank()
                 
-    def clear_penalties(self, hand):        
+    def clear_penalties(self, hand):       
         for card in hand:
             if card.suit == FLOOD:                
                 card.penalties_suits.discard(ARMY)

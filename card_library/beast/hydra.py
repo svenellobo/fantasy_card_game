@@ -7,6 +7,6 @@ class Hydra(Card):
         
         
     @Card.not_blank   
-    def condition(self, hand):
+    def bonus(self, hand):
         if any(card.name == "Swamp" for card in hand):
             self.total_power += 28

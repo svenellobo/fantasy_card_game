@@ -8,11 +8,11 @@ class Cavern(Card):
         self.save_original_state()
 
     @Card.not_blank
-    def condition(self, hand):
+    def bonus(self, hand):
         if any(card.name in {"Dwarvish Infantry", "Dragon"} for card in hand):
             self.total_power += 25
-            
-    def clear_penalties(self, hand):                
+                        
+    def clear_penalties(self, hand):               
         for card in hand:
             if card.suit == WEATHER:
                 card.has_penalty = False

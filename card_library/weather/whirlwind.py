@@ -8,6 +8,6 @@ class Whirlwind(Card):
             
 
     @Card.not_blank
-    def condition(self, hand):  
+    def bonus(self, hand):  
         if any(card.name == "Rainstorm" for card in hand) and any(card.name in {"Blizzard", "Great Flood"} for card in hand):
             self.total_power += 40

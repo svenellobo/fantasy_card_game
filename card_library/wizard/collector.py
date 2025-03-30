@@ -8,7 +8,7 @@ class Collector(Card):
 
 
     @Card.not_blank
-    def condition(self, hand):    
+    def bonus(self, hand):    
         suits_dict = {}
         
         for card in hand:

@@ -7,6 +7,6 @@ class Lightning(Card):
         
 
     @Card.not_blank
-    def condition(self, hand):    
+    def bonus(self, hand):    
         if any(card.name == "Rainstorm" for card in hand):
             self.total_power += 30

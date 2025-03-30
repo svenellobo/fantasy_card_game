@@ -9,7 +9,7 @@ class LightCavalry(Card):
 
 
     @Card.not_blank
-    def condition(self, hand):
+    def penalty(self, hand):
         if self.has_penalty:    
             count_lands = sum(1 for card in hand if card.suit in self.penalties_suits)
             self.total_power += count_lands * -2

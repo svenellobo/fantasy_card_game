@@ -8,7 +8,7 @@ class Forest(Card):
         
 
     @Card.not_blank
-    def condition(self, hand):
+    def bonus(self, hand):
         for card in hand:
             if card.suit == BEAST or card.name == "Elven Archers":
                 self.total_power += 12

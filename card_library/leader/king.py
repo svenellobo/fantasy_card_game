@@ -7,7 +7,7 @@ class King(Card):
         self.save_original_state()   
 
     @Card.not_blank
-    def condition(self, hand):    
+    def bonus(self, hand):    
         count_army = 0
         has_queen = False
         for card in hand:

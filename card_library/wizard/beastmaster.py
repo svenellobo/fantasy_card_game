@@ -8,10 +8,10 @@ class Beastmaster(Card):
 
 
     @Card.not_blank
-    def condition(self, hand):    
+    def bonus(self, hand):    
         count_beasts = sum(1 for card in hand if card.suit == BEAST)     
         self.total_power += count_beasts * 9
-    
+            
     def clear_penalties(self, hand):
         for card in hand:
             if card.suit == BEAST:
