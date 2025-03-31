@@ -41,7 +41,7 @@ class Card():
     #decorator for checking if card is blanked
     @staticmethod
     def not_blank(func):
-        def wrapper(self, *args, **kwargs):
+        def wrapper(self, *args, **kwargs):            
             if self.is_blanked:
                 return 
             return func(self, *args, **kwargs)
@@ -57,7 +57,7 @@ class Card():
         
         
         
-    @not_blank
+    
     def effect(self, hand):
         pass
 

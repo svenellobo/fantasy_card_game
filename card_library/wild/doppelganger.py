@@ -1,10 +1,12 @@
 from card import *
 import copy
+import types
 
 class Doppelganger(Card):
     def __init__(self):
         super().__init__("Doppelganger", 0, WILD, 53)
         self.priority = 0
+        self.best_card = None
         self.save_original_state()
         
         
@@ -40,59 +42,88 @@ class Doppelganger(Card):
 
         for card in hand:
             if card.priority == 3:
+                card.penalty(hand)                
                 card.bonus(hand)
-                card.effect(hand)
-                card.penalty(hand)  
         
         for card in hand:
-            if card.priority == 1:
-                card.bonus(hand)
-                card.effect(hand)
-                card.penalty(hand)         
+            if card.priority == 1:                
+                card.penalty(hand)                
+                card.bonus(hand)               
+                 
+                
+    
+            
+    def best_card_to_copy(self):
+        if self.best_card:
+            self.name = self.best_card.name
+            self.base_power = self.best_card.base_power
+            self.total_power = self.best_card.base_power
+            self.suit = self.best_card.suit
+            self.priority = self.best_card.priority
+            self.has_penalty = self.best_card.has_penalty
+            self.has_blank = self.best_card.has_blank
+            
+            
+            
+    def final_activation(self, hand):
+        for card in hand:
+            if self.best_card:
+                if card.original_state["name"] == self.best_card.name:                                        
+                    self.name = card.name
+                                        
+                    self.suit = card.suit
+                    self.priority = card.priority
+                    self.has_penalty = card.has_penalty
+                    self.has_blank = card.has_blank
+                    self.base_power = card.base_power
+                    self.total_power = card.total_power
+                    self.is_blanked = card.is_blanked                    
+                    if card.has_penalty and card.has_blank:                        
+                        card.activate_blank(hand)                        
+                        if self.is_blanked:
+                            card.blank()
+                            
+                    
         
         
-    @Card.not_blank   
+        
+       
     def effect(self, hand):
-        self.card_reset(hand)
         temp_hand = copy.deepcopy(hand)
-        self.penalties_and_conditions(hand)        
-        best_impact = -float("inf")
-        best_card_to_copy = None  
-        hand_total_power = sum(card.total_power for card in hand)        
+        self.card_reset(temp_hand)        
+        self.penalties_and_conditions(temp_hand)        
+        best_impact = -float("inf")              
+        hand_total_power = sum(card.total_power for card in temp_hand)
+        self.card_reset(temp_hand)
+        
+        for temp_card in temp_hand:
+            if temp_card.original_state["name"] == "Doppelganger":
+                dop_card = temp_card
         
         
-        
-        """for temp_card in temp_hand:
-            self.card_reset(temp_hand)
-            if temp_card is not self: #temp card nikad ne bude self
-                self.name = temp_card.name
-                self.base_power = temp_card.base_power
-                self.suit = temp_card.suit
-                self.has_penalty = temp_card.has_penalty
-                self.has_blank = temp_card.has_blank
-                self.priority = temp_card.priority
-                if temp_card.has_penalty: 
-                    self.effect = temp_card.condition
-                    self.activate_blank = temp_card.activate_blank
-                else:
-                    self.effect = Card.effect
-                    self.activate_blank = Card.activate_blank
-                self.penalties_and_conditions(temp_hand) 
-                new_total_power = sum(temp_card.total_power for temp_card in temp_hand)
+        for temp_card in temp_hand:            
+            if temp_card.original_state["name"] != "Doppelganger":                                                    
+                dop_card.name = temp_card.name
+                dop_card.base_power = temp_card.base_power
+                dop_card.total_power = temp_card.total_power
+                dop_card.suit = temp_card.original_state["suit"]
+                dop_card.has_penalty = temp_card.has_penalty
+                dop_card.has_blank = temp_card.has_blank                    
+                dop_card.is_blanked = temp_card.is_blanked  
+                self.penalties_and_conditions(temp_hand)
+                if temp_card.has_penalty and not temp_card.has_blank:
+                    dop_card.total_power = temp_card.total_power                 
+                
+                
+                new_total_power = sum(card.total_power for card in temp_hand)
                 impact = new_total_power - hand_total_power
                 
                 if impact > best_impact:
                     best_impact = impact
-                    best_card_to_copy = temp_card
+                    self.best_card = temp_card
+                self.card_reset(temp_hand)
             
                 
-        self.name = best_card_to_copy.name
-        self.base_power = best_card_to_copy.base_power
-        self.suit = best_card_to_copy.suit
-        self.priority = best_card_to_copy.priority
-        if best_card_to_copy.has_penalty: 
-            self.effect = best_card_to_copy.condition
-            self.activate_blank = best_card_to_copy.activate_blank """
-               
+        self.best_card_to_copy()   
     
-         
+  

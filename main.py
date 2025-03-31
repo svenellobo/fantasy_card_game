@@ -11,7 +11,7 @@ from card_library.leader.queen import Queen
 from card_library.beast.basilisk import Basilisk
 from card_library.wizard.beastmaster import Beastmaster
 from card_library.land.bell_tower import BellTower
-from card_library.wild.doppelganger import Doppelganger
+from card_library.flame.wildfire import Wildfire
 from card_library.land.mountain import Mountain
 from card_library.flood.great_flood import GreatFlood
 from card_library.army.elven_archers import ElvenArchers
@@ -48,7 +48,8 @@ def main():
     
 
     """
-
+    wildfire = Wildfire()
+    player.cards_in_hand.append(wildfire)
     kn = Knights()
     player.cards_in_hand.append(kn)
     fe = FireElemental()
@@ -103,29 +104,20 @@ def main():
     player.cards_in_hand.append(rangers)
     
     kn = Knights()
-    player.cards_in_hand.append(kn)  """  
+    player.cards_in_hand.append(kn) """ 
     
     
-    """collector = Collector()
-    player.cards_in_hand.append(collector)"""
     
-    """arch = ElvenArchers()
-    player.cards_in_hand.append(arch)
     
-    doppel = Doppelganger() 
+    """doppel = Doppelganger() 
     player.cards_in_hand.append(doppel)"""
     
-    """collector = Collector()
-    player.cards_in_hand.append(collector)
     
-    blizzard = Blizzard()
-    player.cards_in_hand.append(blizzard)
     
-    lcavl = LightCavalry()
-    player.cards_in_hand.append(lcavl)  
+    """bas = Basilisk()
+    player.cards_in_hand.append(bas)"""
     
-    cavern = Cavern()
-    player.cards_in_hand.append(cavern)"""
+    
    
 
     
@@ -134,7 +126,8 @@ def main():
     for card in player.cards_in_hand:
         print(card)    
     ttt = player.calculate_total_points()   
-    print(ttt)   
+    print(ttt)
+     
     
     
     
