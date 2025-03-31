@@ -9,7 +9,8 @@ class BookOfChanges(Card):
         
     def card_reset(self,hand):
         for card in hand:
-            card.reset()
+            if card.name not in {"Mirage", "Doppelganger", "Shapeshifter"}:
+                card.reset()
     
         
     def penalties_and_conditions(self, hand):
@@ -63,9 +64,7 @@ class BookOfChanges(Card):
         for card in hand:
             for suit in ALL_SUITS:
                 temp_hand = copy.deepcopy(hand)
-                for temp_card in temp_hand:
-                    """if temp_card.priority == #kajgod bude priority od doppelgangera:
-                        temp_card.condition()"""                    
+                for temp_card in temp_hand:                                        
                     if temp_card.name != "Book of Changes":   
                         temp_card.suit = suit                    
                             
@@ -85,6 +84,6 @@ class BookOfChanges(Card):
             if card.name == best_card_to_change:
                 card.suit = best_suit_option
                 print(f"CHANGED CARD == {best_card_to_change} and SUIT CHANGED {best_suit_option}")
-        #self.penalties_and_conditions(hand)                       
+                              
         
                 

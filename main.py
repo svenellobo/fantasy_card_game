@@ -27,6 +27,8 @@ from card_library.wizard.collector import Collector
 from card_library.wild.doppelganger import Doppelganger
 from card_library.weather.blizzard import Blizzard
 from card_library.land.cavern import Cavern
+from card_library.artifact.protection_rune import ProtectionRune
+from card_library.wild.mirage import Mirage
 
 
 
@@ -46,8 +48,13 @@ def main():
     player.deal_hand(deck) 
 
     
+    
 
     """
+    mirage = Mirage()
+    player.cards_in_hand.append(mirage)
+    prorune = ProtectionRune()
+    player.cards_in_hand.append(prorune)
     wildfire = Wildfire()
     player.cards_in_hand.append(wildfire)
     kn = Knights()
@@ -87,30 +94,40 @@ def main():
     candle = Candle()
     player.cards_in_hand.append(candle)
     
-    """
-
+    """  
     
     
-    """boc = BookOfChanges()
-    player.cards_in_hand.append(boc)"""
     
     """lcavl = LightCavalry()
     player.cards_in_hand.append(lcavl)  
         
     dw = DwarvishInfantry()
-    player.cards_in_hand.append(dw)
+    player.cards_in_hand.append(dw)"""
     
-    rangers = Rangers()
-    player.cards_in_hand.append(rangers)
+    """rangers = Rangers()
+    player.cards_in_hand.append(rangers)"""
     
-    kn = Knights()
-    player.cards_in_hand.append(kn) """ 
+    """kn = Knights()
+    player.cards_in_hand.append(kn)"""  
+    
+    """fe = FireElemental()
+    player.cards_in_hand.append(fe) """
     
     
+    """prorune = ProtectionRune()
+    player.cards_in_hand.append(prorune)
     
-    
-    """doppel = Doppelganger() 
+    doppel = Doppelganger() 
     player.cards_in_hand.append(doppel)"""
+    
+    mirage = Mirage()
+    player.cards_in_hand.append(mirage)
+    
+    candle = Candle()
+    player.cards_in_hand.append(candle)
+    
+    boc = BookOfChanges()
+    player.cards_in_hand.append(boc)
     
     
     

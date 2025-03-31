@@ -6,7 +6,7 @@ class Player():
         return sum(card.total_power for card in self.cards_in_hand)
   
     def deal_hand(self, deck):                   
-        for i in range(6):
+        for i in range(0):
             card = deck.draw_card()
             self.cards_in_hand.append(card)        
     
@@ -40,6 +40,10 @@ class Player():
                 
         for card in hand:
             if card.priority == 0:                
+                card.effect(hand)
+                
+        for card in hand:
+            if card.priority == 2:                
                 card.effect(hand)
                 
 

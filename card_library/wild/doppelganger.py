@@ -16,13 +16,10 @@ class Doppelganger(Card):
         
         
     def penalties_and_conditions(self, hand):
-        cards_with_blank = []       
-                
-                
+        cards_with_blank = [] 
         for card in hand:
             if card.has_clear:
-                card.clear_penalties(hand)
-        
+                card.clear_penalties(hand)        
         
         for card in hand:
             if card.has_blank and not card.blanks_self:                
@@ -68,20 +65,26 @@ class Doppelganger(Card):
     def final_activation(self, hand):
         for card in hand:
             if self.best_card:
-                if card.original_state["name"] == self.best_card.name:                                        
-                    self.name = card.name
-                                        
-                    self.suit = card.suit
-                    self.priority = card.priority
-                    self.has_penalty = card.has_penalty
-                    self.has_blank = card.has_blank
-                    self.base_power = card.base_power
-                    self.total_power = card.total_power
-                    self.is_blanked = card.is_blanked                    
-                    if card.has_penalty and card.has_blank:                        
+                if card.original_state["name"] == self.best_card.name:
+                    if card.name == "Basilisk" and card.has_penalty:
+                        card.blank()
+                        self.blank()
+                    else:                                        
+                        self.name = card.name                                        
+                        self.suit = card.suit
+                        self.priority = card.priority
+                        self.has_penalty = card.has_penalty
+                        self.has_blank = card.has_blank
+                        self.base_power = card.base_power                        
+                        self.is_blanked = card.is_blanked
+                        if card.has_penalty:
+                             self.total_power = card.total_power
+                    
+                                       
+                    """if card.has_penalty and card.has_blank:                        
                         card.activate_blank(hand)                        
                         if self.is_blanked:
-                            card.blank()
+                            card.blank()"""
                             
                     
         
