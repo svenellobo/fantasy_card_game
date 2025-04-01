@@ -29,7 +29,16 @@ from card_library.weather.blizzard import Blizzard
 from card_library.land.cavern import Cavern
 from card_library.artifact.protection_rune import ProtectionRune
 from card_library.wild.mirage import Mirage
-
+from card_library.leader.king import King
+from card_library.wizard.enchantress import Enchantress
+from card_library.artifact.world_tree import WorldTree
+from card_library.flood.fountain_of_life import FountainOfLife
+from card_library.weapon.warship import Warship
+from card_library.weapon.war_dirigible import WarDirigible
+from card_library.weather.whirlwind import Whirlwind
+from card_library.weapon.sword_of_keth import SwordOfKeth
+from card_library.artifact.shield_of_keth import ShieldOfKeth
+from card_library.wild.shapeshifter import Shapeshifter
 
 
 def main():
@@ -46,11 +55,61 @@ def main():
     
     player = CPUPlayer()
     player.deal_hand(deck) 
+    
+    
+    
+    
+    
+    
 
+    """cavern = Cavern()
+    player.cards_in_hand.append(cavern)
+    
+    warship = Warship()
+    player.cards_in_hand.append(warship)
+    
+    kn = Knights()
+    player.cards_in_hand.append(kn)
+    
+    hyd = Hydra()
+    player.cards_in_hand.append(hyd)
+    
+    whirl = Whirlwind()
+    player.cards_in_hand.append(whirl)
+    
+    dop = Doppelganger()
+    player.cards_in_hand.append(dop)
+    
+    necro = Necromancer() 
+    player.cards_in_hand.append(necro)"""
     
     
 
     """
+    shape = Shapeshifter()
+    player.cards_in_hand.append(shape)
+    sword = SwordOfKeth()
+    player.cards_in_hand.append(sword)    
+    shield = ShieldOfKeth()
+    player.cards_in_hand.append(shield)
+    cavern = Cavern()
+    player.cards_in_hand.append(cavern)
+    wardirigble = WarDirigible()
+    player.cards_in_hand.append(wardirigble)
+    warship = Warship()
+    player.cards_in_hand.append(warship)
+    ranger = Rangers()
+    player.cards_in_hand.append(ranger)
+    fontana = FountainOfLife()
+    player.cards_in_hand.append(fontana)
+    wtree = WorldTree()
+    player.cards_in_hand.append(wtree)
+    enchant = Enchantress()
+    player.cards_in_hand.append(enchant)
+    blizz = Blizzard()
+    player.cards_in_hand.append(blizz)
+    king = King()
+    player.cards_in_hand.append(king)
     mirage = Mirage()
     player.cards_in_hand.append(mirage)
     prorune = ProtectionRune()
@@ -92,36 +151,9 @@ def main():
     hyd = Hydra()
     player.cards_in_hand.append(hyd)
     candle = Candle()
-    player.cards_in_hand.append(candle)
+    player.cards_in_hand.append(candle)  
+    """     
     
-    """  
-    
-    
-    
-    """lcavl = LightCavalry()
-    player.cards_in_hand.append(lcavl)  
-        
-    dw = DwarvishInfantry()
-    player.cards_in_hand.append(dw)"""
-    
-    """rangers = Rangers()
-    player.cards_in_hand.append(rangers)"""
-    
-    """kn = Knights()
-    player.cards_in_hand.append(kn)"""  
-    
-    """fe = FireElemental()
-    player.cards_in_hand.append(fe) """
-    
-    
-    """prorune = ProtectionRune()
-    player.cards_in_hand.append(prorune)
-    
-    doppel = Doppelganger() 
-    player.cards_in_hand.append(doppel)"""
-    
-    mirage = Mirage()
-    player.cards_in_hand.append(mirage)
     
     candle = Candle()
     player.cards_in_hand.append(candle)
@@ -129,10 +161,19 @@ def main():
     boc = BookOfChanges()
     player.cards_in_hand.append(boc)
     
+    shield = ShieldOfKeth()
+    player.cards_in_hand.append(shield)
+    
+    shape = Shapeshifter()
+    player.cards_in_hand.append(shape)
+    
+    dop = Doppelganger()
+    player.cards_in_hand.append(dop)
+    
+    mirage = Mirage()
+    player.cards_in_hand.append(mirage)
     
     
-    """bas = Basilisk()
-    player.cards_in_hand.append(bas)"""
     
     
    

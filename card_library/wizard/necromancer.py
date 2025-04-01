@@ -35,11 +35,11 @@ class Necromancer(Card):
                 card.activate_blank(hand)  
 
         for card in hand:
-            if card.priority == 1:
+            if card.priority == 5:
                 card.condition(hand)
         
         for card in hand:
-            if card.priority == 3:
+            if card.priority == 4:
                 card.condition(hand)
 
 

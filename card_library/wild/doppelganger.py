@@ -5,7 +5,7 @@ import types
 class Doppelganger(Card):
     def __init__(self):
         super().__init__("Doppelganger", 0, WILD, 53)
-        self.priority = 0
+        self.priority = 1
         self.best_card = None
         self.save_original_state()
         
@@ -38,12 +38,12 @@ class Doppelganger(Card):
                 card.activate_blank(hand)  
 
         for card in hand:
-            if card.priority == 3:
+            if card.priority == 4:
                 card.penalty(hand)                
                 card.bonus(hand)
         
         for card in hand:
-            if card.priority == 1:                
+            if card.priority == 5:                
                 card.penalty(hand)                
                 card.bonus(hand)               
                  
@@ -78,7 +78,8 @@ class Doppelganger(Card):
                         self.base_power = card.base_power                        
                         self.is_blanked = card.is_blanked
                         if card.has_penalty:
-                             self.total_power = card.total_power
+                            self.total_power = card.total_power                        
+                            
                     
                                        
                     """if card.has_penalty and card.has_blank:                        
@@ -115,7 +116,9 @@ class Doppelganger(Card):
                 dop_card.is_blanked = temp_card.is_blanked  
                 self.penalties_and_conditions(temp_hand)
                 if temp_card.has_penalty and not temp_card.has_blank:
-                    dop_card.total_power = temp_card.total_power                 
+                    dop_card.total_power = temp_card.total_power
+                if temp_card.is_blanked:
+                    dop_card.total_power = 0
                 
                 
                 new_total_power = sum(card.total_power for card in temp_hand)

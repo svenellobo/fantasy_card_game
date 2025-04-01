@@ -13,7 +13,9 @@ class Mirage(Card):
                              FLAME: ["Wildfire", "Candle", "Forge", "Lightning", "Fire Elemental"]}
         
         
-    def card_reset(self,hand):
+        
+        
+    def card_reset(self, hand):
         for card in hand:            
             card.reset()
             
@@ -40,11 +42,11 @@ class Mirage(Card):
                 card.activate_blank(hand)  
 
         for card in hand:
-            if card.priority == 3:                                
+            if card.priority == 4:                                
                 card.bonus(hand)
         
         for card in hand:
-            if card.priority == 1:                
+            if card.priority == 5:                
                 card.penalty(hand)                
                 card.bonus(hand)
              
@@ -55,20 +57,19 @@ class Mirage(Card):
         self.penalties_and_conditions(temp_hand)        
         best_impact = -float("inf")              
         hand_total_power = sum(card.total_power for card in temp_hand)
-        self.card_reset(temp_hand)
         best_suit = None
         best_name = None
+        self.card_reset(temp_hand)
+        
         
         for temp_card in temp_hand:
             if temp_card.original_state["name"] == "Mirage":
-                mirage_card = temp_card        
-        
+                mirage_card = temp_card
         
         for suit, names in self.mirage_suits.items():
             for name in names:
                 mirage_card.name = name
                 mirage_card.suit = suit
-                print(f"mirage name:{mirage_card.name}, mirage suit:{mirage_card.suit}")
                 self.penalties_and_conditions(temp_hand)  
                 new_total_power = sum(card.total_power for card in temp_hand)
                 impact = new_total_power - hand_total_power
@@ -82,6 +83,7 @@ class Mirage(Card):
         if best_suit and best_name:
             self.name = best_name
             self.suit = best_suit
+            
                             
         
         
