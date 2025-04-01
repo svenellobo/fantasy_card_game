@@ -16,8 +16,9 @@ class Mirage(Card):
         
         
     def card_reset(self, hand):
-        for card in hand:            
-            card.reset()
+        for card in hand:
+            if card.original_state["name"] not in {"Mirage", "Doppelganger", "Shapeshifter"}:
+                card.reset()
             
     def penalties_and_conditions(self, hand):
         cards_with_blank = [] 
@@ -39,7 +40,11 @@ class Mirage(Card):
                 
         for card in hand:
             if card.has_blank:
-                card.activate_blank(hand)  
+                card.activate_blank(hand) 
+                
+        """for card in hand:
+            if card.priority == 3:
+                card.effect(hand)"""
 
         for card in hand:
             if card.priority == 4:                                

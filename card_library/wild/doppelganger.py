@@ -10,9 +10,10 @@ class Doppelganger(Card):
         self.save_original_state()
         
         
-    def card_reset(self,hand):
+    def card_reset(self, hand):
         for card in hand:
-            card.reset()
+            if card.original_state["name"] not in {"Mirage", "Doppelganger", "Shapeshifter"}:
+                card.reset()
         
         
     def penalties_and_conditions(self, hand):
@@ -35,11 +36,18 @@ class Doppelganger(Card):
                 
         for card in hand:
             if card.has_blank:
-                card.activate_blank(hand)  
+                card.activate_blank(hand)
+                
+        """for card in hand:
+            if card.priority == 2:
+                card.effect(hand)
+                
+        for card in hand:
+            if card.priority == 3:
+                card.effect(hand)"""
 
         for card in hand:
-            if card.priority == 4:
-                card.penalty(hand)                
+            if card.priority == 4:                               
                 card.bonus(hand)
         
         for card in hand:
@@ -77,20 +85,12 @@ class Doppelganger(Card):
                         self.has_blank = card.has_blank
                         self.base_power = card.base_power                        
                         self.is_blanked = card.is_blanked
-                        if card.has_penalty:
+                        if card.total_power < card.base_power:
                             self.total_power = card.total_power                        
+                        else:
+                            self.total_power = card.base_power
+                             
                             
-                    
-                                       
-                    """if card.has_penalty and card.has_blank:                        
-                        card.activate_blank(hand)                        
-                        if self.is_blanked:
-                            card.blank()"""
-                            
-                    
-        
-        
-        
        
     def effect(self, hand):
         temp_hand = copy.deepcopy(hand)
@@ -117,6 +117,7 @@ class Doppelganger(Card):
                 self.penalties_and_conditions(temp_hand)
                 if temp_card.has_penalty and not temp_card.has_blank:
                     dop_card.total_power = temp_card.total_power
+                    
                 if temp_card.is_blanked:
                     dop_card.total_power = 0
                 

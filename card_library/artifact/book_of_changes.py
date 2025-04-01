@@ -51,45 +51,8 @@ class BookOfChanges(Card):
         for card in hand:
             if card.priority == 5:
                 card.bonus(hand)                
-                card.penalty(hand)
-                
-        """cards_with_blank = []
-        cards_with_self_blanking = []        
-       
-        for card in hand:
-            if card.has_clear:
-                card.clear_penalties(hand)       
-                
-        for card in hand:
-            if card.has_blank:
-                if not card.blanks_self: 
-                    cards_with_blank.append(card)
-                if card.blanks_self:
-                    cards_with_self_blanking.append(card)
-                     
-        if len(cards_with_blank) > 1:
-            for card in cards_with_blank:            
-                    card.activate_blank(cards_with_blank)
-                
-        for card in hand:
-            if card.has_blank:
-                card.activate_blank(hand)
-                
-        for card in hand:
-            if card.has_blank:
-                card.activate_blank(hand)
-
-
-        for card in hand:
-            if card.priority == 5:
-                card.bonus(hand)                
-                card.penalty(hand)"""
-                  
+                card.penalty(hand)                
         
-        
-     
-     
-     
      
     @Card.not_blank   
     def bonus(self, hand):

@@ -16,8 +16,9 @@ class Shapeshifter(Card):
         
         
     def card_reset(self, hand):
-        for card in hand:            
-            card.reset()
+        for card in hand:
+            if card.original_state["name"] not in {"Mirage", "Doppelganger", "Shapeshifter"}:
+                card.reset()
             
     def penalties_and_conditions(self, hand):
         cards_with_blank = [] 

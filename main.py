@@ -39,6 +39,8 @@ from card_library.weather.whirlwind import Whirlwind
 from card_library.weapon.sword_of_keth import SwordOfKeth
 from card_library.artifact.shield_of_keth import ShieldOfKeth
 from card_library.wild.shapeshifter import Shapeshifter
+from card_library.beast.dragon import Dragon
+
 
 
 def main():
@@ -57,12 +59,26 @@ def main():
     player.deal_hand(deck) 
     
     
+    discard = DiscardArea()
+    player.discard_area = discard.discard_area_cards
     
+    qu = Queen()
+    discard.discard_area_cards.append(qu)
+    
+    king = King()
+    discard.discard_area_cards.append(king)    
+    
+    
+    lightcaval = LightCavalry()
+    discard.discard_area_cards.append(lightcaval)
+    
+    dragon = Dragon()
+    discard.discard_area_cards.append(dragon)
     
     
     
 
-    """cavern = Cavern()
+    cavern = Cavern()
     player.cards_in_hand.append(cavern)
     
     warship = Warship()
@@ -81,11 +97,15 @@ def main():
     player.cards_in_hand.append(dop)
     
     necro = Necromancer() 
-    player.cards_in_hand.append(necro)"""
+    player.cards_in_hand.append(necro)
     
     
 
     """
+    dragon = Dragon()
+    player.cards_in_hand.append(dragon)
+    lightcaval = LightCavalry()
+    player.cards_in_hand.append(lightcaval)
     shape = Shapeshifter()
     player.cards_in_hand.append(shape)
     sword = SwordOfKeth()
@@ -155,7 +175,7 @@ def main():
     """     
     
     
-    candle = Candle()
+    """candle = Candle()
     player.cards_in_hand.append(candle)
     
     boc = BookOfChanges()
@@ -171,7 +191,7 @@ def main():
     player.cards_in_hand.append(dop)
     
     mirage = Mirage()
-    player.cards_in_hand.append(mirage)
+    player.cards_in_hand.append(mirage)"""
     
     
     
@@ -180,11 +200,13 @@ def main():
 
     
     
-    player.penalties_and_conditions(player.cards_in_hand)
+    player.penalties_and_conditions(player.cards_in_hand)    
     for card in player.cards_in_hand:
         print(card)    
     ttt = player.calculate_total_points()   
     print(ttt)
+  
+    
      
     
     
