@@ -90,11 +90,10 @@ class Necromancer(Card):
                     self.penalties_and_conditions(temp_hand)              
                     new_total_power = sum(card.total_power for card in temp_hand)
                     impact = new_total_power - hand_total_power                    
-                    
+                    discard_card.reset()
                     temp_hand.remove(discard_card)                    
 
-                    if impact > best_impact:
-                        discard_card.reset()
+                    if impact > best_impact:                        
                         best_discard_card = discard_card
                         best_impact = impact
 

@@ -1,3 +1,5 @@
+import customtkinter as ctk
+from screens.main_menu import MainMenu
 from player import Player
 from cpu_player import CPUPlayer
 from deck import Deck
@@ -42,6 +44,30 @@ from card_library.wild.shapeshifter import Shapeshifter
 from card_library.beast.dragon import Dragon
 
 
+class App(ctk.CTk):
+    
+    def __init__(self, title, geo):
+        super().__init__()
+        ctk.set_appearance_mode("dark")
+        ctk.set_default_color_theme("green")        
+        self.geometry(geo)
+        self.title(title)       
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.initialize_main_menu()
+        
+        
+        
+    def initialize_main_menu(self):
+        MainMenu(self)
+        
+        """if sticky is None:
+            component.grid(row=row, column=column, padx=5, pady=5)
+        else:
+            component.grid(row=row, column=column, padx=5, pady=5, sticky=sticky)"""
+        
+
+
 
 def main():
     print("Game started")    
@@ -49,55 +75,23 @@ def main():
 
     
     
-    for card in deck.cards:
-        if card.name == "Book of Changes":
-            deck.cards.remove(card)
-    
-    deck.shuffle_deck()    
-    
-    player = CPUPlayer()
-    player.deal_hand(deck) 
-    
-    
-    discard = DiscardArea()
-    player.discard_area = discard.discard_area_cards
-    
-    qu = Queen()
-    discard.discard_area_cards.append(qu)
-    
-    king = King()
-    discard.discard_area_cards.append(king)    
-    
-    
-    lightcaval = LightCavalry()
-    discard.discard_area_cards.append(lightcaval)
-    
-    dragon = Dragon()
-    discard.discard_area_cards.append(dragon)
+if __name__ == "__main__":
+    app = App("Fantasy Realms", "1000x1000")
+    app.mainloop()
+    #main()
     
     
     
 
-    cavern = Cavern()
-    player.cards_in_hand.append(cavern)
     
-    warship = Warship()
-    player.cards_in_hand.append(warship)
     
-    kn = Knights()
-    player.cards_in_hand.append(kn)
     
-    hyd = Hydra()
-    player.cards_in_hand.append(hyd)
+    """deck.shuffle_deck()    
     
-    whirl = Whirlwind()
-    player.cards_in_hand.append(whirl)
+    player = CPUPlayer()
+    player.deal_hand(deck)"""
     
-    dop = Doppelganger()
-    player.cards_in_hand.append(dop)
     
-    necro = Necromancer() 
-    player.cards_in_hand.append(necro)
     
     
 
@@ -171,47 +165,13 @@ def main():
     hyd = Hydra()
     player.cards_in_hand.append(hyd)
     candle = Candle()
-    player.cards_in_hand.append(candle)  
-    """     
+    player.cards_in_hand.append(candle)  """    
     
-    
-    """candle = Candle()
-    player.cards_in_hand.append(candle)
-    
-    boc = BookOfChanges()
-    player.cards_in_hand.append(boc)
-    
-    shield = ShieldOfKeth()
-    player.cards_in_hand.append(shield)
-    
-    shape = Shapeshifter()
-    player.cards_in_hand.append(shape)
-    
-    dop = Doppelganger()
-    player.cards_in_hand.append(dop)
-    
-    mirage = Mirage()
-    player.cards_in_hand.append(mirage)"""
-    
-    
-    
-    
-   
-
-    
-    
-    player.penalties_and_conditions(player.cards_in_hand)    
+    """player.penalties_and_conditions(player.cards_in_hand)    
     for card in player.cards_in_hand:
         print(card)    
     ttt = player.calculate_total_points()   
-    print(ttt)
+    print(ttt)"""
   
     
      
-    
-    
-    
-    
-    
-if __name__ == "__main__":
-    main()
