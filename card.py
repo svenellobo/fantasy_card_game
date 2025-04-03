@@ -1,4 +1,6 @@
 from constants import *
+import customtkinter as ctk
+from PIL import Image
 
 
 class Card():
@@ -14,6 +16,8 @@ class Card():
         self.has_blank = False
         self.blanks_self=False
         self.priority = 5
+        self.image = ctk.CTkImage(light_image=Image.open("test_image.jpeg"), size=(150, 200))
+        #self.image = None
         self.penalties_names = set()
         self.penalties_suits = set()  
         
@@ -76,7 +80,7 @@ class Card():
     def penalty(self, hand):
         pass
 
-
+    
     
     def reset(self):        
         self.name = self.original_state["name"]

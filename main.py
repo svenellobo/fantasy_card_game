@@ -54,17 +54,18 @@ class App(ctk.CTk):
         self.title(title)       
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
+        self.main_menu = None
         self.initialize_main_menu()
         
         
         
     def initialize_main_menu(self):
-        MainMenu(self)
+        if not self.main_menu:  
+            self.main_menu = MainMenu(self)
+        else:             
+            self.main_menu.grid() 
         
-        """if sticky is None:
-            component.grid(row=row, column=column, padx=5, pady=5)
-        else:
-            component.grid(row=row, column=column, padx=5, pady=5, sticky=sticky)"""
+        
         
 
 

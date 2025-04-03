@@ -2,16 +2,25 @@ from deck import Deck
 from player import Player
 from cpu_player import CPUPlayer
 from discard_area import DiscardArea
+from screens.game_screen import GameScreen
+from screens.card_widget import CardWidget
 
 class Game():
-    def __init__(self):
+    def __init__(self, game_screen):
         self.deck = Deck()
         self.deck.shuffle_deck()
         self.player1 = CPUPlayer()
         self.player2 = CPUPlayer()
         self.discard_area = DiscardArea()
+        self.game_screen = game_screen
         
-    
+        self.player1.deal_hand(self.deck)
+        self.player2.deal_hand(self.deck)
+        for card in self.player1.cards_in_hand:
+            self.game_screen.display_cards(self.player1.cards_in_hand)
+        for card in self.player2.cards_in_hand:
+            self.game_screen.display_cards(self.player2.cards_in_hand, False)
+            
         
     def is_game_over(self, discard_area):
         if len(discard_area.cards) >= 10:
