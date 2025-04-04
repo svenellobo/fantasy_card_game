@@ -7,7 +7,8 @@ class Smoke(Card):
         self.has_penalty = True
         self.has_blank = True
         self.blanks_self=True
-        self.penalties_suits = {FLAME} 
+        self.penalties_suits = {FLAME}
+        self.image = "images/smoke.jpeg" 
         self.save_original_state()
            
 

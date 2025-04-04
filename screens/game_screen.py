@@ -25,26 +25,25 @@ class GameScreen(ctk.CTkFrame):
                 col += 1
         
         
-    def init_screen(self):
-        """self.menu_label = ctk.CTkLabel(self, text="Welcome to Fantasy Realms!", text_color="green", font=("Arial", 24))
-        self.menu_label.grid(row=0, column=0, columnspan=2, pady=20)
-        
-        self.start_button = ctk.CTkButton(self, text="Start Game", command=self.back_to_menu)
-        self.start_button.grid(row=1, column=0, padx=20, pady=10)"""
+    def init_screen(self):        
         
         self.rowconfigure(0, weight=1) 
         self.rowconfigure(1, weight=4)
         self.rowconfigure(2, weight=1)  
-        self.columnconfigure(0, weight=1)
+        self.columnconfigure(0, weight=0, minsize=150)
+        self.columnconfigure(1, weight=0)
+        
+        self.draw_deck = ctk.CTkLabel(self, text="", height=220, width=150, fg_color="yellow")
+        self.draw_deck.grid(row=1, column=0, sticky="ew", padx=40, pady=40)
         
         self.opponent_frame = ctk.CTkFrame(self, height=100, fg_color="green") 
-        self.opponent_frame.grid(row=0, column=0, sticky="ew", padx=10, pady=10)  
+        self.opponent_frame.grid(row=0, column=1, sticky="ew", padx=10, pady=10)  
         
         self.discard_area = ctk.CTkFrame(self, height=500, fg_color="red") 
-        self.discard_area.grid(row=1, column=0, sticky="ew", padx=10, pady=10) 
+        self.discard_area.grid(row=1, column=1, sticky="ew", padx=10, pady=10) 
         
         self.hand_frame = ctk.CTkFrame(self, height=100, fg_color="blue") 
-        self.hand_frame.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+        self.hand_frame.grid(row=2, column=1, sticky="ew", padx=10, pady=10)
 
         
         

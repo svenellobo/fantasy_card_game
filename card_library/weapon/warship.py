@@ -8,6 +8,7 @@ class Warship(Card):
         self.has_blank = True
         self.blanks_self=True 
         self.penalties_suits = {FLOOD}
+        self.image = "images/warship.jpeg"
         self.save_original_state()
         
         

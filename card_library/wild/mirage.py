@@ -5,6 +5,7 @@ class Mirage(Card):
     def __init__(self):
         super().__init__("Mirage", 0, WILD, 52)
         self.priority = 2
+        self.image = "images/mirage.jpeg"
         self.save_original_state()        
         self.mirage_suits = {ARMY: ["Knights", "Elven Archers", "Light Cavalry", "Dwarvish Infantry", "Rangers"],
                              LAND: ["Mountain", "Cavern", "Bell Tower", "Forest", "Earth Elemental"],

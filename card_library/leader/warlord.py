@@ -4,6 +4,7 @@ from card import *
 class Warlord(Card):
     def __init__(self):
         super().__init__("Warlord", 4, LEADER, 34)
+        self.image = "images/warlord.jpeg"
         self.save_original_state()   
 
     @Card.not_blank

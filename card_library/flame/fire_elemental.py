@@ -3,6 +3,7 @@ from card import *
 class FireElemental(Card):
     def __init__(self):
         super().__init__("Fire Elemental", 4, FLAME, 20)
+        self.image = "images/fire_elemental.jpeg"
         self.save_original_state()    
         
 

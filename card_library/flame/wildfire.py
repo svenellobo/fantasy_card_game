@@ -7,6 +7,7 @@ class Wildfire(Card):
         self.has_blank = True
         self.penalties_names = {"Mountain", "Great Flood", "Island", "Unicorn", "Dragon"}
         self.penalties_suits = {FLAME, WIZARD, WEATHER, WEAPON, ARTIFACT}
+        self.image = "images/wildfire.jpeg"
         self.save_original_state()
         
 

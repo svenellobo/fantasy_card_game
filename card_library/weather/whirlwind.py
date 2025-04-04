@@ -4,6 +4,7 @@ from card import *
 class Whirlwind(Card):
     def __init__(self):
         super().__init__("Whirlwind", 13, WEATHER, 14)
+        self.image = "images/whirlwind.jpeg"
         self.save_original_state()
             
 

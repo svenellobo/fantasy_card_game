@@ -7,6 +7,7 @@ class Doppelganger(Card):
         super().__init__("Doppelganger", 0, WILD, 53)
         self.priority = 1
         self.best_card = None
+        self.image = "images/doppelganger.jpeg"
         self.save_original_state()
         
         

@@ -5,6 +5,7 @@ class LightCavalry(Card):
         super().__init__("Light Cavalry", 17, ARMY, 23)
         self.has_penalty = True
         self.penalties_suits = {LAND} 
+        self.image = "images/light_cavalry.jpeg"
         self.save_original_state()        
 
 

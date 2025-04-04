@@ -6,6 +6,7 @@ class Basilisk(Card):
         self.has_penalty = True
         self.has_blank = True
         self.penalties_suits = {ARMY}
+        self.image = "images/basilisk.jpeg"
         self.save_original_state()
         
         

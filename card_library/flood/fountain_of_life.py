@@ -3,6 +3,7 @@ from card import *
 class FountainOfLife(Card):
     def __init__(self):
         super().__init__("Fountain of Life", 1, FLOOD, 6)
+        self.image = "images/fountain_of_life.jpeg"
         self.save_original_state()
 
 

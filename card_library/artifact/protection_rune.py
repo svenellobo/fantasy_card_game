@@ -4,6 +4,7 @@ class ProtectionRune(Card):
     def __init__(self):
         super().__init__("Protection Rune", 1, ARTIFACT, 50)
         self.has_clear = True
+        self.image = "images/protection_rune.jpeg"
         self.save_original_state()
         
         

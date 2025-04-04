@@ -15,9 +15,8 @@ class Card():
         self.is_blanked = False
         self.has_blank = False
         self.blanks_self=False
-        self.priority = 5
-        self.image = ctk.CTkImage(light_image=Image.open("test_image.jpeg"), size=(150, 200))
-        #self.image = None
+        self.priority = 5        
+        self.image = None
         self.penalties_names = set()
         self.penalties_suits = set()  
         

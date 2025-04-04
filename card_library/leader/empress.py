@@ -6,6 +6,7 @@ class Empress(Card):
         super().__init__("Empress", 15, LEADER, 35)
         self.has_penalty = True
         self.penalties_suits = {LEADER}
+        self.image = "images/empress.jpeg"
         self.save_original_state()
 
     @Card.not_blank

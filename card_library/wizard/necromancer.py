@@ -5,6 +5,7 @@ class Necromancer(Card):
     def __init__(self):
         super().__init__("Necromancer", 3, WIZARD, 28)
         self.priority = 6
+        self.image = "images/necromancer.jpeg"
         self.save_original_state()
         
     def card_reset(self, hand):

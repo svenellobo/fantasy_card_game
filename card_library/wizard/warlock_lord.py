@@ -5,6 +5,7 @@ class WarlockLord(Card):
         super().__init__("Warlock Lord", 25, WIZARD, 29)
         self.has_penalty = True
         self.penalties_suits = {LEADER, WIZARD}
+        self.image = "images/warlock_lord.jpeg"
         self.save_original_state()   
         
 

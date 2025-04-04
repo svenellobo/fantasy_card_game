@@ -3,6 +3,7 @@ from card import *
 class WorldTree(Card):
     def __init__(self):
         super().__init__("World Tree", 2, ARTIFACT, 48)
+        self.image = "images/world_tree.jpeg"
         self.save_original_state()
         
         

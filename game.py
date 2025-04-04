@@ -5,6 +5,8 @@ from discard_area import DiscardArea
 from screens.game_screen import GameScreen
 from screens.card_widget import CardWidget
 
+
+
 class Game():
     def __init__(self, game_screen):
         self.deck = Deck()
@@ -14,7 +16,7 @@ class Game():
         self.discard_area = DiscardArea()
         self.game_screen = game_screen
         
-        self.player1.deal_hand(self.deck)
+        self.player1.deal_hand(self.deck) 
         self.player2.deal_hand(self.deck)
         for card in self.player1.cards_in_hand:
             self.game_screen.display_cards(self.player1.cards_in_hand)

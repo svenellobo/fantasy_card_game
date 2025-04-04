@@ -4,6 +4,7 @@ from card import *
 class Princess(Card):
     def __init__(self):
         super().__init__("Princess", 2, LEADER, 33) 
+        self.image = "images/princess.jpeg"
         self.save_original_state()  
 
     @Card.not_blank

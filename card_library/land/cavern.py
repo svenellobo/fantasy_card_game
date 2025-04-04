@@ -5,6 +5,7 @@ class Cavern(Card):
     def __init__(self):
         super().__init__("Cavern", 6, LAND, 2)
         self.has_clear = True
+        self.image = "images/cavern.jpeg"
         self.save_original_state()
 
     @Card.not_blank

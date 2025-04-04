@@ -4,6 +4,7 @@ class Rangers(Card):
     def __init__(self):
         super().__init__("Rangers", 5, ARMY, 25)   
         self.has_clear = True
+        self.image = "images/rangers.jpeg"
         self.save_original_state()
 
 
