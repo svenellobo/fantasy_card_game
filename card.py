@@ -17,6 +17,7 @@ class Card():
         self.blanks_self=False
         self.priority = 5        
         self.image = None
+        self.card_back_image = "images/card_back.jpeg"
         self.penalties_names = set()
         self.penalties_suits = set()  
         

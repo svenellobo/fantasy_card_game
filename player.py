@@ -85,6 +85,6 @@ class Player():
             if card.original_state["name"] == "Doppelganger":
                 card.final_activation(hand)
                 
+    def take_turn(self, deck, discard_area, area, selected_card=None):
+        pass
                 
-  
-    

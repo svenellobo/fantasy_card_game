@@ -59,7 +59,9 @@ class Game():
         print(f"Player 1 Score: {player1_score}") 
         print(f"Player 2 Score: {player2_score}") 
     
-        
+    """def draw_card_to_hand(self):
+        card = self.deck.draw_card()
+        self.player"""
         #draw a card
         #select a card to discard
         #table list append card that's discarded

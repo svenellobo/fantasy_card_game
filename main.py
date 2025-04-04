@@ -54,6 +54,10 @@ class App(ctk.CTk):
         self.title(title)       
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
+        
+        self.attributes("-fullscreen", True) 
+        self.bind("<Escape>", lambda event: self.attributes("-fullscreen", False))
+    
         self.main_menu = None
         self.initialize_main_menu()
         

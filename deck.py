@@ -5,6 +5,7 @@ import importlib
 class Deck():
     def __init__(self):
         self.cards = []
+        self.image = "images/card_back.jpeg"
         self.create_deck()
 
     def create_deck(self):    
