@@ -13,8 +13,8 @@ class Game():
         self.deck.shuffle_deck()
         self.player1 = CPUPlayer()
         self.player2 = CPUPlayer()
-        self.discard_area = DiscardArea()
-        self.game_screen = game_screen
+        self.discard_area = DiscardArea()              
+        self.game_screen = game_screen        
         
         self.player1.deal_hand(self.deck) 
         self.player2.deal_hand(self.deck)
@@ -22,7 +22,19 @@ class Game():
             self.game_screen.display_cards(self.player1.cards_in_hand)
         for card in self.player2.cards_in_hand:
             self.game_screen.display_cards(self.player2.cards_in_hand, False)
-            
+        
+    
+    
+    def draw_from_deck(self):
+        print(f"!!!!!!!!!!!!!!!!!!!!!! {self.game_screen.game}")
+        i=0
+        card = self.deck.draw_card()
+        self.player1.cards_in_hand.append(card)
+        print(f"Card drawn from deck: {card}")
+        for card in self.player1.cards_in_hand:
+            print(f"CARD {i}: {card} ")
+            i += 1  
+        self.game_screen.display_cards(self.player1.cards_in_hand)
         
     def is_game_over(self, discard_area):
         if len(discard_area.cards) >= 10:

@@ -26,8 +26,10 @@ class MainMenu(ctk.CTkFrame):
     def start_game(self):
         print("Game starting...")
         self.grid_forget()        
-        self.game_screen = GameScreen(self.parent)
+        self.game_screen = GameScreen(self.parent, None)
         self.game = Game(self.game_screen)
+        self.game_screen.game = self.game
+        
         
     def quit_game(self):
         print("Game quitting...")

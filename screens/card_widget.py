@@ -45,7 +45,7 @@ class CardWidget(ctk.CTkFrame):
         #self.card_image = self.load_image(self.card_image_path, self.normal_size)
         #self.card_label.configure(image=self.card_image)
         
-    def on_click(self, event):
+    def on_click(self, label, event):
         """if not self.is_open:
             self.configure(width=self.hover_size[0], height=self.hover_size[1])
             self.new_image = self.load_image(self.card_image_path, self.hover_size)
@@ -70,29 +70,9 @@ class CardWidget(ctk.CTkFrame):
         
         enlarged_window.grab_set()  
         enlarged_window.wait_window()"""
+        #SET IMAGE TO LABEL NEXT TO DISCARD
+        """enlarged_image = self.load_image(self.card_image_path, self.enlarged_size)
         
-         # Create a modal dialog window
-        dialog = ctk.CTkToplevel(self.parent)
-        dialog.geometry("300, 450")  # Set a fixed size for the dialog
-        dialog.title("Card Preview")
-        
-        # Center the dialog on the screen
-        dialog.update_idletasks()
-        x = (dialog.winfo_screenwidth() - dialog.winfo_width()) // 2
-        y = (dialog.winfo_screenheight() - dialog.winfo_height()) // 2
-        dialog.geometry(f"+{x}+{y}")
-        
-        # Add content to the dialog
-        enlarged_image = self.load_image(self.card_image_path, self.enlarged_size)
-        enlarged_label = ctk.CTkLabel(dialog, image=enlarged_image, text="")
-        enlarged_label.grid(row=0, column=0, padx=10, pady=10)
-        
-        # Add a close button
-        close_button = ctk.CTkButton(dialog, text="Close", command=dialog.destroy)
-        close_button.grid(row=1, column=0, pady=20)
-        
-        # Make the dialog modal
-        dialog.grab_set()
-        dialog.wait_window()
+        label.configure(image=enlarged_image)"""
             
         

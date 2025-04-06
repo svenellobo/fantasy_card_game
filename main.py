@@ -55,8 +55,8 @@ class App(ctk.CTk):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         
-        self.attributes("-fullscreen", True) 
-        self.bind("<Escape>", lambda event: self.attributes("-fullscreen", False))
+        #self.attributes("-fullscreen", True) 
+        #self.bind("<Escape>", lambda event: self.attributes("-fullscreen", False))
     
         self.main_menu = None
         self.initialize_main_menu()
@@ -67,21 +67,14 @@ class App(ctk.CTk):
         if not self.main_menu:  
             self.main_menu = MainMenu(self)
         else:             
-            self.main_menu.grid() 
+            self.main_menu.grid()       
         
         
-        
-
-
-
-def main():
-    print("Game started")    
-    deck = Deck()
 
     
     
 if __name__ == "__main__":
-    app = App("Fantasy Realms", "1000x1000")
+    app = App("Fantasy Realms", "1200x800")
     app.mainloop()
     #main()
     
