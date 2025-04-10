@@ -2,11 +2,12 @@ import customtkinter as ctk
 from PIL import Image, ImageTk
 
 class CardWidget(ctk.CTkFrame):
-    def __init__(self, parent, card_image_path):
+    def __init__(self, parent, card_image_path, card, click_action=None):
         super().__init__(parent, border_width=2, corner_radius=10)
-        self.parent = parent
         self.card_image_path = card_image_path 
-        self.is_open = False       
+        self.card = card
+        self.click_action = click_action
+               
         
         self.normal_size = (150, 220)
         self.hover_size = (200, 270)
@@ -16,20 +17,26 @@ class CardWidget(ctk.CTkFrame):
         
         self.card_image = self.load_image(self.card_image_path, self.normal_size)
         self.card_label = ctk.CTkLabel(self, image=self.card_image, text="")
-        self.card_label.grid(row=0, column=0, padx=5, pady=5)        
+        self.card_label.grid(row=0, column=0, padx=5, pady=5)
+        self.card_label.bind("<Button-1>", self.on_left_click)
+        self.bind("<Button-1>", self.on_left_click)        
         
         
         self.bind("<Enter>", self.on_hover)
         self.bind("<Leave>", self.on_leave)
         self.card_label.bind("<Enter>", self.on_hover)
-        self.card_label.bind("<Leave>", self.on_leave)
+        self.card_label.bind("<Leave>", self.on_leave)        
         
-        self.card_label.bind("<Button-3>", self.on_click)
+        self.bind("<Button-1>", self.on_left_click)
         
         
     def load_image(self, image_path, size):        
         image = Image.open(image_path)
         return ctk.CTkImage(light_image=image, size=size)
+    
+    def on_left_click(self, event):
+        if self.click_action:
+            self.click_action(self.card)
     
         
     def on_hover(self, event):
@@ -45,7 +52,10 @@ class CardWidget(ctk.CTkFrame):
         #self.card_image = self.load_image(self.card_image_path, self.normal_size)
         #self.card_label.configure(image=self.card_image)
         
-    def on_click(self, label, event):
+    #def on_click(self, event):
+       #pass
+        
+    
         """if not self.is_open:
             self.configure(width=self.hover_size[0], height=self.hover_size[1])
             self.new_image = self.load_image(self.card_image_path, self.hover_size)
