@@ -66,7 +66,7 @@ class GameScreen(ctk.CTkFrame):
         draw_image = Image.open("images/card_back.jpeg")
         draw_image_tk = ctk.CTkImage(light_image=draw_image, size=(150, 220))
         
-        self.end_turn_btn = ctk.CTkButton(self, fg_color="green", text="End Turn", command=lambda: self.game.draw_from_deck())
+        self.end_turn_btn = ctk.CTkButton(self, fg_color="green", text="End Turn", command=lambda: self.game.end_turn())
         self.end_turn_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
         
         #hands and draw

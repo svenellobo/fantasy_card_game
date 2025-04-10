@@ -6,9 +6,6 @@ from screens.game_screen import GameScreen
 from screens.card_widget import CardWidget
 
 
-from card_library.beast.dragon import Dragon
-from card_library.army.light_cavalry import LightCavalry
-
 
 
 class Game():
@@ -18,34 +15,11 @@ class Game():
         self.player1 = Player()
         self.player2 = CPUPlayer()
         self.discard_area = DiscardArea()
-        self.player_turn = False
-        self.cpu_player_turn = False
+        self.current_player = None
         self.card_taken = False
-        self.card_discarded = False
-        
-        dragon = Dragon()
-        self.discard_area.discard_area_cards.append(dragon)
-        lightcaval = LightCavalry()
-        self.discard_area.discard_area_cards.append(lightcaval)
-        
-        """self.discard_area.discard_area_cards.append(dragon)
-        self.discard_area.discard_area_cards.append(dragon)
-        self.discard_area.discard_area_cards.append(dragon)
-        self.discard_area.discard_area_cards.append(dragon)
-        self.discard_area.discard_area_cards.append(dragon)
-        self.discard_area.discard_area_cards.append(dragon)
-        self.discard_area.discard_area_cards.append(dragon)
-        self.discard_area.discard_area_cards.append(dragon)"""
-        
-        
-                      
+        self.card_discarded = False        
         self.game_screen = game_screen        
-        
-        """self.player1.deal_hand(self.deck) 
-        self.player2.deal_hand(self.deck)"""
-        
-        
-        
+
         self.play()
             
         
@@ -58,13 +32,14 @@ class Game():
             self.card_taken = True
     
     def draw_from_deck(self):
-        if self.player_turn and not self.card_taken:        
+        if self.current_player == "player" and not self.card_taken:        
             card = self.deck.draw_card()
             self.player1.cards_in_hand.append(card)        
             self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
             self.card_taken = True
         else:
             print("already drew")
+            
         
     def discard_from_hand(self, card):
         if self.card_taken and not self.card_discarded:            
@@ -74,12 +49,32 @@ class Game():
             self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
             self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
             self.card_discarded = True
-            print(f"discard card: {self.card_taken}")
+            self.game_screen.end_turn_btn.configure(fg_color="red")
+            
+            
+            
         
-    def is_game_over(self, discard_area):
-        if len(discard_area) >= 10:
-            return True
-        return False
+    def end_game(self):
+        print("game ended")
+        if any(card.original_state["name"] == "Necromancer" for card in self.player2.cards_in_hand):
+            self.player2.discard_area = self.discard_area.discard_area_cards
+        elif any(card.original_state["name"] == "Necromancer" for card in self.player1.cards_in_hand):
+            self.card_taken = False
+            self.take_card_from_discard
+        
+        
+    
+    def end_turn(self):
+        if len(self.discard_area.discard_area_cards) >= 10:
+            self.end_game()
+        else: 
+            if self.current_player == "player":                
+                self.current_player = "cpu"
+                self.game_screen.after(1000, self.cpu_turn_logic())                
+            elif self.current_player == "cpu":                
+                self.current_player = "player"
+                self.player_turn_logic()
+                
     
     def update_game_screen(self):    
         self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
@@ -89,22 +84,20 @@ class Game():
     
     def player_turn_logic(self):
         print("Player 1's turn...")
-        self.player_turn = True
+        self.current_player = "player"
         self.card_taken = False
-        self.card_discarded = False
+        self.card_discarded = False      
         
         
-        if self.card_taken and self.card_discarded:
-            self.player_turn = False
-            self.cpu_player_turn = True
-            self.game_screen.end_turn_btn.configure(fg_color="red")
                 
                 
     def cpu_turn_logic(self):
         print("CPU Player's turn...")
         self.player2.take_turn(self.deck, self.discard_area.discard_area_cards)
-        self.player_turn = True
-        self.cpu_player_turn = False
+        self.game_screen.display_cards(self.player2.cards_in_hand, "opponent_hand")
+        self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
+        self.end_turn()
+        
             
     
     

@@ -98,39 +98,11 @@ class Necromancer(Card):
                         best_discard_card = discard_card
                         best_impact = impact
 
-            
-            hand.append(best_discard_card)            
-            discard_area.remove(best_discard_card)
+            if len(discard_area) >= 10:
+                hand.append(best_discard_card)            
+                discard_area.remove(best_discard_card)
         
             
-        """if discard_area:    
-            best_discard_card = None
-            best_impact = -float("inf")  
-            hand_total_power = sum(card.total_power for card in hand)
-            discard_suits = {ARMY, LEADER, WIZARD, BEAST}
-
-            
-            for discard_card in discard_area:
-                if discard_card.suit in discard_suits:
-                    temp_hand = copy.deepcopy(hand)
-                    temp_hand.append(discard_card)
-                                        
-                    self.penalties_and_conditions(temp_hand)              
-                    new_total_power = sum(card.total_power for card in temp_hand)
-                    impact = new_total_power - hand_total_power
-
-                    if impact > best_impact:
-                        discard_card.reset()
-                        best_discard_card = discard_card
-                        best_impact = impact
-
-            
-            hand.append(best_discard_card)
-            print(f"BEST CARD {best_discard_card}")
-            i = 0
-            for card in hand:
-                print(f"{i+1}. {card}")
-                i += 1
-            discard_area.remove(best_discard_card)"""
+        
             
                 

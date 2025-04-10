@@ -4,9 +4,11 @@ import copy
 class CPUPlayer(Player):
     def __init__(self):
           super().__init__()
-              
-
-            
+          
+          
+          
+          
+          
     def remove_worst_card(self, hand: list):
         self.penalties_and_conditions(hand)
         hand_total_power = sum(card.total_power for card in hand)
@@ -15,7 +17,8 @@ class CPUPlayer(Player):
         
         for card in hand:
             temp_hand = copy.deepcopy(hand)
-            temp_hand.remove(card)
+            card_index = hand.index(card)
+            temp_hand.pop(card_index)
             self.penalties_and_conditions(temp_hand)
             new_power = hand_total_power - sum(card.total_power for card in temp_hand)
             
@@ -25,11 +28,12 @@ class CPUPlayer(Player):
         
         if worst_card:            
             hand.remove(worst_card)
-            return worst_card          
+            return worst_card  
+   
     
         
     def take_turn(self, deck, discard_area): 
-        self.penalties_and_conditions(deck)       
+        self.penalties_and_conditions(self.cards_in_hand)       
         best_discard_card = None
         best_impact = -float("inf")          
         hand_total_power = sum(card.total_power for card in self.cards_in_hand)
