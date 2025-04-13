@@ -6,9 +6,6 @@ class CPUPlayer(Player):
           super().__init__()
           
           
-          
-          
-          
     def remove_worst_card(self, hand: list):
         self.penalties_and_conditions(hand)
         hand_total_power = sum(card.total_power for card in hand)

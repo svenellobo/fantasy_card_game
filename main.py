@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from screens.main_menu import MainMenu
+from gui.main_menu import MainMenu
 from player import Player
 from cpu_player import CPUPlayer
 from deck import Deck

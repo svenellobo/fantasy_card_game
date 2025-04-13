@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from screens.game_screen import GameScreen
+from gui.game_screen import GameScreen
 from game import Game
 
 class MainMenu(ctk.CTkFrame):

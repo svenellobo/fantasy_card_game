@@ -2,8 +2,10 @@ from deck import Deck
 from player import Player
 from cpu_player import CPUPlayer
 from discard_area import DiscardArea
-from screens.game_screen import GameScreen
-from screens.card_widget import CardWidget
+from gui.game_screen import GameScreen
+from gui.card_widget import CardWidget
+from gui.score_screen import ScoreScreen
+from card_library.beast.dragon import Dragon
 
 
 
@@ -18,7 +20,19 @@ class Game():
         self.current_player = None
         self.card_taken = False
         self.card_discarded = False        
-        self.game_screen = game_screen        
+        self.game_screen = game_screen    
+        
+        dragon = Dragon()
+        self.discard_area.discard_area_cards.append(dragon)
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+           
 
         self.play()
             
@@ -29,6 +43,7 @@ class Game():
             self.player1.cards_in_hand.append(card)        
             self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
             self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
+            self.game_screen.status_area_lbl.configure(text="HINT: Click on a card in hand to discard it")
             self.card_taken = True
     
     def draw_from_deck(self):
@@ -36,6 +51,7 @@ class Game():
             card = self.deck.draw_card()
             self.player1.cards_in_hand.append(card)        
             self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
+            self.game_screen.status_area_lbl.configure(text="HINT: Click on an unwanted card in your hand to discard it.")
             self.card_taken = True
         else:
             print("already drew")
@@ -49,31 +65,35 @@ class Game():
             self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
             self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
             self.card_discarded = True
-            self.game_screen.end_turn_btn.configure(fg_color="red")
+            self.game_screen.end_turn_btn.configure(fg_color="green", state="normal")
+            self.game_screen.status_area_lbl.configure(text="HINT: Click on the 'End Turn' button")
             
             
             
         
     def end_game(self):
         print("game ended")
-        if any(card.original_state["name"] == "Necromancer" for card in self.player2.cards_in_hand):
-            self.player2.discard_area = self.discard_area.discard_area_cards
-        elif any(card.original_state["name"] == "Necromancer" for card in self.player1.cards_in_hand):
-            self.card_taken = False
-            self.take_card_from_discard
+        #p1_score = self.player1.calculate_total_points()
+        #p2_score = self.player2.calculate_total_points()
+        self.game_screen.open_score_screen(self.player1, self.player2)
+        
+        
+            
+            
         
         
     
     def end_turn(self):
-        if len(self.discard_area.discard_area_cards) >= 10:
-            self.end_game()
-        else: 
-            if self.current_player == "player":                
-                self.current_player = "cpu"
-                self.game_screen.after(1000, self.cpu_turn_logic())                
-            elif self.current_player == "cpu":                
-                self.current_player = "player"
-                self.player_turn_logic()
+        if self.card_taken and self.card_discarded:
+            if len(self.discard_area.discard_area_cards) >= 10:
+                self.end_game()
+            else: 
+                if self.current_player == "player":                
+                    self.current_player = "cpu"
+                    self.game_screen.after(1000, self.cpu_turn_logic())                
+                elif self.current_player == "cpu":                
+                    self.current_player = "player"
+                    self.player_turn_logic()
                 
     
     def update_game_screen(self):    
@@ -85,6 +105,8 @@ class Game():
     def player_turn_logic(self):
         print("Player 1's turn...")
         self.current_player = "player"
+        self.game_screen.end_turn_btn.configure(fg_color="red", state="disabled")
+        self.game_screen.status_area_lbl.configure(text="HINT: Draw a card from the deck or take one from the discard area.")
         self.card_taken = False
         self.card_discarded = False      
         

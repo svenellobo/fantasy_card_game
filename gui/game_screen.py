@@ -1,8 +1,9 @@
 import customtkinter as ctk
-from screens.card_widget import CardWidget
+from gui.card_widget import CardWidget
 from PIL import Image
 from deck import Deck
 from player import Player
+from gui.score_screen import ScoreScreen
 
 
 class GameScreen(ctk.CTkFrame):
@@ -66,7 +67,7 @@ class GameScreen(ctk.CTkFrame):
         draw_image = Image.open("images/card_back.jpeg")
         draw_image_tk = ctk.CTkImage(light_image=draw_image, size=(150, 220))
         
-        self.end_turn_btn = ctk.CTkButton(self, fg_color="green", text="End Turn", command=lambda: self.game.end_turn())
+        self.end_turn_btn = ctk.CTkButton(self, fg_color="red", text="End Turn", height=60, command=lambda: self.game.end_turn())
         self.end_turn_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
         
         #hands and draw
@@ -91,6 +92,13 @@ class GameScreen(ctk.CTkFrame):
         self.discard_area.pack_propagate(False)
         self.discard_area.bind("<Enter>", self.on_discard_area_hover)
         self.discard_area.bind("<Leave>", self.on_discard_area_leave)
+        
+        self.status_area = ctk.CTkFrame(self, height=220)
+        self.status_area.grid(row=2, column=0, sticky="ew", padx=10, pady=40)
+        self.end_turn_btn = ctk.CTkButton(self.status_area, fg_color="red", state="disabled", text="End Turn", height=60, command=lambda: self.game.end_turn())
+        self.end_turn_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
+        self.status_area_lbl = ctk.CTkLabel(self.status_area, text="",  wraplength=200)
+        self.status_area_lbl.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
   
     
     
@@ -103,6 +111,10 @@ class GameScreen(ctk.CTkFrame):
     def on_right_click(self):
         pass
               
+    def open_score_screen(self, player1_hand, player2_hand):
+        self.destroy()        
+        score_screen = ScoreScreen(self.parent, player1_hand, player2_hand)
+        score_screen.grid(row=0, column=0, sticky="nsew")
         
             
         
