@@ -6,6 +6,7 @@ class Necromancer(Card):
         super().__init__("Necromancer", 3, WIZARD, 28)
         self.priority = 6
         self.image = "images/necromancer.jpeg"
+        self.discard_suits = {ARMY, LEADER, WIZARD, BEAST}
         self.save_original_state()
         
     def card_reset(self, hand):
@@ -80,11 +81,11 @@ class Necromancer(Card):
             best_discard_card = None
             best_impact = -float("inf")  
             hand_total_power = sum(card.total_power for card in temp_hand)
-            discard_suits = {ARMY, LEADER, WIZARD, BEAST}
+            
 
             
             for discard_card in discard_area:
-                if discard_card.suit in discard_suits:
+                if discard_card.suit in self.discard_suits:
                     self.card_reset(temp_hand)                    
                     temp_hand.append(discard_card)
                                         

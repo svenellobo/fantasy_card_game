@@ -1,9 +1,8 @@
 import customtkinter as ctk
 from gui.card_widget import CardWidget
 from PIL import Image
-from deck import Deck
-from player import Player
 from gui.score_screen import ScoreScreen
+from gui.player_choice_screen import PlayerChoiceScreen
 
 
 class GameScreen(ctk.CTkFrame):
@@ -111,10 +110,15 @@ class GameScreen(ctk.CTkFrame):
     def on_right_click(self):
         pass
               
-    def open_score_screen(self, player1_hand, player2_hand):
+    def open_score_screen(self, player1, player2):
         self.destroy()        
-        score_screen = ScoreScreen(self.parent, player1_hand, player2_hand)
+        score_screen = ScoreScreen(self.parent, player1, player2)
         score_screen.grid(row=0, column=0, sticky="nsew")
+        
+    def open_choice_screen(self, player1, player2, discard_area):
+        self.destroy()
+        player_choice_screen = PlayerChoiceScreen(self.parent, player1, player2, discard_area)
+        player_choice_screen.grid(row=0, column=0, sticky="nsew")
         
             
         

@@ -6,6 +6,11 @@ from gui.game_screen import GameScreen
 from gui.card_widget import CardWidget
 from gui.score_screen import ScoreScreen
 from card_library.beast.dragon import Dragon
+from card_library.wild.doppelganger import Doppelganger
+from card_library.wild.mirage import Mirage
+from card_library.wild.shapeshifter import Shapeshifter
+from card_library.artifact.book_of_changes import BookOfChanges
+from card_library.wizard.necromancer import Necromancer
 
 
 
@@ -20,8 +25,9 @@ class Game():
         self.current_player = None
         self.card_taken = False
         self.card_discarded = False        
-        self.game_screen = game_screen    
-        
+        self.game_screen = game_screen
+           
+        necro = Necromancer() 
         dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
@@ -31,7 +37,18 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(necro) 
+        
+        boc = BookOfChanges()
+        self.player1.cards_in_hand.append(boc)
+        
+        self.player1.cards_in_hand.append(necro)
+        dop = Doppelganger()
+        self.player1.cards_in_hand.append(dop)
+        mirage = Mirage()
+        self.player1.cards_in_hand.append(mirage)
+        shape = Shapeshifter()
+        self.player1.cards_in_hand.append(shape)
            
 
         self.play()
@@ -67,17 +84,16 @@ class Game():
             self.card_discarded = True
             self.game_screen.end_turn_btn.configure(fg_color="green", state="normal")
             self.game_screen.status_area_lbl.configure(text="HINT: Click on the 'End Turn' button")
-            
-            
-            
+               
+              
         
     def end_game(self):
         print("game ended")
-        #p1_score = self.player1.calculate_total_points()
-        #p2_score = self.player2.calculate_total_points()
-        self.game_screen.open_score_screen(self.player1, self.player2)
-        
-        
+        #self.destroy()
+        if any(card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes"} for card in self.player1.cards_in_hand):
+            self.game_screen.open_choice_screen(self.player1, self.player2, self.discard_area)
+        else:       
+            self.game_screen.open_score_screen(self.player1, self.player2) 
             
             
         
@@ -129,34 +145,8 @@ class Game():
         self.player2.deal_hand(self.deck) 
         self.update_game_screen()
         
-        self.player_turn_logic()
-        
-        
-        """ while not self.is_game_over(self.discard_area.discard_area_cards):
-            self.player_turn_logic()
-            
-            if self.is_game_over(self.discard_area.discard_area_cards):  
-                break
-                
-            self.cpu_turn_logic()
-            if self.is_game_over(self.discard_area.discard_area_cards):  
-                break"""
-        
-        
-        """for card in self.player1.cards_in_hand:
-            if any(card.name == "Necromancer"):
-                card.bonus(self.player1.cards_in_hand, discard_area=self.discard_area.discard_area_cards)
-                
-        for card in self.player2.cards_in_hand:
-            if any(card.name == "Necromancer"):
-                card.bonus(self.player2.cards_in_hand, discard_area=self.discard_area.discard_area_cards)"""
-        
-                
-        
-        """player1_score = self.player1.calculate_total_points(self.player1.cards_in_hand) 
-        player2_score = self.player2.calculate_total_points(self.player2.cards_in_hand)
-        print(f"Player 1 Score: {player1_score}") 
-        print(f"Player 2 Score: {player2_score}") """
+        self.player_turn_logic()        
+       
     
     
         #draw a card
