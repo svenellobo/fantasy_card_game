@@ -7,6 +7,8 @@ class ScoreScreen(ctk.CTkFrame):
         super().__init__(parent)        
         self.player1 = player1
         self.player2 = player2
+        self.player1.penalties_and_conditions(self.player1.cards_in_hand)
+        self.player2.penalties_and_conditions(self.player2.cards_in_hand)
         self.p1_score = self.player1.calculate_total_points()
         self.p2_score = self.player2.calculate_total_points()
         
@@ -14,6 +16,9 @@ class ScoreScreen(ctk.CTkFrame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(0, weight=1)
+        
+        for card in self.player2.cards_in_hand:
+            print(card)
         
         self.init_screen()
         

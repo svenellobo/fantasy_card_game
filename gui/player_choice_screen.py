@@ -36,6 +36,9 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.right_column = ctk.CTkFrame(self, fg_color="green")
         self.right_column.grid(row=0, column=2, padx=5, pady=5, sticky="nsew")
         
+        self.right_column.grid_rowconfigure(0, weight=1)
+        self.right_column.grid_columnconfigure(0, weight=1)
+        
         self.to_score_screen_btn = ctk.CTkButton(self.right_column, fg_color="blue",
                                                  text="To Score Screen", height=60, command=self.open_score_screen)
         self.to_score_screen_btn.grid(row=0, column=0, padx=5, pady=5)

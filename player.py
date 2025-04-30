@@ -7,17 +7,15 @@ class Player():
         return sum(card.total_power for card in self.cards_in_hand)
   
     def deal_hand(self, deck):                           
-        for i in range(3):
+        for i in range(7):
             card = deck.draw_card()
             self.cards_in_hand.append(card)        
     
             
     def penalties_and_conditions(self, hand):
         cards_with_blank = []
-        order_exception = {"Great Flood", "Blizzard", "Wildfire"}        
-        
-        for card in hand:            
-            card.reset()
+        order_exception = {"Great Flood", "Blizzard", "Wildfire"}      
+      
                 
         for card in hand:
             if card.has_clear:
@@ -47,29 +45,6 @@ class Player():
         for card in hand:
             if card.has_blank:
                 card.activate_blank(hand) 
-                
-        for card in hand:
-            if card.priority == 6:
-                card.bonus(hand, self.discard_area)
-                
-        for card in hand:
-            if card.priority == 1:                               
-                card.effect(hand)
-                
-                
-        for card in hand:
-            if card.priority == 2:                
-                card.effect(hand)
-                
-        for card in hand:
-            if card.priority == 3:                
-                card.effect(hand)
-                
-
-        for card in hand:
-            if card.priority == 4:
-                card.bonus(hand)               
-        
         
         for card in hand:
             if card.priority == 5:                
@@ -78,8 +53,6 @@ class Player():
         for card in hand:
             if card.priority == 5:
                 card.penalty(hand)
-                
-        
                     
         for card in hand:
             if card.original_state["name"] == "Doppelganger":

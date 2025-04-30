@@ -76,9 +76,9 @@ class App(ctk.CTk):
 if __name__ == "__main__":
     app = App("Fantasy Realms", "1200x800")
     app.mainloop()
-    #main()
     
     
+    deck = Deck()
     
 
     
@@ -87,7 +87,19 @@ if __name__ == "__main__":
     """deck.shuffle_deck()    
     
     player = CPUPlayer()
-    player.deal_hand(deck)"""
+    player.deal_hand(deck)
+    
+    forge = Forge()
+    player.cards_in_hand.append(forge)
+        
+    wtree = WorldTree()
+    player.cards_in_hand.append(wtree)
+    
+    player.penalties_and_conditions(player.cards_in_hand)    
+    for card in player.cards_in_hand:
+        print(card)    
+    ttt = player.calculate_total_points()   
+    print(ttt)"""
     
     
     

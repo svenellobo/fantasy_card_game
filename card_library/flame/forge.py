@@ -10,4 +10,5 @@ class Forge(Card):
     @Card.not_blank
     def bonus(self, hand):    
         count = sum(1 for card in hand if card.suit == ARTIFACT or card.suit == WEAPON)
+        print(count)
         self.total_power += count * 9
