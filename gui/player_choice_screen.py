@@ -13,7 +13,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.cards_with_choice = []
         
         for card in self.player1.cards_in_hand:
-            if card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes"}:
+            if card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes"} and not card.is_blanked:
                 self.cards_with_choice.append(card)
                 
         self.grid_rowconfigure(0, weight=1)

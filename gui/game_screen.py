@@ -10,9 +10,10 @@ class GameScreen(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
         self.grid(row=0, column=0, sticky="nsew")
-        self.game = game
+        self.game = game        
         self.configure(fg_color="#4E342E")
         self.init_screen()
+        
         
         
     def display_cards(self, hand, area):
@@ -27,23 +28,47 @@ class GameScreen(ctk.CTkFrame):
         for widget in frame.winfo_children():
             widget.destroy()
             
+            
+        if frame == self.discard_area:
+            frame.grid_columnconfigure(0, weight=1) 
+            frame.grid_columnconfigure(1, weight=0)  
+            frame.grid_columnconfigure(2, weight=0)  
+            frame.grid_columnconfigure(3, weight=0)  
+            frame.grid_columnconfigure(4, weight=0)  
+            frame.grid_columnconfigure(5, weight=0)
+            frame.grid_columnconfigure(6, weight=1)
+            
+        disc_col = 1
+            
         row = 0
         col = 0
         for card in hand:            
             if frame == self.discard_area:
-                card_widget = CardWidget(frame, card.image, card, click_action=lambda c=card: self.game.take_card_from_discard(c))
-                card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")                
-                if col == 4:
-                    row = 1
-                    col = -1
+                card_widget = CardWidget(frame, card.image, card,
+                                         click_action=lambda c=card: self.game.take_card_from_discard(c),
+                                         right_click_action=lambda path=card.image: self.card_preview(path))
+                card_widget.grid(row=row, column=disc_col, padx=2, pady=5, sticky="nsew") 
+                disc_col += 1               
+                if disc_col == 6:
+                    row += 1
+                    #col = -1
+                    disc_col = 1
             elif frame == self.hand_frame:
-                card_widget = CardWidget(frame, card.image, card, click_action=lambda c=card: self.game.discard_from_hand(c))
-                card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
+                card_widget = CardWidget(frame, card.image, card,
+                                         click_action=lambda c=card: self.game.discard_from_hand(c),
+                                         right_click_action=lambda path=card.image: self.card_preview(path))
+                card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
                 
             else:
                 card_widget = CardWidget(frame, card.image, card)
-                card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
+                card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
             col += 1
+            
+    
+        
+        
+        
+
     
         
         
@@ -55,51 +80,66 @@ class GameScreen(ctk.CTkFrame):
         self.columnconfigure(0, weight=0, minsize=150)
         self.columnconfigure(1, weight=0)
         
-        
-        
+               
         
         #Deck of cards
         self.draw_deck_frame = ctk.CTkFrame(self)
         self.draw_deck_frame.grid(row=1, column=0, sticky="ew", padx=40, pady=40)
         
-        self.draw_button = ctk.CTkButton(self.draw_deck_frame, fg_color="purple", text="Draw from deck", command=lambda: self.game.draw_from_deck())
+        self.draw_button = ctk.CTkButton(self.draw_deck_frame, fg_color="purple",
+                                         text="Draw from deck", command=lambda: self.game.draw_from_deck())
         self.draw_button.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
-        draw_image = Image.open("images/card_back.jpeg")
-        draw_image_tk = ctk.CTkImage(light_image=draw_image, size=(150, 220))
-        
-        self.end_turn_btn = ctk.CTkButton(self, fg_color="red", text="End Turn", height=60, command=lambda: self.game.end_turn())
-        self.end_turn_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
         
         #hands and draw
-        self.draw_deck = ctk.CTkLabel(self.draw_deck_frame, image=draw_image_tk, text="", height=220, width=150, fg_color="red")
+        draw_image = Image.open("images/card_back.jpeg")
+        draw_image_tk = ctk.CTkImage(light_image=draw_image, size=(150, 220)) 
+        self.draw_deck = ctk.CTkLabel(self.draw_deck_frame, image=draw_image_tk,
+                                      text="", height=220, width=150)
         self.draw_deck.grid(row=1, column=0, padx=5, pady=5) 
         
         self.hand_frame = ctk.CTkFrame(self, height=220, fg_color="#6D4C41") 
         self.hand_frame.grid(row=2, column=1, sticky="ew", padx=10, pady=10)
-        #self.hand_frame.grid_propagate(False)     
+             
              
         self.opponent_frame = ctk.CTkFrame(self, height=240, fg_color="#6D4C41") 
         self.opponent_frame.grid(row=0, column=1, sticky="ew", padx=10, pady=10)
         self.opponent_frame.grid_propagate(False)  
         
         #discard area
-        self.discard_area_border = ctk.CTkFrame(self, height=500, fg_color="gray") 
+        self.discard_area_border = ctk.CTkFrame(self, height=500, fg_color="#D7CCC8") 
         self.discard_area_border.grid(row=1, column=1, sticky="ew", padx=10, pady=10)
-        #self.discard_area_border.grid_propagate(False)
         
-        self.discard_area = ctk.CTkFrame(self.discard_area_border, height=500, fg_color="#D7CCC8") 
+        
+        self.discard_area = ctk.CTkFrame(self.discard_area_border, height=500, fg_color="#2E4F2E") 
         self.discard_area.pack(fill="both", expand=True, padx=2, pady=2)
         self.discard_area.pack_propagate(False)
         self.discard_area.bind("<Enter>", self.on_discard_area_hover)
         self.discard_area.bind("<Leave>", self.on_discard_area_leave)
         
+        #end turn and hints
         self.status_area = ctk.CTkFrame(self, height=220)
         self.status_area.grid(row=2, column=0, sticky="ew", padx=10, pady=40)
-        self.end_turn_btn = ctk.CTkButton(self.status_area, fg_color="red", state="disabled", text="End Turn", height=60, command=lambda: self.game.end_turn())
+        self.end_turn_btn = ctk.CTkButton(self.status_area, fg_color="#800000", state="normal",
+                                          text="End Turn", height=60, command=lambda: self.game.end_turn())
         self.end_turn_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
+        
         self.status_area_lbl = ctk.CTkLabel(self.status_area, text="",  wraplength=200)
         self.status_area_lbl.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
-  
+        
+        self.card_preview_lbl = ctk.CTkLabel(self, text="", fg_color="#6D4C41", height=220, width=150)
+        self.card_preview_lbl.grid(row=1, column=3, padx=10, pady=10, sticky="nsew")
+        self.rowconfigure(1, weight=4)  # Adjust weight as needed
+        self.columnconfigure(3, weight=1)
+        
+    
+    
+    def card_preview(self, image_path):        
+        enlarged_image = Image.open(image_path) 
+        resized_image = enlarged_image.resize((300, 450))  
+        self.preview_ctk_image = ctk.CTkImage(resized_image, size=(300, 450))
+        self.card_preview_lbl.configure(image=self.preview_ctk_image)  
+        self.card_preview_lbl.image = self.preview_ctk_image
+        
     
     
     def on_discard_area_hover(self, event):        
@@ -108,8 +148,7 @@ class GameScreen(ctk.CTkFrame):
     def on_discard_area_leave(self, event):        
         self.discard_area_border.configure(fg_color="gray") 
         
-    def on_right_click(self):
-        pass
+    
               
     def open_score_screen(self, player1, player2):
         self.destroy()        
@@ -121,7 +160,6 @@ class GameScreen(ctk.CTkFrame):
         player_choice_screen = PlayerChoiceScreen(self.parent, player1, player2, discard_area)
         player_choice_screen.grid(row=0, column=0, sticky="nsew")
         
-            
         
     """def back_to_menu(self):        
         self.grid_forget()  

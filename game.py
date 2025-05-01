@@ -50,6 +50,7 @@ from card_library.artifact.shield_of_keth import ShieldOfKeth
 from card_library.wild.shapeshifter import Shapeshifter
 from card_library.beast.dragon import Dragon
 from card_library.weather.smoke import Smoke
+from card_library.leader.warlord import Warlord
 
 
 
@@ -66,7 +67,7 @@ class Game():
         self.card_discarded = False        
         self.game_screen = game_screen
            
-        """necro = Necromancer() 
+        necro = Necromancer() 
         dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
@@ -76,7 +77,7 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(necro) """
+        self.discard_area.discard_area_cards.append(necro) 
         
         """boc = BookOfChanges()
         self.player1.cards_in_hand.append(boc)
@@ -87,9 +88,9 @@ class Game():
         mirage = Mirage()
         self.player1.cards_in_hand.append(mirage)
         shape = Shapeshifter()
-        self.player1.cards_in_hand.append(shape)"""
+        self.player1.cards_in_hand.append(shape)
         
-        """mnt = Mountain()
+        mnt = Mountain()
         self.player2.cards_in_hand.append(mnt)
         
         flood = GreatFlood()
@@ -100,8 +101,8 @@ class Game():
         
         forge = Forge()
         self.player2.cards_in_hand.append(forge)
-        
-        hyd = Hydra()
+        """
+        """hyd = Hydra()
         self.player2.cards_in_hand.append(hyd)
         
         warship = Warship()
@@ -109,6 +110,21 @@ class Game():
         
         wtree = WorldTree()
         self.player2.cards_in_hand.append(wtree)"""
+        
+        cavern = Cavern()
+        self.player2.cards_in_hand.append(cavern)
+        smoke = Smoke()
+        self.player2.cards_in_hand.append(smoke)
+        dw = DwarvishInfantry()
+        self.player2.cards_in_hand.append(dw)
+        warlord = Warlord()
+        self.player2.cards_in_hand.append(warlord)
+        sword = SwordOfKeth()
+        self.player2.cards_in_hand.append(sword) 
+        wtree = WorldTree()
+        self.player2.cards_in_hand.append(wtree)
+        dop = Doppelganger()
+        self.player2.cards_in_hand.append(dop)
         
         
         
@@ -254,7 +270,7 @@ class Game():
     def player_turn_logic(self):
         print("Player 1's turn...")
         self.current_player = "player"
-        self.game_screen.end_turn_btn.configure(fg_color="red", state="disabled")
+        self.game_screen.end_turn_btn.configure(fg_color="#800000", state="disabled")
         self.game_screen.status_area_lbl.configure(text="HINT: Draw a card from the deck or take one from the discard area.")
         self.card_taken = False
         self.card_discarded = False      

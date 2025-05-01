@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from gui.card_widget import CardWidget
+from PIL import Image, ImageTk
 
 
 class ScoreScreen(ctk.CTkFrame):
@@ -12,13 +13,13 @@ class ScoreScreen(ctk.CTkFrame):
         self.p1_score = self.player1.calculate_total_points()
         self.p2_score = self.player2.calculate_total_points()
         
+        for card in self.player2.cards_in_hand:
+            print(card)
+        
               
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-        
-        for card in self.player2.cards_in_hand:
-            print(card)
+        self.grid_columnconfigure(0, weight=1)      
         
         self.init_screen()
         
@@ -57,14 +58,35 @@ class ScoreScreen(ctk.CTkFrame):
         
         p1_col = 0
         p2_col = 0
-        for card in self.player1.cards_in_hand: 
-            card_widget = CardWidget(self.player1_cards, card.image, card)
-            card_widget.grid(row=1, column=p1_col, padx=5, pady=5, sticky="nsew")
+        for card in self.player1.cards_in_hand:
+            if card.is_blanked:
+                
+                image = Image.open(card.image)
+                grayscale_image = image.convert("L")                
+                ctk_image = ctk.CTkImage(grayscale_image, size=(150, 220))
+                
+                card_widget = CardWidget(self.player1_cards, card.image, card)
+                card_widget.grid(row=1, column=p1_col, padx=5, pady=5, sticky="nsew")
+                card_widget.update_image(ctk_image)
+                
+            else:
+                card_widget = CardWidget(self.player1_cards, card.image, card)
+                card_widget.grid(row=1, column=p1_col, padx=5, pady=5, sticky="nsew")
             p1_col += 1
             
-        for card in self.player2.cards_in_hand: 
-            card_widget = CardWidget(self.player2_cards, card.image, card)
-            card_widget.grid(row=1, column=p2_col, padx=5, pady=5, sticky="nsew")
+        for card in self.player2.cards_in_hand:
+            if card.is_blanked:
+                image = Image.open(card.image)
+                grayscale_image = image.convert("L")                
+                ctk_image = ctk.CTkImage(grayscale_image, size=(150, 220))
+                
+                card_widget = CardWidget(self.player1_cards, card.image, card)
+                card_widget.grid(row=1, column=p1_col, padx=5, pady=5, sticky="nsew")
+                card_widget.update_image(ctk_image)
+            
+            else:
+                card_widget = CardWidget(self.player2_cards, card.image, card)
+                card_widget.grid(row=1, column=p2_col, padx=5, pady=5, sticky="nsew")
             p2_col += 1
             
             
