@@ -2,12 +2,14 @@ import customtkinter as ctk
 from PIL import Image, ImageTk
 
 class CardWidget(ctk.CTkFrame):
-    def __init__(self, parent, card_image_path, card, click_action=None, right_click_action=None):
+    def __init__(self, parent, card_image_path, card, click_action=None, right_click_action=None, drag_callback=None, interactive=False):
         super().__init__(parent, border_width=2, corner_radius=10)
         self.card_image_path = card_image_path 
         self.card = card
         self.click_action = click_action
         self.right_click_action = right_click_action
+        self.drag_callback = drag_callback
+        self.interactive = interactive
                
         
         self.normal_size = (150, 220)
@@ -34,6 +36,44 @@ class CardWidget(ctk.CTkFrame):
         
         self.bind("<Button-3>", self.on_right_click)
         self.card_label.bind("<Button-3>",  self.on_right_click)
+        
+        #drag and drop        
+        self.drag_data = {"x": 0, "y": 0, "widget": None}   
+        
+        if self.interactive == True:
+            self.bind("<ButtonPress-1>", self.on_drag_start)
+            self.bind("<B1-Motion>", self.on_drag_motion)
+            self.bind("<ButtonRelease-1>", self.on_drag_stop)
+            self.card_label.bind("<ButtonPress-1>", self.on_drag_start)
+            self.card_label.bind("<B1-Motion>", self.on_drag_motion)
+            self.card_label.bind("<ButtonRelease-1>", self.on_drag_stop)        
+             
+        
+    def on_drag_start(self, event):        
+        self.drag_data["widget"] = self
+        self.drag_data["x"] = event.x
+        self.drag_data["y"] = event.y
+        self.drag_data["start_x"] = self.winfo_x()
+        self.drag_data["start_y"] = self.winfo_y()
+        self.lift()
+
+    def on_drag_motion(self, event):        
+        x = self.winfo_x() - self.drag_data["x"] + event.x
+        y = self.winfo_y() - self.drag_data["y"] + event.y
+        self.place(x=x, y=y)
+
+    def on_drag_stop(self, event):        
+        dx = abs(self.winfo_x() - self.drag_data["start_x"])
+        dy = abs(self.winfo_y() - self.drag_data["start_y"])
+        if dx < 2 and dy < 2:            
+            self.on_left_click(event)
+        else:
+            if self.drag_callback:
+                self.drag_callback(self)
+        self.drag_data["widget"] = None
+        self.drag_data["x"] = 0
+        self.drag_data["y"] = 0
+        
         
         
     def load_image(self, image_path, size):        

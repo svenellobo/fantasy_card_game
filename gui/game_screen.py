@@ -22,9 +22,9 @@ class GameScreen(ctk.CTkFrame):
         elif area == "opponent_hand":
             frame = self.opponent_frame
         elif area == "discard_area":
-            frame = self.discard_area
-            
-                
+            frame = self.discard_area        
+        
+        
         for widget in frame.winfo_children():
             widget.destroy()
             
@@ -42,21 +42,23 @@ class GameScreen(ctk.CTkFrame):
             
         row = 0
         col = 0
-        for card in hand:            
+        for index, card in enumerate(hand):            
             if frame == self.discard_area:
                 card_widget = CardWidget(frame, card.image, card,
                                          click_action=lambda c=card: self.game.take_card_from_discard(c),
-                                         right_click_action=lambda path=card.image: self.card_preview(path))
+                                         right_click_action=lambda path=card.image: self.card_preview(path),
+                                         )
                 card_widget.grid(row=row, column=disc_col, padx=2, pady=5, sticky="nsew") 
                 disc_col += 1               
                 if disc_col == 6:
-                    row += 1
-                    #col = -1
+                    row += 1                    
                     disc_col = 1
             elif frame == self.hand_frame:
                 card_widget = CardWidget(frame, card.image, card,
                                          click_action=lambda c=card: self.game.discard_from_hand(c),
-                                         right_click_action=lambda path=card.image: self.card_preview(path))
+                                         right_click_action=lambda path=card.image: self.card_preview(path),
+                                         drag_callback=self.reorder_cards,
+                                         interactive=True)
                 card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
                 
             else:
@@ -72,13 +74,12 @@ class GameScreen(ctk.CTkFrame):
     
         
         
-    def init_screen(self):        
-        
+    def init_screen(self): 
         self.rowconfigure(0, weight=1) 
         self.rowconfigure(1, weight=4)
         self.rowconfigure(2, weight=1)  
         self.columnconfigure(0, weight=0, minsize=150)
-        self.columnconfigure(1, weight=0)
+        self.columnconfigure(1, weight=0, minsize=1330)
         
                
         
@@ -108,11 +109,13 @@ class GameScreen(ctk.CTkFrame):
         #discard area
         self.discard_area_border = ctk.CTkFrame(self, height=500, fg_color="#D7CCC8") 
         self.discard_area_border.grid(row=1, column=1, sticky="ew", padx=10, pady=10)
+        self.discard_area_border.grid_propagate(False)
         
         
         self.discard_area = ctk.CTkFrame(self.discard_area_border, height=500, fg_color="#2E4F2E") 
         self.discard_area.pack(fill="both", expand=True, padx=2, pady=2)
-        self.discard_area.pack_propagate(False)
+        
+        self.discard_area.grid_propagate(False)
         self.discard_area.bind("<Enter>", self.on_discard_area_hover)
         self.discard_area.bind("<Leave>", self.on_discard_area_leave)
         
@@ -128,7 +131,7 @@ class GameScreen(ctk.CTkFrame):
         
         self.card_preview_lbl = ctk.CTkLabel(self, text="", fg_color="#6D4C41", height=220, width=150)
         self.card_preview_lbl.grid(row=1, column=3, padx=10, pady=10, sticky="nsew")
-        self.rowconfigure(1, weight=4)  # Adjust weight as needed
+        self.rowconfigure(1, weight=4)
         self.columnconfigure(3, weight=1)
         
     
@@ -144,10 +147,10 @@ class GameScreen(ctk.CTkFrame):
     
     def on_discard_area_hover(self, event):        
         self.discard_area_border.configure(fg_color="yellow")
-
-    def on_discard_area_leave(self, event):        
-        self.discard_area_border.configure(fg_color="gray") 
         
+        
+    def on_discard_area_leave(self, event):        
+        self.discard_area_border.configure(fg_color="gray")         
     
               
     def open_score_screen(self, player1, player2):
@@ -159,6 +162,17 @@ class GameScreen(ctk.CTkFrame):
         self.destroy()
         player_choice_screen = PlayerChoiceScreen(self.parent, player1, player2, discard_area)
         player_choice_screen.grid(row=0, column=0, sticky="nsew")
+        
+    def reorder_cards(self, dragged_card_widget):
+        widgets = sorted(
+            self.hand_frame.winfo_children(),
+            key=lambda widget: widget.winfo_x(),
+        )
+        self.game.player1.cards_in_hand = [widget.card for widget in widgets]
+        
+        for index, widget in enumerate(widgets):
+            widget.grid(row=0, column=index, padx=5, pady=5, sticky="nsew")
+        self.display_cards(self.game.player1.cards_in_hand, "player_hand")
         
         
     """def back_to_menu(self):        

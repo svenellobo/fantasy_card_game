@@ -67,7 +67,7 @@ class Game():
         self.card_discarded = False        
         self.game_screen = game_screen
            
-        necro = Necromancer() 
+        """necro = Necromancer() 
         dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
@@ -77,7 +77,7 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(necro) 
+        self.discard_area.discard_area_cards.append(necro) """
         
         """boc = BookOfChanges()
         self.player1.cards_in_hand.append(boc)
@@ -111,7 +111,7 @@ class Game():
         wtree = WorldTree()
         self.player2.cards_in_hand.append(wtree)"""
         
-        cavern = Cavern()
+        """cavern = Cavern()
         self.player2.cards_in_hand.append(cavern)
         smoke = Smoke()
         self.player2.cards_in_hand.append(smoke)
@@ -124,7 +124,7 @@ class Game():
         wtree = WorldTree()
         self.player2.cards_in_hand.append(wtree)
         dop = Doppelganger()
-        self.player2.cards_in_hand.append(dop)
+        self.player2.cards_in_hand.append(dop)"""
         
         
         
