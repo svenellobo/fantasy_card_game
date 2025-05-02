@@ -12,6 +12,9 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.discard_area = discard_area
         self.cards_with_choice = []
         
+        
+        
+        
         for card in self.player1.cards_in_hand:
             if card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes"} and not card.is_blanked:
                 self.cards_with_choice.append(card)
@@ -95,10 +98,19 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         elif card.original_state["name"] == "Doppelganger":
             col = 0
             row = 0
-            for dop_card in self.player1.cards_in_hand:
+            """for dop_card in self.player1.cards_in_hand:
                 card_widget = CardWidget(self.choice_area_frame, dop_card.image, dop_card,
                                          click_action=lambda c=card, dop_c=dop_card: self.doppelganger_choice(c, dop_c))
                 card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
+                col += 1
+                if col >= 5:
+                    col = 0
+                    row += 1
+                    print(card)
+                    print(dop_card)"""
+                    
+            for dop_card in self.player1.cards_in_hand:
+                self.create_card_widget(card, dop_card, row, col)
                 col += 1
                 if col >= 5:
                     col = 0
@@ -144,7 +156,18 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                         col = 0
                         row = 1
     
-            
+    
+    
+        
+    def create_card_widget(self, card, dop_card, row, col):
+        card_widget = CardWidget(
+            self.choice_area_frame,
+            dop_card.image,
+            dop_card,
+            click_action=lambda event: self.doppelganger_choice(card, dop_card)  
+        )
+        card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
+           
             
     def mirage_shapeshift_choice(self, card, suit, value):
         card.suit = suit
@@ -152,11 +175,16 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         print(card) 
         
     def doppelganger_choice(self, card, dop_card):
+        
+        print(f"doppelganger: {card}")
+        print(f"original card: {dop_card}")
         card.name = dop_card.name
         card.base_power = dop_card.base_power
         card.suit = dop_card.suit
-        print(card)
-        print(dop_card)
+        card.best_card = dop_card       
+        print(f"changed card: {card}")
+        print(f"original card: {dop_card}")
+        
         
     def book_of_changes_choices(self, chosen_card, suit):
         if chosen_card:
@@ -175,7 +203,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             self.card_picked = True
             print(card)
             
-    def open_score_screen(self):
+    def open_score_screen(self):        
         self.destroy()        
         score_screen = ScoreScreen(self.parent, self.player1, self.player2)
         score_screen.grid(row=0, column=0, sticky="nsew")

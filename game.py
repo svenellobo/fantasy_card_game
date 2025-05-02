@@ -51,6 +51,7 @@ from card_library.wild.shapeshifter import Shapeshifter
 from card_library.beast.dragon import Dragon
 from card_library.weather.smoke import Smoke
 from card_library.leader.warlord import Warlord
+from card_library.weapon.magic_wand import MagicWand
 
 
 
@@ -67,7 +68,7 @@ class Game():
         self.card_discarded = False        
         self.game_screen = game_screen
            
-        """necro = Necromancer() 
+        necro = Necromancer() 
         dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
@@ -77,7 +78,7 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(necro) """
+        self.discard_area.discard_area_cards.append(necro) 
         
         """boc = BookOfChanges()
         self.player1.cards_in_hand.append(boc)
@@ -111,25 +112,29 @@ class Game():
         wtree = WorldTree()
         self.player2.cards_in_hand.append(wtree)"""
         
-        """cavern = Cavern()
-        self.player2.cards_in_hand.append(cavern)
-        smoke = Smoke()
-        self.player2.cards_in_hand.append(smoke)
+        cavern = Cavern()
+        self.player1.cards_in_hand.append(cavern)        
         dw = DwarvishInfantry()
-        self.player2.cards_in_hand.append(dw)
-        warlord = Warlord()
-        self.player2.cards_in_hand.append(warlord)
-        sword = SwordOfKeth()
-        self.player2.cards_in_hand.append(sword) 
-        wtree = WorldTree()
-        self.player2.cards_in_hand.append(wtree)
+        self.player1.cards_in_hand.append(dw)        
         dop = Doppelganger()
-        self.player2.cards_in_hand.append(dop)"""
+        self.player1.cards_in_hand.append(dop)
+        beastmas = Beastmaster()
+        self.player1.cards_in_hand.append(beastmas)
+        dragon = Dragon()
+        self.player1.cards_in_hand.append(dragon)
+        magicwand = MagicWand()
+        self.player1.cards_in_hand.append(magicwand)
+        prorune = ProtectionRune()
+        self.player1.cards_in_hand.append(prorune)
+        
+        
         
         
         
         """dragon = Dragon()
         player.cards_in_hand.append(dragon)
+        magicwand = MagicWand()
+        self.player2.cards_in_hand.append(magicwand)
         lightcaval = LightCavalry()
         player.cards_in_hand.append(lightcaval)
         shape = Shapeshifter()

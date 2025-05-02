@@ -13,7 +13,7 @@ class ScoreScreen(ctk.CTkFrame):
         self.p1_score = self.player1.calculate_total_points()
         self.p2_score = self.player2.calculate_total_points()
         
-        for card in self.player2.cards_in_hand:
+        for card in self.player1.cards_in_hand:
             print(card)
         
               
@@ -40,7 +40,8 @@ class ScoreScreen(ctk.CTkFrame):
         self.player1_cards.grid_rowconfigure(0, weight=0)
         self.player1_cards.grid_rowconfigure(1, weight=1)        
         
-        self.player1_score_lbl = ctk.CTkLabel(self.player1_cards, text=f"Player's hand and score: {self.p1_score}")
+        self.player1_score_lbl = ctk.CTkLabel(self.player1_cards,
+                                              text=f"Player's hand and score: {self.p1_score}")
         self.player1_score_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=7, sticky="nsew")
          
         
@@ -52,7 +53,8 @@ class ScoreScreen(ctk.CTkFrame):
         self.player2_cards.grid_rowconfigure(1, weight=1)
         
         
-        self.player2_score_lbl = ctk.CTkLabel(self.player2_cards, text=f"CPU's hand and score: {self.p2_score} ")
+        self.player2_score_lbl = ctk.CTkLabel(self.player2_cards,
+                                              text=f"CPU's hand and score: {self.p2_score} ")
         self.player2_score_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=7, sticky="nsew") 
         
         

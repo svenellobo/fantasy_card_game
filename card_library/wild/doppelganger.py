@@ -71,29 +71,28 @@ class Doppelganger(Card):
             
             
             
-    def final_activation(self, hand):          
-        if self.original_state["name"] == "Doppelganger":
-            self.reset()
-        else:
-            for card in hand:
-                if self.best_card:
-                    if card.original_state["name"] == self.best_card.name:
-                        if card.name == "Basilisk" and card.has_penalty:
-                            card.blank()
-                            self.blank()
-                        else:                                        
-                            self.name = card.name                                        
-                            self.suit = card.suit
-                            self.priority = card.priority
-                            self.has_penalty = card.has_penalty
-                            self.has_blank = card.has_blank
-                            self.base_power = card.base_power                        
-                            self.is_blanked = card.is_blanked
-                            if card.total_power < card.base_power:
-                                self.total_power = card.total_power                        
-                            else:
-                                self.total_power = card.base_power
-                             
+    def final_activation(self, hand):
+        for card in hand:
+            if self.best_card:
+                if card.original_state["name"] == self.best_card.name:
+                    if card.name == "Basilisk" and card.has_penalty:
+                        card.blank()
+                        self.blank()
+                    else:                                        
+                        self.name = card.name                                        
+                        self.suit = card.suit
+                        self.priority = card.priority
+                        self.has_penalty = card.has_penalty
+                        self.has_blank = card.has_blank
+                        self.base_power = card.base_power                        
+                        self.is_blanked = card.is_blanked
+                        if card.total_power < card.base_power:
+                            self.total_power = card.total_power                        
+                        else:
+                            self.total_power = card.base_power
+    
+    
+                            
                             
        
     def effect(self, hand):
