@@ -34,7 +34,8 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.left_column.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
         
         self.player_choice_area = ctk.CTkFrame(self, fg_color="purple")
-        self.player_choice_area.grid(row=0, column=1, padx=5, pady=5, sticky="nsew")
+        self.player_choice_area.grid(row=0, column=1, padx=5, pady=5, sticky="nsew")        
+        
         
         self.right_column = ctk.CTkFrame(self, fg_color="green")
         self.right_column.grid(row=0, column=2, padx=5, pady=5, sticky="nsew")
@@ -98,17 +99,6 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         elif card.original_state["name"] == "Doppelganger":
             col = 0
             row = 0
-            """for dop_card in self.player1.cards_in_hand:
-                card_widget = CardWidget(self.choice_area_frame, dop_card.image, dop_card,
-                                         click_action=lambda c=card, dop_c=dop_card: self.doppelganger_choice(c, dop_c))
-                card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
-                col += 1
-                if col >= 5:
-                    col = 0
-                    row += 1
-                    print(card)
-                    print(dop_card)"""
-                    
             for dop_card in self.player1.cards_in_hand:
                 self.create_card_widget(card, dop_card, row, col)
                 col += 1

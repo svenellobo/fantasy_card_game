@@ -76,8 +76,10 @@ class Doppelganger(Card):
             if self.best_card:
                 if card.original_state["name"] == self.best_card.name:
                     if card.name == "Basilisk" and card.has_penalty:
-                        card.blank()
                         self.blank()
+                        if card.suit in {ARMY, LEADER, BEAST}:
+                            card.blank()
+                        
                     else:                                        
                         self.name = card.name                                        
                         self.suit = card.suit

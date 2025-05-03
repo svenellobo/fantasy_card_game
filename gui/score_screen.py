@@ -12,8 +12,9 @@ class ScoreScreen(ctk.CTkFrame):
         self.player2.penalties_and_conditions(self.player2.cards_in_hand)
         self.p1_score = self.player1.calculate_total_points()
         self.p2_score = self.player2.calculate_total_points()
+        self.configure(fg_color="#4E342E")
         
-        for card in self.player1.cards_in_hand:
+        for card in self.player2.cards_in_hand:
             print(card)
         
               
@@ -33,62 +34,117 @@ class ScoreScreen(ctk.CTkFrame):
         self.player_score_area.grid_rowconfigure(1, weight=1)
         
         
-        self.player1_cards = ctk.CTkFrame(self.player_score_area, fg_color="green")
+        self.player1_cards = ctk.CTkFrame(self.player_score_area, fg_color="#6D4C41")
         self.player1_cards.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
         
         self.player1_cards.grid_columnconfigure(0, weight=1)
         self.player1_cards.grid_rowconfigure(0, weight=0)
-        self.player1_cards.grid_rowconfigure(1, weight=1)        
+        self.player1_cards.grid_rowconfigure(1, weight=1)
+        self.player1_cards.grid_rowconfigure(2, weight=1)        
         
         self.player1_score_lbl = ctk.CTkLabel(self.player1_cards,
                                               text=f"Player's hand and score: {self.p1_score}")
         self.player1_score_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=7, sticky="nsew")
          
         
-        self.player2_cards = ctk.CTkFrame(self.player_score_area, fg_color="black")
+        self.player2_cards = ctk.CTkFrame(self.player_score_area, fg_color="#6D4C41")
         self.player2_cards.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
         
         self.player2_cards.grid_columnconfigure(0, weight=1)
         self.player2_cards.grid_rowconfigure(0, weight=1)
         self.player2_cards.grid_rowconfigure(1, weight=1)
+        self.player2_cards.grid_rowconfigure(2, weight=1)
         
         
         self.player2_score_lbl = ctk.CTkLabel(self.player2_cards,
                                               text=f"CPU's hand and score: {self.p2_score} ")
         self.player2_score_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=7, sticky="nsew") 
         
+        for col in range(7): 
+            self.player1_cards.grid_columnconfigure(col, weight=1)
+        for col in range(7):
+            self.player2_cards.grid_columnconfigure(col, weight=1)
+        
         
         p1_col = 0
         p2_col = 0
         for card in self.player1.cards_in_hand:
+            point_difference = card.total_power - card.base_power
             if card.is_blanked:
-                
+                point_text = f"{"BLANKED"}"
+                point_color = "black"       
+            elif point_difference < 0:
+                    point_text = f"-{abs(point_difference)}"
+                    point_color = "red"
+            elif point_difference > 0:
+                point_text = f"+{point_difference}"
+                point_color = "green"
+            elif point_difference == 0:    
+                point_text = f"+{point_difference}"
+                point_color = "purple"
+            
+            if card.is_blanked:                
                 image = Image.open(card.image)
                 grayscale_image = image.convert("L")                
                 ctk_image = ctk.CTkImage(grayscale_image, size=(150, 220))
                 
                 card_widget = CardWidget(self.player1_cards, card.image, card)
-                card_widget.grid(row=1, column=p1_col, padx=5, pady=5, sticky="nsew")
+                card_widget.grid(row=1, column=p1_col, padx=5, pady=5)
                 card_widget.update_image(ctk_image)
-                
+                 
+                card_info_area = ctk.CTkLabel(self.player1_cards,
+                                               text=f"Total power: {card.total_power}\n{point_text}",
+                                               text_color=point_color)
+                card_info_area.grid(row=2, column=p1_col, padx=5, pady=5)                            
+            
             else:
                 card_widget = CardWidget(self.player1_cards, card.image, card)
-                card_widget.grid(row=1, column=p1_col, padx=5, pady=5, sticky="nsew")
+                card_widget.grid(row=1, column=p1_col, padx=5, pady=5)
+                
+                card_info_area = ctk.CTkLabel(self.player1_cards,
+                                               text=f"Total power: {card.total_power}\n{point_text}",
+                                               text_color=point_color)
+                card_info_area.grid(row=2, column=p1_col, padx=5, pady=5)               
+            
             p1_col += 1
             
         for card in self.player2.cards_in_hand:
+            point_difference = card.total_power - card.base_power      
+            if card.is_blanked:
+                point_text = f"{"BLANKED"}"
+                point_color = "black"       
+            elif point_difference < 0:
+                    point_text = f"-{abs(point_difference)}"
+                    point_color = "red"
+            elif point_difference > 0:
+                point_text = f"+{point_difference}"
+                point_color = "green"
+            elif point_difference == 0:    
+                point_text = f"+{point_difference}"
+                point_color = "purple"
+                
             if card.is_blanked:
                 image = Image.open(card.image)
                 grayscale_image = image.convert("L")                
                 ctk_image = ctk.CTkImage(grayscale_image, size=(150, 220))
                 
-                card_widget = CardWidget(self.player1_cards, card.image, card)
-                card_widget.grid(row=1, column=p1_col, padx=5, pady=5, sticky="nsew")
+                card_widget = CardWidget(self.player2_cards, card.image, card)
+                card_widget.grid(row=1, column=p2_col, padx=5, pady=5, sticky="nsew")
                 card_widget.update_image(ctk_image)
+                
+                card_info_area = ctk.CTkLabel(self.player2_cards,
+                                               text=f"Total power: {card.total_power}\n{point_text}",
+                                               text_color=point_color)
+                card_info_area.grid(row=2, column=p2_col, padx=5, pady=5)
             
             else:
                 card_widget = CardWidget(self.player2_cards, card.image, card)
                 card_widget.grid(row=1, column=p2_col, padx=5, pady=5, sticky="nsew")
+                
+                card_info_area = ctk.CTkLabel(self.player2_cards,
+                                               text=f"Total power: {card.total_power}\n{point_text}",
+                                               text_color=point_color)
+                card_info_area.grid(row=2, column=p2_col, padx=5, pady=5) 
             p2_col += 1
             
             

@@ -80,16 +80,7 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(necro) 
         
-        """boc = BookOfChanges()
-        self.player1.cards_in_hand.append(boc)
-        
-        self.player1.cards_in_hand.append(necro)
-        dop = Doppelganger()
-        self.player1.cards_in_hand.append(dop)
-        mirage = Mirage()
-        self.player1.cards_in_hand.append(mirage)
-        shape = Shapeshifter()
-        self.player1.cards_in_hand.append(shape)
+        """
         
         mnt = Mountain()
         self.player2.cards_in_hand.append(mnt)
@@ -102,8 +93,8 @@ class Game():
         
         forge = Forge()
         self.player2.cards_in_hand.append(forge)
-        """
-        """hyd = Hydra()
+        
+        hyd = Hydra()
         self.player2.cards_in_hand.append(hyd)
         
         warship = Warship()
@@ -112,23 +103,24 @@ class Game():
         wtree = WorldTree()
         self.player2.cards_in_hand.append(wtree)"""
         
-        cavern = Cavern()
-        self.player1.cards_in_hand.append(cavern)        
-        dw = DwarvishInfantry()
-        self.player1.cards_in_hand.append(dw)        
+              
+        
+        """boc = BookOfChanges()
+        self.player1.cards_in_hand.append(boc)        
+        self.player1.cards_in_hand.append(necro)
         dop = Doppelganger()
         self.player1.cards_in_hand.append(dop)
-        beastmas = Beastmaster()
-        self.player1.cards_in_hand.append(beastmas)
-        dragon = Dragon()
-        self.player1.cards_in_hand.append(dragon)
-        magicwand = MagicWand()
-        self.player1.cards_in_hand.append(magicwand)
-        prorune = ProtectionRune()
-        self.player1.cards_in_hand.append(prorune)
+        mirage = Mirage()
+        self.player1.cards_in_hand.append(mirage)
+        shape = Shapeshifter()
+        self.player1.cards_in_hand.append(shape)
+        bas = Basilisk()
+        self.player1.cards_in_hand.append(bas)"""
         
         
         
+        wildfire = Wildfire()
+        self.player2.cards_in_hand.append(wildfire)
         
         
         """dragon = Dragon()
