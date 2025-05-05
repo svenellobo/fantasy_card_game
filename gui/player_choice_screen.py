@@ -15,8 +15,9 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         
         
         
+        
         for card in self.player1.cards_in_hand:
-            if card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes"} and not card.is_blanked:
+            if card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes"}:
                 self.cards_with_choice.append(card)
                 
         self.grid_rowconfigure(0, weight=1)
@@ -53,10 +54,11 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.player1_choice_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=7, sticky="nsew")
         
         
-        col = 0
-        
+        col = 0        
         for card in self.cards_with_choice:
-            card_widget = CardWidget(self.player_choice_area, card.image, card, click_action=lambda c=card: self.player_choice(c))
+            card_widget = CardWidget(self.player_choice_area, card.image, card,
+                                     click_action=lambda c=card: self.player_choice(c))
+            self.card_widgets.append(card_widget)
             card_widget.grid(row=1, column=col, padx=5, pady=5, sticky="nsew")
             col += 1
             
@@ -68,7 +70,8 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         
     def player_choice(self, card):
         for widget in self.choice_area_frame.winfo_children():
-            widget.destroy()
+            widget.destroy()           
+        
             
         if card.original_state["name"] == "Mirage":
             col = 0
@@ -89,7 +92,8 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             for key,values in card.shape_suits.items():
                 for value in values:
                     self.btn_option = ctk.CTkButton(self.choice_area_frame, fg_color="blue", text=f"{key}: {value}",
-                                                    height=60, command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
+                                                    height=60,
+                                                    command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
                     self.btn_option.grid(row=row, column=col, sticky="ew", padx=10, pady=5)
                     col += 1
                     if col >= 5:
@@ -125,7 +129,8 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             self.suits_area.grid(row=0, column=6, sticky="ew", padx=10, pady=5)
             for suit in ALL_SUITS:
                 self.btn_option = ctk.CTkButton(self.suits_area, fg_color="blue", text=f"{suit}",
-                                                height=40, command=lambda s=suit: self.book_of_changes_choices(self.chosen_card, s))
+                                                height=40,
+                                                command=lambda s=suit: self.book_of_changes_choices(self.chosen_card, s))
                 self.btn_option.grid(row=suit_row, column=suit_col, sticky="ew", padx=10, pady=5)
                 suit_col += 1
                 if suit_col >= 3:
@@ -148,6 +153,17 @@ class PlayerChoiceScreen(ctk.CTkFrame):
     
     
     
+    
+    """def display_cards(self):
+        for widget in self.player_choice_area.winfo_children():
+            widget.destroy()
+        col = 0
+        for card in self.cards_with_choice:
+            card_widget = CardWidget(self.player_choice_area, card.image, card,
+                                     click_action=lambda c=card: self.player_choice(c))            
+            card_widget.grid(row=1, column=col, padx=5, pady=5, sticky="nsew")
+            col += 1"""
+            
         
     def create_card_widget(self, card, dop_card, row, col):
         card_widget = CardWidget(
@@ -162,7 +178,13 @@ class PlayerChoiceScreen(ctk.CTkFrame):
     def mirage_shapeshift_choice(self, card, suit, value):
         card.suit = suit
         card.name = value
-        print(card) 
+        for widget in self.card_widgets:
+            if widget.card == card:
+                widget.card_label.configure(f"{value}\n{suit} suit")
+                break
+        self.display_cards()        
+       
+        
         
     def doppelganger_choice(self, card, dop_card):
         
@@ -197,3 +219,5 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.destroy()        
         score_screen = ScoreScreen(self.parent, self.player1, self.player2)
         score_screen.grid(row=0, column=0, sticky="nsew")
+        
+    

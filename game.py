@@ -105,7 +105,7 @@ class Game():
         
               
         
-        """boc = BookOfChanges()
+        boc = BookOfChanges()
         self.player1.cards_in_hand.append(boc)        
         self.player1.cards_in_hand.append(necro)
         dop = Doppelganger()
@@ -115,7 +115,7 @@ class Game():
         shape = Shapeshifter()
         self.player1.cards_in_hand.append(shape)
         bas = Basilisk()
-        self.player1.cards_in_hand.append(bas)"""
+        self.player1.cards_in_hand.append(bas)
         
         
         

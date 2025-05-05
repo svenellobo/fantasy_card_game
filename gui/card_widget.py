@@ -21,7 +21,12 @@ class CardWidget(ctk.CTkFrame):
         self.card_image = self.load_image(self.card_image_path, self.normal_size)      
         
         
-        self.card_label = ctk.CTkLabel(self, image=self.card_image, text="")        
+        self.card_label = ctk.CTkLabel(self,
+                                       image=self.card_image,
+                                       text="",
+                                       font=("Arial", 14, "bold"),
+                                       compound="center",
+                                       text_color="red")        
         self.card_label.grid(row=0, column=0, padx=5, pady=5)
         self.card_label.bind("<Button-1>", self.on_left_click)
         self.bind("<Button-1>", self.on_left_click)        

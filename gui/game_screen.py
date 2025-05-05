@@ -129,7 +129,7 @@ class GameScreen(ctk.CTkFrame):
         self.status_area_lbl = ctk.CTkLabel(self.status_area, text="",  wraplength=200)
         self.status_area_lbl.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
         
-        self.card_preview_lbl = ctk.CTkLabel(self, text="", fg_color="#6D4C41", height=220, width=150)
+        self.card_preview_lbl = ctk.CTkLabel(self, text="Right click on a card to view it", fg_color="#6D4C41", height=220, width=150)
         self.card_preview_lbl.grid(row=1, column=3, padx=10, pady=10, sticky="nsew")
         self.rowconfigure(1, weight=4)
         self.columnconfigure(3, weight=1)
