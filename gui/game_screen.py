@@ -62,7 +62,7 @@ class GameScreen(ctk.CTkFrame):
                 card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
                 
             else:
-                card_widget = CardWidget(frame, card.image, card)
+                card_widget = CardWidget(frame, "images/card_back.jpeg", card)
                 card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
             col += 1
             
@@ -88,7 +88,7 @@ class GameScreen(ctk.CTkFrame):
         self.draw_deck_frame.grid(row=1, column=0, sticky="ew", padx=40, pady=40)
         
         self.draw_button = ctk.CTkButton(self.draw_deck_frame, fg_color="purple",
-                                         text="Draw from deck", command=lambda: self.game.draw_from_deck())
+                                         text="Draw from deck", height=50, command=lambda: self.game.draw_from_deck())
         self.draw_button.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
         
         #hands and draw
@@ -140,7 +140,7 @@ class GameScreen(ctk.CTkFrame):
         enlarged_image = Image.open(image_path) 
         resized_image = enlarged_image.resize((300, 450))  
         self.preview_ctk_image = ctk.CTkImage(resized_image, size=(300, 450))
-        self.card_preview_lbl.configure(image=self.preview_ctk_image)  
+        self.card_preview_lbl.configure(image=self.preview_ctk_image, text='')  
         self.card_preview_lbl.image = self.preview_ctk_image
         
     

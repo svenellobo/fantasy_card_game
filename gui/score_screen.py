@@ -14,7 +14,7 @@ class ScoreScreen(ctk.CTkFrame):
         self.p2_score = self.player2.calculate_total_points()
         self.configure(fg_color="#4E342E")
         
-        for card in self.player2.cards_in_hand:
+        for card in self.player1.cards_in_hand:
             print(card)
         
               
@@ -95,7 +95,7 @@ class ScoreScreen(ctk.CTkFrame):
                 card_widget.update_image(ctk_image)
                  
                 card_info_area = ctk.CTkLabel(self.player1_cards,
-                                               text=f"{point_text}\nTotal power: {card.total_power}",
+                                               text=f"{point_text}\nTotal power: {card.total_power}\n{card.name if card.suit and card.name != card.original_state['name'] else ''}\n{card.suit if card.suit and card.suit != card.original_state['suit'] else ''}",
                                                text_color=point_color,
                                                fg_color="#5D4037")
                 card_info_area.grid(row=2, column=p1_col, padx=5, pady=5)                            
@@ -105,7 +105,7 @@ class ScoreScreen(ctk.CTkFrame):
                 card_widget.grid(row=1, column=p1_col, padx=5, pady=5)
                 
                 card_info_area = ctk.CTkLabel(self.player1_cards,
-                                               text=f"{point_text}\nTotal power: {card.total_power}",
+                                               text=f"{point_text}\nTotal power: {card.total_power}\n{card.name if card.suit and card.name != card.original_state['name'] else ''}\n{card.suit if card.suit and card.suit != card.original_state['suit'] else ''}",
                                                text_color=point_color,
                                                fg_color="#5D4037")
                 card_info_area.grid(row=2, column=p1_col, padx=5, pady=5)               
@@ -137,7 +137,7 @@ class ScoreScreen(ctk.CTkFrame):
                 card_widget.update_image(ctk_image)
                 
                 card_info_area = ctk.CTkLabel(self.player2_cards,
-                                               text=f"{point_text}\nTotal power: {card.total_power}",
+                                               text=f"{point_text}\nTotal power: {card.total_power}\n{card.name if card.suit and card.name != card.original_state['name'] else ''}\n{card.suit if card.suit and card.suit != card.original_state['suit'] else ''}",
                                                text_color=point_color,
                                                fg_color="#5D4037")
                 card_info_area.grid(row=2, column=p2_col, padx=5, pady=5)
@@ -147,7 +147,7 @@ class ScoreScreen(ctk.CTkFrame):
                 card_widget.grid(row=1, column=p2_col, padx=5, pady=5, sticky="nsew")
                 
                 card_info_area = ctk.CTkLabel(self.player2_cards,
-                                               text=f"{point_text}\nTotal power: {card.total_power}",
+                                               text=f"{point_text}\nTotal power: {card.total_power}\n{card.name if card.suit and card.name != card.original_state['name'] else ''}\n{card.suit if card.suit and card.suit != card.original_state['suit'] else ''}",
                                                text_color=point_color,
                                                fg_color="#5D4037")
                 card_info_area.grid(row=2, column=p2_col, padx=5, pady=5) 

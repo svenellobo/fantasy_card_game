@@ -81,8 +81,8 @@ class Doppelganger(Card):
                             card.blank()
                         
                     else:                                        
-                        self.name = card.name                                        
-                        self.suit = card.suit
+                        self.name = card.original_state["name"]                                        
+                        self.suit = card.original_state["suit"]
                         self.priority = card.priority
                         self.has_penalty = card.has_penalty
                         self.has_blank = card.has_blank

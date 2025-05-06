@@ -24,9 +24,9 @@ class CardWidget(ctk.CTkFrame):
         self.card_label = ctk.CTkLabel(self,
                                        image=self.card_image,
                                        text="",
-                                       font=("Arial", 14, "bold"),
+                                       font=("Arial", 18, "bold"),
                                        compound="center",
-                                       text_color="red")        
+                                       text_color="black")        
         self.card_label.grid(row=0, column=0, padx=5, pady=5)
         self.card_label.bind("<Button-1>", self.on_left_click)
         self.bind("<Button-1>", self.on_left_click)        
@@ -35,7 +35,10 @@ class CardWidget(ctk.CTkFrame):
         self.bind("<Enter>", self.on_hover)
         self.bind("<Leave>", self.on_leave)
         self.card_label.bind("<Enter>", self.on_hover)
-        self.card_label.bind("<Leave>", self.on_leave)        
+        self.card_label.bind("<Leave>", self.on_leave)
+        
+        self.bind("<Double-Button-1>", self.on_double_click) 
+        self.card_label.bind("<Double-Button-1>", self.on_double_click)       
         
         self.bind("<Button-1>", self.on_left_click)
         
@@ -97,8 +100,11 @@ class CardWidget(ctk.CTkFrame):
             self.right_click_action(self.card_image_path)
         
     def on_hover(self, event):        
-        self.configure( border_color="yellow")        
+        self.configure(border_color="yellow")   
         
+    def on_double_click(self, event):
+        if self.click_action:
+            self.click_action(self.card)
         
     def on_leave(self, event):        
         self.configure(border_color="black")

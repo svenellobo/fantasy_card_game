@@ -52,6 +52,8 @@ from card_library.beast.dragon import Dragon
 from card_library.weather.smoke import Smoke
 from card_library.leader.warlord import Warlord
 from card_library.weapon.magic_wand import MagicWand
+from card_library.flood.island import Island
+from card_library.weather.air_elemental import AirElemental
 
 
 
@@ -114,13 +116,18 @@ class Game():
         self.player1.cards_in_hand.append(mirage)
         shape = Shapeshifter()
         self.player1.cards_in_hand.append(shape)
-        bas = Basilisk()
-        self.player1.cards_in_hand.append(bas)
+        dw = DwarvishInfantry()
+        self.player1.cards_in_hand.append(dw)
+        island = Island()
+        self.player1.cards_in_hand.append(island)
+        airelem = AirElemental()
+        self.player1.cards_in_hand.append(airelem)
+
         
         
         
-        wildfire = Wildfire()
-        self.player2.cards_in_hand.append(wildfire)
+        
+        
         
         
         """dragon = Dragon()
@@ -252,7 +259,7 @@ class Game():
             else: 
                 if self.current_player == "player":                
                     self.current_player = "cpu"
-                    self.game_screen.after(1000, self.cpu_turn_logic())                
+                    self.game_screen.after(500, self.cpu_turn_logic())                
                 elif self.current_player == "cpu":                
                     self.current_player = "player"
                     self.player_turn_logic()
