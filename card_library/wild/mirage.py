@@ -41,11 +41,8 @@ class Mirage(Card):
                 
         for card in hand:
             if card.has_blank:
-                card.activate_blank(hand) 
-                
-        """for card in hand:
-            if card.priority == 3:
-                card.effect(hand)"""
+                card.activate_blank(hand)                 
+        
 
         for card in hand:
             if card.priority == 4:                                

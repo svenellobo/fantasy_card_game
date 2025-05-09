@@ -1,6 +1,6 @@
 from card import *
 import copy
-import types
+
 
 class Doppelganger(Card):
     def __init__(self):
@@ -38,14 +38,6 @@ class Doppelganger(Card):
         for card in hand:
             if card.has_blank:
                 card.activate_blank(hand)
-                
-        """for card in hand:
-            if card.priority == 2:
-                card.effect(hand)
-                
-        for card in hand:
-            if card.priority == 3:
-                card.effect(hand)"""
 
         for card in hand:
             if card.priority == 4:                               
@@ -88,6 +80,8 @@ class Doppelganger(Card):
                         self.has_blank = card.has_blank
                         self.base_power = card.base_power                        
                         self.is_blanked = card.is_blanked
+                        if self.is_blanked:
+                            self.blank()
                         if card.total_power < card.base_power:
                             self.total_power = card.total_power                        
                         else:
@@ -98,6 +92,7 @@ class Doppelganger(Card):
                             
        
     def effect(self, hand):
+        self.best_card = None
         temp_hand = copy.deepcopy(hand)
         self.card_reset(temp_hand)        
         self.penalties_and_conditions(temp_hand)        
@@ -131,8 +126,11 @@ class Doppelganger(Card):
                 
                 if impact > best_impact:
                     best_impact = impact
-                    self.best_card = temp_card
+                    for card in hand:
+                        if temp_card.original_state["name"] == card.original_state["name"]:
+                            self.best_card = card
                 self.card_reset(temp_hand)
+                
             
                 
         self.best_card_to_copy()   

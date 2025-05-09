@@ -74,8 +74,9 @@ class Necromancer(Card):
 
 
     @Card.not_blank
-    def bonus(self, hand,discard_area=None):
-        if discard_area:
+    def bonus(self, hand,discard_area=None):        
+        
+        if len(discard_area) >= 10 and discard_area != None:            
             temp_hand = copy.deepcopy(hand) 
             self.card_reset(temp_hand)   
             best_discard_card = None
@@ -99,11 +100,11 @@ class Necromancer(Card):
                         best_discard_card = discard_card
                         best_impact = impact
 
-            if len(discard_area) >= 10:
-                hand.append(best_discard_card)            
-                discard_area.remove(best_discard_card)
-        
             
+            hand.append(best_discard_card)            
+            discard_area.remove(best_discard_card)
+        
+            print(best_discard_card)
         
             
                 

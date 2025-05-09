@@ -60,7 +60,7 @@ from card_library.weather.air_elemental import AirElemental
 
 class Game():
     def __init__(self, game_screen):
-        self.deck = Deck()
+        self.deck = Deck()        
         self.deck.shuffle_deck()
         self.player1 = Player()
         self.player2 = CPUPlayer()
@@ -70,7 +70,7 @@ class Game():
         self.card_discarded = False        
         self.game_screen = game_screen
            
-        necro = Necromancer() 
+       
         dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
@@ -80,7 +80,8 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(necro) 
+        self.discard_area.discard_area_cards.append(dragon)
+        
         
         """
         
@@ -108,29 +109,27 @@ class Game():
               
         
         boc = BookOfChanges()
-        self.player1.cards_in_hand.append(boc)        
-        self.player1.cards_in_hand.append(necro)
+        self.player2.cards_in_hand.append(boc)
+        necro = Necromancer()        
+        self.player2.cards_in_hand.append(necro)
         dop = Doppelganger()
-        self.player1.cards_in_hand.append(dop)
+        self.player2.cards_in_hand.append(dop)
         mirage = Mirage()
-        self.player1.cards_in_hand.append(mirage)
+        self.player2.cards_in_hand.append(mirage)
         shape = Shapeshifter()
-        self.player1.cards_in_hand.append(shape)
+        self.player2.cards_in_hand.append(shape)
         dw = DwarvishInfantry()
-        self.player1.cards_in_hand.append(dw)
+        self.player2.cards_in_hand.append(dw)
         island = Island()
-        self.player1.cards_in_hand.append(island)
+        self.player2.cards_in_hand.append(island)
         airelem = AirElemental()
-        self.player1.cards_in_hand.append(airelem)
-
+        self.player2.cards_in_hand.append(airelem)
         
         
-        
-        
-        
-        
-        
-        """dragon = Dragon()
+        """
+        warlord = Warlord()
+        self.player2.cards_in_hand.append(warlord)
+        dragon = Dragon()
         player.cards_in_hand.append(dragon)
         magicwand = MagicWand()
         self.player2.cards_in_hand.append(magicwand)
@@ -213,7 +212,8 @@ class Game():
             self.player1.cards_in_hand.append(card)        
             self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
             self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
-            self.game_screen.status_area_lbl.configure(text="HINT: Click on a card in hand to discard it")
+            self.game_screen.status_area_lbl.configure(text="HINT: Double click on a card in hand to discard it")
+            self.game_screen.draw_button.configure(fg_color="#800000", state="disabled")
             self.card_taken = True
     
     def draw_from_deck(self):
@@ -221,8 +221,9 @@ class Game():
             card = self.deck.draw_card()
             self.player1.cards_in_hand.append(card)        
             self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
-            self.game_screen.status_area_lbl.configure(text="HINT: Click on an unwanted card in your hand to discard it.")
+            self.game_screen.status_area_lbl.configure(text="HINT: Double click on an unwanted card in your hand to discard it.")
             self.card_taken = True
+            self.game_screen.draw_button.configure(fg_color="#800000", state="disabled")
         else:
             print("already drew")
             
@@ -246,7 +247,7 @@ class Game():
         if any(card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes"} for card in self.player1.cards_in_hand):
             self.game_screen.open_choice_screen(self.player1, self.player2, self.discard_area)
         else:       
-            self.game_screen.open_score_screen(self.player1, self.player2) 
+            self.game_screen.open_score_screen(self.player1, self.player2, self.discard_area) 
             
             
         
@@ -275,6 +276,7 @@ class Game():
         print("Player 1's turn...")
         self.current_player = "player"
         self.game_screen.end_turn_btn.configure(fg_color="#800000", state="disabled")
+        self.game_screen.draw_button.configure(fg_color="green", state="normal")
         self.game_screen.status_area_lbl.configure(text="HINT: Draw a card from the deck or take one from the discard area.")
         self.card_taken = False
         self.card_discarded = False      

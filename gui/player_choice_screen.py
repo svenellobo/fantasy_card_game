@@ -11,7 +11,9 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.player2 = player2
         self.discard_area = discard_area
         self.cards_with_choice = []
-        self.card_widgets = []
+        self.necromancer_card = None
+        self.boc_card = None
+        self.boc_area = False
         self.card_info_labels = {}
         
         
@@ -38,6 +40,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         
         self.player_choice_area = ctk.CTkFrame(self, fg_color="#5D4037")
         self.player_choice_area.grid(row=0, column=1, padx=5, pady=5, sticky="nsew")        
+              
         
         
         self.right_column = ctk.CTkFrame(self, fg_color="green")
@@ -48,15 +51,24 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         
         self.to_score_screen_btn = ctk.CTkButton(self.right_column, fg_color="blue",
                                                  text="To Score Screen", height=60, command=self.open_score_screen)
-        self.to_score_screen_btn.grid(row=0, column=0, padx=5, pady=5)
-        
+        self.to_score_screen_btn.grid(row=0, column=0, padx=5, pady=5)        
         
         
         self.player1_choice_lbl = ctk.CTkLabel(self.player_choice_area, text=f"Card options")
         self.player1_choice_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=7, sticky="nsew")
         
+        self.choice_area_frame = ctk.CTkFrame(self, fg_color="#6D4C41")
+        self.choice_area_frame.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
+        self.choice_area_frame.grid_columnconfigure(0, weight=1)
         
-        col = 0        
+        self.center_frame = ctk.CTkFrame(self.choice_area_frame, fg_color="transparent")
+        self.center_frame.grid(row=0, column=0, pady=(15,0), sticky="n")
+        
+        #self.instruction_area = ctk.CTkLabel(self.)
+         
+        
+        
+        col = 1        
         for card in self.cards_with_choice:
             card_widget = CardWidget(self.player_choice_area, card.image, card,
                                      click_action=lambda c=card: self.player_choice(c))            
@@ -64,29 +76,38 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             card_info_area = ctk.CTkLabel(self.player_choice_area,
                                                text="",
                                                text_color="green",
-                                               fg_color="#4E342E")
+                                               fg_color="#2B2B2B")
             card_info_area.grid(row=2, column=col, padx=5, pady=5)
-            self.card_info_labels[card] = (card_info_area, card_widget)            
-            self.card_widgets.append(card_widget)
+            self.card_info_labels[card] = (card_info_area, card_widget)
             col += 1
             
+        self.player_choice_area.grid_columnconfigure(0, weight=1)
+        self.player_choice_area.grid_columnconfigure(1, weight=0)
+        self.player_choice_area.grid_columnconfigure(2, weight=0)
+        self.player_choice_area.grid_columnconfigure(3, weight=0)
+        self.player_choice_area.grid_columnconfigure(4, weight=0)
+        self.player_choice_area.grid_columnconfigure(5, weight=0)
+        self.player_choice_area.grid_columnconfigure(6, weight=1)
             
-        self.choice_area_frame = ctk.CTkFrame(self, fg_color="green")
-        self.choice_area_frame.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
+            
+        
         
         
         
     def player_choice(self, card):
-        for widget in self.choice_area_frame.winfo_children():
-            widget.destroy()           
-        
+        for widget in self.center_frame.winfo_children():
+            widget.destroy()
+        if self.boc_area:
+            self.suits_area.destroy()
+            self.boc_area = False  
+            
             
         if card.original_state["name"] == "Mirage":
             col = 0
             row = 0
             for key,values in card.mirage_suits.items():
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.choice_area_frame, fg_color="blue", text=f"{key}: {value}",
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="blue", text=f"{key}: {value}",
                                                     height=60, command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
                     self.btn_option.grid(row=row, column=col, sticky="ew", padx=10, pady=5)
                     col += 1
@@ -99,7 +120,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             row = 0
             for key,values in card.shape_suits.items():
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.choice_area_frame, fg_color="blue", text=f"{key}: {value}",
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="blue", text=f"{key}: {value}",
                                                     height=60,
                                                     command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
                     self.btn_option.grid(row=row, column=col, sticky="ew", padx=10, pady=5)
@@ -119,39 +140,49 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                     row += 1
                 
         elif card.original_state["name"] == "Book of Changes":
-            col = 0
+            col = 1
             row = 0
             self.chosen_card = None
+            self.boc_area = True
+            self.boc_card = card
             for boc_card in self.player1.cards_in_hand:
-                card_widget = CardWidget(self.choice_area_frame, boc_card.image, boc_card,
+                card_widget = CardWidget(self.center_frame, boc_card.image, boc_card,
                                          click_action=lambda b=boc_card: self.set_chosen_card(b))
                 card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
                 col += 1 
-                if col >= 5:
-                    col = 0
-                    row += 1
+                
                     
-            suit_col = 0
+            suit_col = 1
             suit_row = 0
-            self.suits_area = ctk.CTkFrame(self.choice_area_frame, fg_color="yellow")
-            self.suits_area.grid(row=0, column=6, sticky="ew", padx=10, pady=5)
+            self.suits_area = ctk.CTkFrame(self.choice_area_frame, fg_color="#4E342E")
+            self.suits_area.grid(row=1, column=0, sticky="ew", padx=10, pady=5)
+            
+            self.suits_area.grid_columnconfigure(0, weight=1)
+            self.suits_area.grid_columnconfigure(1, weight=0)
+            self.suits_area.grid_columnconfigure(2, weight=0)
+            self.suits_area.grid_columnconfigure(3, weight=0)
+            self.suits_area.grid_columnconfigure(4, weight=0)
+            self.suits_area.grid_columnconfigure(5, weight=0)
+            self.suits_area.grid_columnconfigure(6, weight=1)
+            
             for suit in ALL_SUITS:
-                self.btn_option = ctk.CTkButton(self.suits_area, fg_color="blue", text=f"{suit}",
+                self.btn_option = ctk.CTkButton(self.suits_area, fg_color="#8B0000", text=f"{suit}",
                                                 height=40,
-                                                command=lambda s=suit: self.book_of_changes_choices(self.chosen_card, s))
+                                                command=lambda c=card, s=suit: self.book_of_changes_choices(c, self.chosen_card, s))
                 self.btn_option.grid(row=suit_row, column=suit_col, sticky="ew", padx=10, pady=5)
                 suit_col += 1
-                if suit_col >= 3:
-                    suit_col = 0
+                if suit_col >= 6:
+                    suit_col = 1
                     suit_row += 1
                 
         elif card.original_state["name"] == "Necromancer":
+            self.necromancer_card = card
             self.card_picked = False
             col = 0
             row = 0
             for disc_card in self.discard_area.discard_area_cards:
                 if disc_card.suit in card.discard_suits:                    
-                    card_widget = CardWidget(self.choice_area_frame, disc_card.image,
+                    card_widget = CardWidget(self.center_frame, disc_card.image,
                                              disc_card, click_action=self.necromancer_choice)
                     card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
                     col += 1
@@ -167,7 +198,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         
     def create_card_widget(self, card, dop_card, row, col):
         card_widget = CardWidget(
-            self.choice_area_frame,
+            self.center_frame,
             dop_card.image,
             dop_card,
             click_action=lambda event: self.doppelganger_choice(card, dop_card)  
@@ -182,9 +213,11 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             card_info_area = self.card_info_labels[card][0]            
             card_info_area.configure(text=f"{card.name}\n{card.suit} suit") 
             card_widget = self.card_info_labels[card][1]
-            card_widget.configure(border_color="green")
+            card_widget.configure(border_color="#DA70D6") 
             card_widget.unbind("<Enter>")
-            card_widget.unbind("<Leave>") 
+            card_widget.card_label.unbind("<Enter>")
+            card_widget.unbind("<Leave>")
+            card_widget.card_label.unbind("<Leave>")
               
        
         
@@ -194,41 +227,59 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         card.base_power = dop_card.base_power
         card.suit = dop_card.suit
         card.best_card = dop_card 
-        card_widget = self.card_info_labels[card][1]
-        card_widget.configure(border_color="green") 
-        card_widget.unbind("<Enter>")
-        card_widget.unbind("<Leave>")        
+        card_widget = self.card_info_labels[card][1]                
         if card in self.card_info_labels:
             card_info_area = self.card_info_labels[card][0]
             card_info_area.configure(text=f"{dop_card.name}\n{dop_card.suit} suit")
+            card_widget.configure(border_color="#DA70D6") 
+            card_widget.unbind("<Enter>")
+            card_widget.card_label.unbind("<Enter>")
+            card_widget.unbind("<Leave>")
+            card_widget.card_label.unbind("<Leave>")
                  
         
         
         
-    def book_of_changes_choices(self, chosen_card, suit):
+    def book_of_changes_choices(self, boc, chosen_card, suit):        
         if chosen_card:
             chosen_card.suit = suit            
-            card_info_area = self.card_info_labels[chosen_card]
-            card_info_area.configure(text=f"Card: {chosen_card.name}\n{suit} suit") 
-            card_widget = self.card_info_labels[chosen_card][1]
-            card_widget.configure(border_color="green")
+            card_info_area_boc = self.card_info_labels[boc][0]
+            if chosen_card in self.cards_with_choice:
+                card_info_area_card = self.card_info_labels[chosen_card][0]
+                card_info_area_card.configure(text=f"{chosen_card.name}\n{suit} suit")
+            card_info_area_boc.configure(text=f"{chosen_card.original_state["name"]}\n{suit} suit")             
+            card_widget = self.card_info_labels[boc][1]
+            card_widget.configure(border_color="#DA70D6") 
+            card_widget.unbind("<Enter>")
+            card_widget.card_label.unbind("<Enter>")
+            card_widget.unbind("<Leave>")
+            card_widget.card_label.unbind("<Leave>")
         
         
     def set_chosen_card(self, card):
-        self.chosen_card = card        
+        self.chosen_card = card
+        card_info_area = self.card_info_labels[self.boc_card][0]
+        card_info_area.configure(text=f"{card.original_state["name"]}")        
         
     def necromancer_choice(self, card):
         if not self.card_picked:
             self.player1.cards_in_hand.append(card)
             self.discard_area.discard_area_cards.remove(card)
             self.card_picked = True
-            card_widget = self.card_info_labels[card][1]
-            card_widget.card_label.configure(border_color="green")
+        if self.necromancer_card in self.card_info_labels:
+            card_info_area = self.card_info_labels[self.necromancer_card][0]
+            card_info_area.configure(text=f"{card.name}")
+            card_widget = self.card_info_labels[self.necromancer_card][1]
+            card_widget.configure(border_color="#DA70D6")
+            card_widget.unbind("<Enter>")
+            card_widget.card_label.unbind("<Enter>")
+            card_widget.unbind("<Leave>")
+            card_widget.card_label.unbind("<Leave>")
             
             
     def open_score_screen(self):        
         self.destroy()        
-        score_screen = ScoreScreen(self.parent, self.player1, self.player2)
+        score_screen = ScoreScreen(self.parent, self.player1, self.player2, self.discard_area)
         score_screen.grid(row=0, column=0, sticky="nsew")
         
     

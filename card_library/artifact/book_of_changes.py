@@ -68,10 +68,7 @@ class BookOfChanges(Card):
         
                 
         for temp_card in temp_hand:
-            for suit in ALL_SUITS:
-                """for card in hand:
-                    if card.priority == 2:
-                        mir = copy.deepcopy(card)"""               
+            for suit in ALL_SUITS:                              
                 if temp_card.name != "Book of Changes":   
                     temp_card.suit = suit
                                             
@@ -83,9 +80,7 @@ class BookOfChanges(Card):
                         best_suit_option = suit
                         best_impact = impact
                         best_card_to_change = temp_card.name
-                """for card in temp_hand:
-                    if card.priority == 2:
-                        card = mir"""
+                
                 self.card_reset(temp_hand)
                             
                        
@@ -94,40 +89,7 @@ class BookOfChanges(Card):
             if card.name == best_card_to_change:
                 card.suit = best_suit_option    
         
-    """@Card.not_blank   
-    def bonus(self, hand):
-        self.card_reset(hand)
-        self.penalties_and_conditions(hand)
-        best_suit_option = None
-        best_card_to_change = None
-        best_impact = -float("inf")
-        hand_total_power = sum(card.total_power for card in hand)
-        self.card_reset(hand)
-        
-                
-        for card in hand:
-            for suit in ALL_SUITS:
-                temp_hand = copy.deepcopy(hand)
-                for temp_card in temp_hand:                                        
-                    if temp_card.name != "Book of Changes":   
-                        temp_card.suit = suit 
-                                          
-                            
-                        self.penalties_and_conditions(temp_hand)
-                        new_total_power = sum(c.total_power for c in temp_hand)
-                        impact = new_total_power - hand_total_power
-                        
-                        if impact > best_impact:
-                            best_suit_option = suit
-                            best_impact = impact
-                            best_card_to_change = temp_card.name
-                    self.card_reset(temp_hand)
-                            
-                       
-                    
-        for card in hand:
-            if card.name == best_card_to_change:
-                card.suit = best_suit_option"""
+    
                 
                               
         

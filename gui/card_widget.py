@@ -27,9 +27,7 @@ class CardWidget(ctk.CTkFrame):
                                        font=("Arial", 18, "bold"),
                                        compound="center",
                                        text_color="black")        
-        self.card_label.grid(row=0, column=0, padx=5, pady=5)
-        self.card_label.bind("<Button-1>", self.on_left_click)
-        self.bind("<Button-1>", self.on_left_click)        
+        self.card_label.grid(row=0, column=0, padx=5, pady=5)             
         
         
         self.bind("<Enter>", self.on_hover)
@@ -37,10 +35,10 @@ class CardWidget(ctk.CTkFrame):
         self.card_label.bind("<Enter>", self.on_hover)
         self.card_label.bind("<Leave>", self.on_leave)
         
-        self.bind("<Double-Button-1>", self.on_double_click) 
-        self.card_label.bind("<Double-Button-1>", self.on_double_click)       
+         
         
-        self.bind("<Button-1>", self.on_left_click)
+        self.card_label.bind("<Double-Button-1>", self.on_double_click)
+        self.bind("<Double-Button-1>", self.on_double_click) 
         
         self.bind("<Button-3>", self.on_right_click)
         self.card_label.bind("<Button-3>",  self.on_right_click)
@@ -70,17 +68,18 @@ class CardWidget(ctk.CTkFrame):
         y = self.winfo_y() - self.drag_data["y"] + event.y
         self.place(x=x, y=y)
 
-    def on_drag_stop(self, event):        
+    def on_drag_stop(self, event):
+        if "start_x" not in self.drag_data or "start_y" not in self.drag_data:
+            return        
         dx = abs(self.winfo_x() - self.drag_data["start_x"])
         dy = abs(self.winfo_y() - self.drag_data["start_y"])
         if dx < 2 and dy < 2:            
-            self.on_left_click(event)
+            pass
         else:
             if self.drag_callback:
                 self.drag_callback(self)
-        self.drag_data["widget"] = None
-        self.drag_data["x"] = 0
-        self.drag_data["y"] = 0
+                
+        self.drag_data = {"x": 0, "y": 0, "widget": None}
         
         
         
