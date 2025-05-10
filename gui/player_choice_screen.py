@@ -62,9 +62,13 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.choice_area_frame.grid_columnconfigure(0, weight=1)
         
         self.center_frame = ctk.CTkFrame(self.choice_area_frame, fg_color="transparent")
-        self.center_frame.grid(row=0, column=0, pady=(15,0), sticky="n")
+        self.center_frame.grid(row=1, column=0,padx=5, pady=(15,0), sticky="n")
         
-        #self.instruction_area = ctk.CTkLabel(self.)
+        self.instruction_area = ctk.CTkFrame(self.choice_area_frame, fg_color="#2B2B2B")
+        self.instruction_area.grid(row=0, column=0, padx=5, pady=(25,0))
+        
+        self.instruction_area_lbl = ctk.CTkLabel(self.instruction_area, text="")
+        self.instruction_area_lbl.grid(row=0, column=0, padx=5, pady=5)
          
         
         
@@ -107,20 +111,21 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             row = 0
             for key,values in card.mirage_suits.items():
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="blue", text=f"{key}: {value}",
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{key}: {value}",
                                                     height=60, command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
                     self.btn_option.grid(row=row, column=col, sticky="ew", padx=10, pady=5)
                     col += 1
                     if col >= 5:
                         col = 0
                         row += 1
+            self.instruction_area_lbl.configure(text="Select a card for 'Mirage' to duplicate.")
                 
         elif card.original_state["name"] == "Shapeshifter":
             col = 0
             row = 0
             for key,values in card.shape_suits.items():
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="blue", text=f"{key}: {value}",
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{key}: {value}",
                                                     height=60,
                                                     command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
                     self.btn_option.grid(row=row, column=col, sticky="ew", padx=10, pady=5)
@@ -128,6 +133,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                     if col >= 5:
                         col = 0
                         row += 1
+            self.instruction_area_lbl.configure(text="Select a card for 'Shapeshifter' to duplicate.")
                         
         elif card.original_state["name"] == "Doppelganger":
             col = 0
@@ -138,6 +144,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 if col >= 5:
                     col = 0
                     row += 1
+            self.instruction_area_lbl.configure(text="Double click on a card for 'Doppelganger' to duplicate.")
                 
         elif card.original_state["name"] == "Book of Changes":
             col = 1
@@ -149,13 +156,16 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 card_widget = CardWidget(self.center_frame, boc_card.image, boc_card,
                                          click_action=lambda b=boc_card: self.set_chosen_card(b))
                 card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
-                col += 1 
+                col += 1
+                if col >= 5:
+                    col = 1
+                    row += 1 
                 
                     
             suit_col = 1
             suit_row = 0
-            self.suits_area = ctk.CTkFrame(self.choice_area_frame, fg_color="#4E342E")
-            self.suits_area.grid(row=1, column=0, sticky="ew", padx=10, pady=5)
+            self.suits_area = ctk.CTkFrame(self.choice_area_frame, fg_color="#6D4C41")
+            self.suits_area.grid(row=1, column=6, sticky="ew", padx=5, pady=(25,0))
             
             self.suits_area.grid_columnconfigure(0, weight=1)
             self.suits_area.grid_columnconfigure(1, weight=0)
@@ -165,13 +175,15 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             self.suits_area.grid_columnconfigure(5, weight=0)
             self.suits_area.grid_columnconfigure(6, weight=1)
             
+            self.instruction_area_lbl.configure(text="Double-click a card to select it, then choose a suit to change it to.")
+            
             for suit in ALL_SUITS:
-                self.btn_option = ctk.CTkButton(self.suits_area, fg_color="#8B0000", text=f"{suit}",
+                self.btn_option = ctk.CTkButton(self.suits_area, fg_color="#B7410E", text=f"{suit}",
                                                 height=40,
                                                 command=lambda c=card, s=suit: self.book_of_changes_choices(c, self.chosen_card, s))
                 self.btn_option.grid(row=suit_row, column=suit_col, sticky="ew", padx=10, pady=5)
                 suit_col += 1
-                if suit_col >= 6:
+                if suit_col >= 3:
                     suit_col = 1
                     suit_row += 1
                 
@@ -189,6 +201,8 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                     if col >= 5:
                         col = 0
                         row = 1
+                        
+            self.instruction_area_lbl.configure(text="Select a card from discard to add it to your hand")
     
     
     

@@ -53,11 +53,10 @@ class Doppelganger(Card):
             
     def best_card_to_copy(self):
         if self.best_card:
-            self.name = self.best_card.name
+            self.name = self.best_card.original_state["name"]
             self.base_power = self.best_card.base_power
             self.total_power = self.best_card.base_power
-            self.suit = self.best_card.suit
-            self.priority = self.best_card.priority
+            self.suit = self.best_card.original_state["suit"]            
             self.has_penalty = self.best_card.has_penalty
             self.has_blank = self.best_card.has_blank
             
@@ -66,7 +65,7 @@ class Doppelganger(Card):
     def final_activation(self, hand):
         for card in hand:
             if self.best_card:
-                if card.original_state["name"] == self.best_card.name:
+                if card.original_state["name"] == self.best_card.original_state["name"]:
                     if card.name == "Basilisk" and card.has_penalty:
                         self.blank()
                         if card.suit in {ARMY, LEADER, BEAST}:

@@ -62,16 +62,17 @@ class Game():
     def __init__(self, game_screen):
         self.deck = Deck()        
         self.deck.shuffle_deck()
+        self.discard_area = DiscardArea()
         self.player1 = Player()
         self.player2 = CPUPlayer()
-        self.discard_area = DiscardArea()
+        self.player2.discard_area = self.discard_area.discard_area_cards
         self.current_player = None
         self.card_taken = False
         self.card_discarded = False        
         self.game_screen = game_screen
            
        
-        dragon = Dragon()
+        """dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
@@ -79,54 +80,51 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon)
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon)"""
         
-        
-        """
-        
-        mnt = Mountain()
-        self.player2.cards_in_hand.append(mnt)
-        
-        flood = GreatFlood()
-        self.player2.cards_in_hand.append(flood)
-        
-        smoke = Smoke()
-        self.player2.cards_in_hand.append(smoke)
-        
-        forge = Forge()
-        self.player2.cards_in_hand.append(forge)
-        
-        hyd = Hydra()
-        self.player2.cards_in_hand.append(hyd)
-        
-        warship = Warship()
-        self.player2.cards_in_hand.append(warship)
-        
-        wtree = WorldTree()
-        self.player2.cards_in_hand.append(wtree)"""
-        
-              
-        
-        boc = BookOfChanges()
-        self.player2.cards_in_hand.append(boc)
-        necro = Necromancer()        
-        self.player2.cards_in_hand.append(necro)
+        """collector = Collector()
+        self.player2.cards_in_hand.append(collector)
+        whirl = Whirlwind()
+        self.player2.cards_in_hand.append(whirl)
+        blizz = Blizzard()
+        self.player2.cards_in_hand.append(blizz)
         dop = Doppelganger()
         self.player2.cards_in_hand.append(dop)
-        mirage = Mirage()
-        self.player2.cards_in_hand.append(mirage)
-        shape = Shapeshifter()
-        self.player2.cards_in_hand.append(shape)
-        dw = DwarvishInfantry()
-        self.player2.cards_in_hand.append(dw)
-        island = Island()
-        self.player2.cards_in_hand.append(island)
+        rainstorm = Rainstorm()
+        self.player2.cards_in_hand.append(rainstorm)        
+        
         airelem = AirElemental()
         self.player2.cards_in_hand.append(airelem)
         
+        mirage = Mirage()
+        self.player2.cards_in_hand.append(mirage)"""
+        
+        
+              
+        
+        """boc = BookOfChanges()
+        self.player1.cards_in_hand.append(boc)
+        necro = Necromancer()        
+        self.player1.cards_in_hand.append(necro)
+        dop = Doppelganger()
+        self.player1.cards_in_hand.append(dop)
+        mirage = Mirage()
+        self.player1.cards_in_hand.append(mirage)
+        shape = Shapeshifter()
+        self.player1.cards_in_hand.append(shape)
+        dw = DwarvishInfantry()
+        self.player1.cards_in_hand.append(dw)
+        island = Island()
+        self.player1.cards_in_hand.append(island)
+        airelem = AirElemental()
+        self.player1.cards_in_hand.append(airelem)"""
+        
+        
         
         """
+        rainstorm = Rainstorm()
+        self.player2.cards_in_hand.append(rainstorm)
         warlord = Warlord()
         self.player2.cards_in_hand.append(warlord)
         dragon = Dragon()
@@ -285,10 +283,14 @@ class Game():
                 
                 
     def cpu_turn_logic(self):
-        print("CPU Player's turn...")
-        self.player2.take_turn(self.deck, self.discard_area.discard_area_cards)
+        print("CPU Player's turn...")        
+        disc_len = len(self.discard_area.discard_area_cards)        
+        turn_logic = self.player2.take_turn(self.deck, self.discard_area.discard_area_cards)        
         self.game_screen.display_cards(self.player2.cards_in_hand, "opponent_hand")
         self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
+        if disc_len == len(self.discard_area.discard_area_cards):
+            self.game_screen.card_preview(turn_logic.image)       
+                
         self.end_turn()
         
             

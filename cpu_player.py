@@ -45,45 +45,46 @@ class CPUPlayer(Player):
                 
         for card in hand:
             if card.priority == 6:
-                card.bonus(hand, self.discard_area)
-                
-        for card in hand:
-            if card.priority == 1:                               
-                card.effect(hand)
-                
+                card.bonus(hand, self.discard_area)                
+
                 
         for card in hand:
             if card.priority == 2:                
                 card.effect(hand)
                 
+
+                
         for card in hand:
             if card.priority == 3:                
-                card.effect(hand)
-                
+                card.effect(hand)                
+
 
         for card in hand:
             if card.priority == 4:
-                card.bonus(hand)               
-        
+                card.bonus(hand)                 
+   
         
         for card in hand:
             if card.priority == 5:                
-                card.bonus(hand)
+                card.bonus(hand)                
+    
                 
         for card in hand:
             if card.priority == 5:
-                card.penalty(hand)
-                
-        
+                card.penalty(hand)                
+      
                     
         for card in hand:
             if card.original_state["name"] == "Doppelganger":
-                card.final_activation(hand)
+                card.final_activation(hand)                
+        
+                
           
           
     def remove_worst_card(self, hand: list):
-        self.penalties_and_conditions(hand)
-        hand_total_power = sum(card.total_power for card in hand)
+        copied_hand = copy.deepcopy(hand)
+        self.penalties_and_conditions(copied_hand)
+        hand_total_power = sum(card.total_power for card in copied_hand)
         worst_impact = float("inf")
         worst_card = None
         
@@ -100,15 +101,18 @@ class CPUPlayer(Player):
         
         if worst_card:            
             hand.remove(worst_card)
-            return worst_card  
-   
+            return worst_card 
+        
+        
     
         
-    def take_turn(self, deck, discard_area): 
-        self.penalties_and_conditions(self.cards_in_hand)       
+    def take_turn(self, deck, discard_area):
+        start_len = len(discard_area)
+        copied_hand = copy.deepcopy(self.cards_in_hand)        
+        self.penalties_and_conditions(copied_hand)       
         best_discard_card = None
         best_impact = -float("inf")          
-        hand_total_power = sum(card.total_power for card in self.cards_in_hand)
+        hand_total_power = sum(card.total_power for card in copied_hand)
 
         if discard_area:
             for discard_card in discard_area:
@@ -136,6 +140,9 @@ class CPUPlayer(Player):
         discard_area.append(removed_card)
         for card in discard_area:
                 card.reset()
+        if start_len == len(discard_area):
+            return best_discard_card
+        
         
     
         

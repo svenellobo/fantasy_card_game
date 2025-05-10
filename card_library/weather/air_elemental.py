@@ -10,5 +10,6 @@ class AirElemental(Card):
 
     @Card.not_blank
     def bonus(self, hand):  
-        weather_count = sum(1 for card in hand if card.suit == WEATHER and card is not self)
+        weather_count = sum(1 for card in hand if card.suit == WEATHER and card is not self)              
         self.total_power += weather_count * 15
+        

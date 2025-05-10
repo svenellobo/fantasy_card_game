@@ -10,6 +10,7 @@ class ScoreScreen(ctk.CTkFrame):
         self.player2 = player2        
         self.player2.discard_area = discard_area.discard_area_cards
         
+        
         self.player1.penalties_and_conditions(self.player1.cards_in_hand)
         self.player2.penalties_and_conditions(self.player2.cards_in_hand)
         self.p1_score = self.player1.calculate_total_points()
