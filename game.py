@@ -72,18 +72,18 @@ class Game():
         self.game_screen = game_screen
            
        
-        """dragon = Dragon()
+        dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
-        self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
         #self.discard_area.discard_area_cards.append(dragon) 
-        #self.discard_area.discard_area_cards.append(dragon)"""
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon)
         
-        """collector = Collector()
+        collector = Collector()
         self.player2.cards_in_hand.append(collector)
         whirl = Whirlwind()
         self.player2.cards_in_hand.append(whirl)
@@ -98,13 +98,12 @@ class Game():
         self.player2.cards_in_hand.append(airelem)
         
         mirage = Mirage()
-        self.player2.cards_in_hand.append(mirage)"""
+        self.player2.cards_in_hand.append(mirage)
         
         
               
         
-        """boc = BookOfChanges()
-        self.player1.cards_in_hand.append(boc)
+        """
         necro = Necromancer()        
         self.player1.cards_in_hand.append(necro)
         dop = Doppelganger()
@@ -119,6 +118,22 @@ class Game():
         self.player1.cards_in_hand.append(island)
         airelem = AirElemental()
         self.player1.cards_in_hand.append(airelem)"""
+        
+        """bell = BellTower()
+        self.player2.cards_in_hand.append(bell)
+        boc = BookOfChanges()
+        self.player2.cards_in_hand.append(boc)
+        shape = Shapeshifter()
+        self.player2.cards_in_hand.append(shape)
+        enchant = Enchantress()
+        self.player2.cards_in_hand.append(enchant)
+        forge = Forge()
+        self.player2.cards_in_hand.append(forge)
+        dragon = Dragon()
+        self.player2.cards_in_hand.append(dragon)
+        fe = FireElemental()
+        self.player2.cards_in_hand.append(fe) """
+        
         
         
         
@@ -253,7 +268,7 @@ class Game():
     
     def end_turn(self):
         if self.card_taken and self.card_discarded:
-            if len(self.discard_area.discard_area_cards) >= 10:
+            if len(self.discard_area.discard_area_cards) >= 3:
                 self.end_game()
             else: 
                 if self.current_player == "player":                
@@ -285,7 +300,7 @@ class Game():
     def cpu_turn_logic(self):
         print("CPU Player's turn...")        
         disc_len = len(self.discard_area.discard_area_cards)        
-        turn_logic = self.player2.take_turn(self.deck, self.discard_area.discard_area_cards)        
+        turn_logic = self.player2.take_turn(self.deck, self.discard_area.discard_area_cards)                
         self.game_screen.display_cards(self.player2.cards_in_hand, "opponent_hand")
         self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
         if disc_len == len(self.discard_area.discard_area_cards):

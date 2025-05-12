@@ -43,7 +43,7 @@ class Mirage(Card):
             if card.has_blank:
                 card.activate_blank(hand)                 
         
-
+        
         for card in hand:
             if card.priority == 4:                                
                 card.bonus(hand)

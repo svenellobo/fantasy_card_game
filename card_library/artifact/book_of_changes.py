@@ -79,14 +79,14 @@ class BookOfChanges(Card):
                     if impact > best_impact:
                         best_suit_option = suit
                         best_impact = impact
-                        best_card_to_change = temp_card.name
+                        best_card_to_change = temp_card.original_state["name"]
                 
                 self.card_reset(temp_hand)
                             
                        
                     
         for card in hand:
-            if card.name == best_card_to_change:
+            if card.original_state["name"] == best_card_to_change:
                 card.suit = best_suit_option    
         
     
