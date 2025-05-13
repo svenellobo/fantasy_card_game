@@ -11,6 +11,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.player2 = player2
         self.discard_area = discard_area
         self.cards_with_choice = []
+        self.configure(fg_color="#4E342E")
         self.necromancer_card = None
         self.boc_card = None
         self.boc_area = False
@@ -35,15 +36,14 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         
     def init_screen(self):       
         
-        self.left_column = ctk.CTkFrame(self, fg_color="green")
+        self.left_column = ctk.CTkFrame(self, fg_color="#4E342E")
         self.left_column.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
         
         self.player_choice_area = ctk.CTkFrame(self, fg_color="#5D4037")
-        self.player_choice_area.grid(row=0, column=1, padx=5, pady=5, sticky="nsew")        
-              
+        self.player_choice_area.grid(row=0, column=1, padx=5, pady=5, sticky="nsew")
         
         
-        self.right_column = ctk.CTkFrame(self, fg_color="green")
+        self.right_column = ctk.CTkFrame(self, fg_color="#4E342E")
         self.right_column.grid(row=0, column=2, padx=5, pady=5, sticky="nsew")
         
         self.right_column.grid_rowconfigure(0, weight=1)
@@ -57,15 +57,17 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.player1_choice_lbl = ctk.CTkLabel(self.player_choice_area, text=f"Card options")
         self.player1_choice_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=7, sticky="nsew")
         
-        self.choice_area_frame = ctk.CTkFrame(self, fg_color="#6D4C41")
+        self.choice_area_frame = ctk.CTkFrame(self, fg_color="#6D4C41" ) 
         self.choice_area_frame.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
         self.choice_area_frame.grid_columnconfigure(0, weight=1)
+        self.choice_area_frame.grid_columnconfigure(1, weight=1)
         
-        self.center_frame = ctk.CTkFrame(self.choice_area_frame, fg_color="transparent")
-        self.center_frame.grid(row=1, column=0,padx=5, pady=(15,0), sticky="n")
-        
-        self.instruction_area = ctk.CTkFrame(self.choice_area_frame, fg_color="#2B2B2B")
+        self.instruction_area = ctk.CTkFrame(self.choice_area_frame, fg_color="#2B2B2B" ) 
         self.instruction_area.grid(row=0, column=0, padx=5, pady=(25,0))
+        
+        self.center_frame = ctk.CTkFrame(self.choice_area_frame, fg_color="transparent") 
+        self.center_frame.grid(row=1, column=0, padx=0, pady=(15,0), sticky="n")        
+        
         
         self.instruction_area_lbl = ctk.CTkLabel(self.instruction_area, text="")
         self.instruction_area_lbl.grid(row=0, column=0, padx=5, pady=5)
@@ -110,10 +112,13 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             col = 0
             row = 0
             for key,values in card.mirage_suits.items():
+                suit_lbl = ctk.CTkLabel(self.center_frame, text=f"{key}:", fg_color="#2B2B2B")
+                suit_lbl.grid(row=row, column=col, sticky="ew", padx=5, pady=5)
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{key}: {value}",
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}",
                                                     height=60, command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
-                    self.btn_option.grid(row=row, column=col, sticky="ew", padx=10, pady=5)
+                    self.btn_option.grid(row=row, column=col+1, sticky="ew", padx=10, pady=5)
+                    
                     col += 1
                     if col >= 5:
                         col = 0
@@ -124,11 +129,13 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             col = 0
             row = 0
             for key,values in card.shape_suits.items():
+                suit_lbl = ctk.CTkLabel(self.center_frame, text=f"{key}:", fg_color="#2B2B2B")
+                suit_lbl.grid(row=row, column=col, sticky="ew", padx=5, pady=5)
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{key}: {value}",
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}",
                                                     height=60,
                                                     command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
-                    self.btn_option.grid(row=row, column=col, sticky="ew", padx=10, pady=5)
+                    self.btn_option.grid(row=row, column=col+1, sticky="ew", padx=10, pady=5)
                     col += 1
                     if col >= 5:
                         col = 0
@@ -163,25 +170,30 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 
                     
             suit_col = 1
-            suit_row = 0
-            self.suits_area = ctk.CTkFrame(self.choice_area_frame, fg_color="#6D4C41")
-            self.suits_area.grid(row=1, column=6, sticky="ew", padx=5, pady=(25,0))
+            suit_row = 1
+            self.suits_area = ctk.CTkFrame(self.choice_area_frame, fg_color="#6D4C41") 
+            self.suits_area.grid(row=1, column=1, sticky="nsew", padx=0, pady=(25,0))
+            
+        
             
             self.suits_area.grid_columnconfigure(0, weight=1)
             self.suits_area.grid_columnconfigure(1, weight=0)
             self.suits_area.grid_columnconfigure(2, weight=0)
-            self.suits_area.grid_columnconfigure(3, weight=0)
-            self.suits_area.grid_columnconfigure(4, weight=0)
-            self.suits_area.grid_columnconfigure(5, weight=0)
-            self.suits_area.grid_columnconfigure(6, weight=1)
+            self.suits_area.grid_columnconfigure(3, weight=1)
+            
+            
             
             self.instruction_area_lbl.configure(text="Double-click a card to select it, then choose a suit to change it to.")
             
+            suits_area_lbl = ctk.CTkLabel(self.suits_area, fg_color="#2B2B2B", text="Suits:")
+            suits_area_lbl.grid(row=0, column=1,  sticky="nsew", padx=10, pady=5, columnspan=2)
+            
             for suit in ALL_SUITS:
+                
                 self.btn_option = ctk.CTkButton(self.suits_area, fg_color="#B7410E", text=f"{suit}",
                                                 height=40,
                                                 command=lambda c=card, s=suit: self.book_of_changes_choices(c, self.chosen_card, s))
-                self.btn_option.grid(row=suit_row, column=suit_col, sticky="ew", padx=10, pady=5)
+                self.btn_option.grid(row=suit_row, column=suit_col, sticky="ew", padx=5, pady=5)
                 suit_col += 1
                 if suit_col >= 3:
                     suit_col = 1
@@ -202,7 +214,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                         col = 0
                         row = 1
                         
-            self.instruction_area_lbl.configure(text="Select a card from discard to add it to your hand")
+            self.instruction_area_lbl.configure(text="Double click on a card from discard to add it to your hand.")
     
     
     

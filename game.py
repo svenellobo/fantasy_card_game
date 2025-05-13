@@ -74,16 +74,16 @@ class Game():
        
         dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
-        #self.discard_area.discard_area_cards.append(dragon) 
-        #self.discard_area.discard_area_cards.append(dragon) 
-        #self.discard_area.discard_area_cards.append(dragon) 
-        #self.discard_area.discard_area_cards.append(dragon) 
-        #self.discard_area.discard_area_cards.append(dragon) 
-        #self.discard_area.discard_area_cards.append(dragon) 
-        #self.discard_area.discard_area_cards.append(dragon) 
-        #self.discard_area.discard_area_cards.append(dragon)
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon) 
+        self.discard_area.discard_area_cards.append(dragon)
         
-        collector = Collector()
+        """collector = Collector()
         self.player2.cards_in_hand.append(collector)
         whirl = Whirlwind()
         self.player2.cards_in_hand.append(whirl)
@@ -98,12 +98,11 @@ class Game():
         self.player2.cards_in_hand.append(airelem)
         
         mirage = Mirage()
-        self.player2.cards_in_hand.append(mirage)
+        self.player2.cards_in_hand.append(mirage)"""
         
         
-              
         
-        """
+        
         necro = Necromancer()        
         self.player1.cards_in_hand.append(necro)
         dop = Doppelganger()
@@ -112,12 +111,13 @@ class Game():
         self.player1.cards_in_hand.append(mirage)
         shape = Shapeshifter()
         self.player1.cards_in_hand.append(shape)
+        boc = BookOfChanges()
+        self.player1.cards_in_hand.append(boc)
         dw = DwarvishInfantry()
         self.player1.cards_in_hand.append(dw)
         island = Island()
         self.player1.cards_in_hand.append(island)
-        airelem = AirElemental()
-        self.player1.cards_in_hand.append(airelem)"""
+        
         
         """bell = BellTower()
         self.player2.cards_in_hand.append(bell)
@@ -268,7 +268,7 @@ class Game():
     
     def end_turn(self):
         if self.card_taken and self.card_discarded:
-            if len(self.discard_area.discard_area_cards) >= 3:
+            if len(self.discard_area.discard_area_cards) >= 10:
                 self.end_game()
             else: 
                 if self.current_player == "player":                

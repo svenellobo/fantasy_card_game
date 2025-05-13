@@ -100,7 +100,7 @@ class Necromancer(Card):
                         best_discard_card = discard_card
                         best_impact = impact
                         
-            if best_impact > -float("inf"):
+            if best_impact > -float("inf") and len(discard_area) >= 6:
                 self.total_power += best_impact            
             if len(discard_area) >= 10: 
                 hand.append(best_discard_card)            

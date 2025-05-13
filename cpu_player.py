@@ -94,10 +94,8 @@ class CPUPlayer(Player):
         for card in hand:
             temp_hand = copy.deepcopy(hand)
             card_index = hand.index(card)
-            temp_hand.pop(card_index)  
-            print("DEEPCOPY START; DOESN't COUNT")
+            temp_hand.pop(card_index)            
             self.penalties_and_conditions(temp_hand)
-            print("DEEPCOPY END; DOESN't COUNT")
             new_power = self.hand_total_power - sum(card.total_power for card in temp_hand)
             
             if new_power < worst_impact:
@@ -117,6 +115,10 @@ class CPUPlayer(Player):
         best_discard_card = None
         best_impact = -float("inf")          
         self.hand_total_power = sum(card.total_power for card in self.cards_in_hand)
+        print(f"TOTAL POWER: {self.hand_total_power}")
+        for card in self.cards_in_hand:
+            if card.name == "Necromancer":
+                print(f"NECRO: {card}")
 
         if discard_area:
             for discard_card in discard_area:
