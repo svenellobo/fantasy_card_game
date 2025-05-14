@@ -3,7 +3,7 @@ from card import *
 class Island(Card):
     def __init__(self):
         super().__init__("Island", 14, FLOOD, 9)
-        self.has_clear = True 
+        self.has_clear = True        
         self.image = "images/island.jpeg"
         self.save_original_state()   
 

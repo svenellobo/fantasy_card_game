@@ -72,7 +72,7 @@ class Game():
         self.game_screen = game_screen
            
        
-        dragon = Dragon()
+        """dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
@@ -81,7 +81,7 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon)
+        self.discard_area.discard_area_cards.append(dragon)"""
         
         """collector = Collector()
         self.player2.cards_in_hand.append(collector)
@@ -103,7 +103,7 @@ class Game():
         
         
         
-        necro = Necromancer()        
+        """necro = Necromancer()        
         self.player1.cards_in_hand.append(necro)
         dop = Doppelganger()
         self.player1.cards_in_hand.append(dop)
@@ -117,6 +117,8 @@ class Game():
         self.player1.cards_in_hand.append(dw)
         island = Island()
         self.player1.cards_in_hand.append(island)
+        wildfire = Wildfire()
+        self.player1.cards_in_hand.append(wildfire)"""
         
         
         """bell = BellTower()

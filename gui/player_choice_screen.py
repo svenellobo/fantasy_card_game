@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from gui.card_widget import CardWidget
-from constants import ALL_SUITS
+from constants import *
 from gui.score_screen import ScoreScreen
 
 class PlayerChoiceScreen(ctk.CTkFrame):
@@ -22,7 +22,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         
         
         for card in self.player1.cards_in_hand:
-            if card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes"}:
+            if card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes", "Island"}:
                 self.cards_with_choice.append(card)
                 
         self.grid_rowconfigure(0, weight=0)
@@ -93,7 +93,8 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.player_choice_area.grid_columnconfigure(3, weight=0)
         self.player_choice_area.grid_columnconfigure(4, weight=0)
         self.player_choice_area.grid_columnconfigure(5, weight=0)
-        self.player_choice_area.grid_columnconfigure(6, weight=1)
+        self.player_choice_area.grid_columnconfigure(6, weight=0)
+        self.player_choice_area.grid_columnconfigure(7, weight=1)
             
             
         
@@ -154,6 +155,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             self.instruction_area_lbl.configure(text="Double click on a card for 'Doppelganger' to duplicate.")
                 
         elif card.original_state["name"] == "Book of Changes":
+            self.boc_card_picked = False
             col = 1
             row = 0
             self.chosen_card = None
@@ -201,7 +203,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 
         elif card.original_state["name"] == "Necromancer":
             self.necromancer_card = card
-            self.card_picked = False
+            self.necro_card_picked = False
             col = 0
             row = 0
             for disc_card in self.discard_area.discard_area_cards:
@@ -215,8 +217,22 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                         row = 1
                         
             self.instruction_area_lbl.configure(text="Double click on a card from discard to add it to your hand.")
+            
+        elif card.original_state["name"] == "Island":
+            self.island_choice_picked = False
+            col = 0
+            row = 0
+            for island_card in self.player1.cards_in_hand:
+                if island_card.suit in {FLAME, FLOOD}:                    
+                    card_widget = CardWidget(self.center_frame, island_card.image,
+                                             island_card, click_action=lambda ic=island_card: self.island_choice(card, ic))
+                    card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
+                    col += 1
+                    if col >= 5:
+                        col = 0
+                        row = 1
     
-    
+            self.instruction_area_lbl.configure(text="Double click on a card to clear its penalties.")
     
     
     
@@ -230,6 +246,23 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             click_action=lambda event: self.doppelganger_choice(card, dop_card)  
         )
         card_widget.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
+        
+    def island_choice(self, card, island_card):
+        if not self.island_choice_picked:
+            island_card.has_penalty = False
+            self.island_choice_picked = True
+            if card in self.card_info_labels:
+                card_info_area = self.card_info_labels[card][0]
+                card_info_area.configure(text=f"{island_card.name}\n")
+                card_widget = self.card_info_labels[card][1]
+                card_widget.configure(border_color="#DA70D6") 
+                card_widget.unbind("<Enter>")
+                card_widget.card_label.unbind("<Enter>")
+                card_widget.unbind("<Leave>")
+                card_widget.card_label.unbind("<Leave>")
+        
+        
+            
            
             
     def mirage_shapeshift_choice(self, card, suit, value):
@@ -266,20 +299,23 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         
         
         
-    def book_of_changes_choices(self, boc, chosen_card, suit):        
-        if chosen_card:
-            chosen_card.suit = suit            
-            card_info_area_boc = self.card_info_labels[boc][0]
-            if chosen_card in self.cards_with_choice:
-                card_info_area_card = self.card_info_labels[chosen_card][0]
-                card_info_area_card.configure(text=f"{chosen_card.name}\n{suit} suit")
-            card_info_area_boc.configure(text=f"{chosen_card.original_state["name"]}\n{suit} suit")             
-            card_widget = self.card_info_labels[boc][1]
-            card_widget.configure(border_color="#DA70D6") 
-            card_widget.unbind("<Enter>")
-            card_widget.card_label.unbind("<Enter>")
-            card_widget.unbind("<Leave>")
-            card_widget.card_label.unbind("<Leave>")
+    def book_of_changes_choices(self, boc, chosen_card, suit):
+        if not self.boc_card_picked:        
+            if chosen_card:
+                chosen_card.suit = suit            
+                card_info_area_boc = self.card_info_labels[boc][0]
+                self.boc_card_picked = True
+                if chosen_card in self.cards_with_choice:
+                    card_info_area_card = self.card_info_labels[chosen_card][0]
+                    card_info_area_card.configure(text=f"{chosen_card.name}\n{suit} suit")
+                card_info_area_boc.configure(text=f"{chosen_card.original_state["name"]}\n{suit} suit")             
+                card_widget = self.card_info_labels[boc][1]
+                card_widget.configure(border_color="#DA70D6") 
+                card_widget.unbind("<Enter>")
+                card_widget.card_label.unbind("<Enter>")
+                card_widget.unbind("<Leave>")
+                card_widget.card_label.unbind("<Leave>")
+                
         
         
     def set_chosen_card(self, card):
@@ -288,10 +324,10 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         card_info_area.configure(text=f"{card.original_state["name"]}")        
         
     def necromancer_choice(self, card):
-        if not self.card_picked:
+        if not self.necro_card_picked:
             self.player1.cards_in_hand.append(card)
             self.discard_area.discard_area_cards.remove(card)
-            self.card_picked = True
+            self.necro_card_picked = True
         if self.necromancer_card in self.card_info_labels:
             card_info_area = self.card_info_labels[self.necromancer_card][0]
             card_info_area.configure(text=f"{card.name}")
