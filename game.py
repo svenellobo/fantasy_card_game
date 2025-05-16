@@ -59,8 +59,11 @@ from card_library.weather.air_elemental import AirElemental
 
 
 class Game():
-    def __init__(self, game_screen):
-        self.deck = Deck()        
+    def __init__(self, game_screen): 
+        image_paths = []       
+        self.deck = Deck()
+        for card in self.deck.cards:
+            image_paths.append(card.image)
         self.deck.shuffle_deck()
         self.discard_area = DiscardArea()
         self.player1 = Player()

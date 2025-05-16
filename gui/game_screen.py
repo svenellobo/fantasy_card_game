@@ -61,7 +61,7 @@ class GameScreen(ctk.CTkFrame):
                 card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
                 
             else:
-                card_widget = CardWidget(frame, card.image, card)
+                card_widget = CardWidget(frame, card.card_back_image, card)
                 card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
             col += 1
             
@@ -127,6 +127,9 @@ class GameScreen(ctk.CTkFrame):
         
         self.status_area_lbl = ctk.CTkLabel(self.status_area, text="",  wraplength=200)
         self.status_area_lbl.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
+
+        self.card_library_btn = ctk.CTkButton(self, text="Card Library", fg_color="green", width=50)
+        self.card_library_btn.grid(row=0, column=3)
         
         self.card_preview_lbl = ctk.CTkLabel(self, text="Right click on a card to view it", fg_color="#6D4C41", height=220, width=150)
         self.card_preview_lbl.grid(row=1, column=3, padx=10, pady=10, sticky="nsew")
