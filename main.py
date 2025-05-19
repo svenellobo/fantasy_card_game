@@ -19,6 +19,7 @@ class App(ctk.CTk):
         screen_height = self.winfo_screenheight() -35
         self.geometry(f"{screen_width}x{screen_height}")
         self.bind("<Escape>", lambda event: self.attributes("-fullscreen", False))
+        
     
         self.main_menu = None
         self.initialize_main_menu()

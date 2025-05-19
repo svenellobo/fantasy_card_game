@@ -3,6 +3,7 @@ from gui.card_widget import CardWidget
 from PIL import Image
 from gui.score_screen import ScoreScreen
 from gui.player_choice_screen import PlayerChoiceScreen
+from gui.card_library import CardLibrary
 
 
 class GameScreen(ctk.CTkFrame):
@@ -10,7 +11,8 @@ class GameScreen(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
         self.grid(row=0, column=0, sticky="nsew")
-        self.game = game        
+        self.game = game
+        self.library_open = False               
         self.configure(fg_color="#4E342E")
         self.init_screen()
         
@@ -87,14 +89,14 @@ class GameScreen(ctk.CTkFrame):
         self.draw_deck_frame.grid(row=1, column=0, sticky="ew", padx=40, pady=40)
         
         self.draw_button = ctk.CTkButton(self.draw_deck_frame, fg_color="green", state="normal",
-                                         text="Draw from deck", height=50, command=lambda: self.game.draw_from_deck())
+                                         text="Draw from deck", font=("Georgia", 14, "bold"), height=50, command=lambda: self.game.draw_from_deck())
         self.draw_button.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
         
         #hands and draw
         draw_image = Image.open("images/card_back.jpeg")
         draw_image_tk = ctk.CTkImage(light_image=draw_image, size=(150, 220)) 
         self.draw_deck = ctk.CTkLabel(self.draw_deck_frame, image=draw_image_tk,
-                                      text="", height=220, width=150)
+                                      text="", height=230, width=160)
         self.draw_deck.grid(row=1, column=0, padx=5, pady=5) 
         
         self.hand_frame = ctk.CTkFrame(self, height=220, fg_color="#6D4C41") 
@@ -122,19 +124,21 @@ class GameScreen(ctk.CTkFrame):
         self.status_area = ctk.CTkFrame(self, height=220, fg_color="#2B2B2B")
         self.status_area.grid(row=2, column=0, sticky="ew", padx=10, pady=40)
         self.end_turn_btn = ctk.CTkButton(self.status_area, fg_color="#800000", state="normal",
-                                          text="End Turn", height=60, command=lambda: self.game.end_turn())
+                                          text="End Turn", font=("Georgia", 14, "bold"), height=60, command=lambda: self.game.end_turn())
         self.end_turn_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
         
-        self.status_area_lbl = ctk.CTkLabel(self.status_area, text="",  wraplength=200)
+        self.status_area_lbl = ctk.CTkLabel(self.status_area, font=("Georgia", 14), text="",  wraplength=200)
         self.status_area_lbl.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
 
-        self.card_library_btn = ctk.CTkButton(self, text="Card Library", fg_color="green", width=50)
+        self.card_library_btn = ctk.CTkButton(self, text="Card Library", font=("Georgia", 14, "bold"), fg_color="green",height=60, command=lambda: self.open_card_library())
         self.card_library_btn.grid(row=0, column=3)
         
-        self.card_preview_lbl = ctk.CTkLabel(self, text="Right click on a card to view it", fg_color="#6D4C41", height=220, width=150)
+        self.card_preview_lbl = ctk.CTkLabel(self, text="Right click on a card to view it", font=("Georgia", 14), fg_color="#6D4C41", height=220, width=150)
         self.card_preview_lbl.grid(row=1, column=3, padx=10, pady=10, sticky="nsew")
         self.rowconfigure(1, weight=4)
         self.columnconfigure(3, weight=1)
+        
+        
         
     
     
@@ -162,7 +166,7 @@ class GameScreen(ctk.CTkFrame):
         
     def open_choice_screen(self, player1, player2, discard_area):
         self.destroy()
-        player_choice_screen = PlayerChoiceScreen(self.parent, player1, player2, discard_area)
+        player_choice_screen = PlayerChoiceScreen(self.parent, player1, player2, discard_area, self.game.image_paths)
         player_choice_screen.grid(row=0, column=0, sticky="nsew")
         
     def reorder_cards(self, dragged_card_widget):
@@ -175,6 +179,15 @@ class GameScreen(ctk.CTkFrame):
         for index, widget in enumerate(widgets):
             widget.grid(row=0, column=index, padx=5, pady=5, sticky="nsew")
         self.display_cards(self.game.player1.cards_in_hand, "player_hand")
+        
+    def open_card_library(self):
+        if not self.library_open:
+            self.library_open = True
+            self.card_library = CardLibrary(self.parent, self.game.image_paths)         
+            self.card_library.grid(row=0, column=0, sticky="nsew")
+        else:
+            self.card_library.grid(row=0, column=0, sticky="nsew")
+        
         
         
     """def back_to_menu(self):        

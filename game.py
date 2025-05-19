@@ -60,10 +60,10 @@ from card_library.weather.air_elemental import AirElemental
 
 class Game():
     def __init__(self, game_screen): 
-        image_paths = []       
+        self.image_paths = []       
         self.deck = Deck()
         for card in self.deck.cards:
-            image_paths.append(card.image)
+            self.image_paths.append(card.image)
         self.deck.shuffle_deck()
         self.discard_area = DiscardArea()
         self.player1 = Player()
@@ -75,7 +75,7 @@ class Game():
         self.game_screen = game_screen
            
        
-        """dragon = Dragon()
+        dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
@@ -84,7 +84,7 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon)"""
+        self.discard_area.discard_area_cards.append(dragon)
         
         """collector = Collector()
         self.player2.cards_in_hand.append(collector)
@@ -106,22 +106,19 @@ class Game():
         
         
         
-        """necro = Necromancer()        
+        necro = Necromancer()        
         self.player1.cards_in_hand.append(necro)
-        dop = Doppelganger()
+        """dop = Doppelganger()
         self.player1.cards_in_hand.append(dop)
         mirage = Mirage()
         self.player1.cards_in_hand.append(mirage)
         shape = Shapeshifter()
         self.player1.cards_in_hand.append(shape)
         boc = BookOfChanges()
-        self.player1.cards_in_hand.append(boc)
-        dw = DwarvishInfantry()
-        self.player1.cards_in_hand.append(dw)
+        self.player1.cards_in_hand.append(boc)"""
         island = Island()
         self.player1.cards_in_hand.append(island)
-        wildfire = Wildfire()
-        self.player1.cards_in_hand.append(wildfire)"""
+        
         
         
         """bell = BellTower()

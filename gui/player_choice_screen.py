@@ -2,26 +2,31 @@ import customtkinter as ctk
 from gui.card_widget import CardWidget
 from constants import *
 from gui.score_screen import ScoreScreen
+from gui.cards_in_hand_screen import CardsInHandScreen
+from gui.card_library import CardLibrary
 
 class PlayerChoiceScreen(ctk.CTkFrame):
-    def __init__(self, parent, player1, player2, discard_area):
+    def __init__(self, parent, player1, player2, discard_area, card_images):
         super().__init__(parent) 
         self.parent = parent       
         self.player1 = player1
         self.player2 = player2
+        self.hand_images = []        
         self.discard_area = discard_area
         self.cards_with_choice = []
         self.configure(fg_color="#4E342E")
         self.necromancer_card = None
         self.boc_card = None
         self.boc_area = False
+        self.necro_card_picked = False
+        self.island_choice_picked = False
+        self.library_open = False
+        self.cards_in_hand_screen_open = False
         self.card_info_labels = {}
-        
-        
-        
-        
+        self.image_paths = card_images
         
         for card in self.player1.cards_in_hand:
+            self.hand_images.append(card.image)
             if card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes", "Island"}:
                 self.cards_with_choice.append(card)
                 
@@ -49,13 +54,21 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.right_column.grid_rowconfigure(0, weight=1)
         self.right_column.grid_columnconfigure(0, weight=1)
         
-        self.to_score_screen_btn = ctk.CTkButton(self.right_column, fg_color="blue",
-                                                 text="To Score Screen", height=60, command=self.open_score_screen)
-        self.to_score_screen_btn.grid(row=0, column=0, padx=5, pady=5)        
+        self.to_score_screen_btn = ctk.CTkButton(self.right_column, fg_color="#b7410e",
+                                                 text="Proceed To Score Screen", height=60, font=("Georgia", 14, "bold"), command=self.open_score_screen)
+        self.to_score_screen_btn.grid(row=0, column=0, padx=5, pady=5)    
+        
+        cards_in_hand_btn = ctk.CTkButton(self.right_column, fg_color="green",
+                                          text="Cards in Hand", height=60, font=("Georgia", 14, "bold"), command=self.open_cards_in_hand_screen)
+        cards_in_hand_btn.grid(row=1, column=0, padx=5, pady=5) 
+        
+        card_library_btn = ctk.CTkButton(self.right_column, fg_color="green",
+                                          text="Card Library", height=60, font=("Georgia", 14, "bold"), command=self.open_card_library)
+        card_library_btn.grid(row=2, column=0, padx=5, pady=5) 
         
         
-        self.player1_choice_lbl = ctk.CTkLabel(self.player_choice_area, text=f"Card options")
-        self.player1_choice_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=7, sticky="nsew")
+        self.player1_choice_lbl = ctk.CTkLabel(self.player_choice_area, text=f"Double click a card:", font=("Georgia", 16, "bold"), text_color="orange")
+        self.player1_choice_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=10, sticky="nsew")
         
         self.choice_area_frame = ctk.CTkFrame(self, fg_color="#6D4C41" ) 
         self.choice_area_frame.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
@@ -69,7 +82,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.center_frame.grid(row=1, column=0, padx=0, pady=(15,0), sticky="n")        
         
         
-        self.instruction_area_lbl = ctk.CTkLabel(self.instruction_area, text="")
+        self.instruction_area_lbl = ctk.CTkLabel(self.instruction_area, text="", font=("Georgia", 14, "bold"))
         self.instruction_area_lbl.grid(row=0, column=0, padx=5, pady=5)
          
         
@@ -82,7 +95,8 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             card_info_area = ctk.CTkLabel(self.player_choice_area,
                                                text="",
                                                text_color="green",
-                                               fg_color="#2B2B2B")
+                                               fg_color="#2B2B2B",
+                                               font=("Georgia", 14))
             card_info_area.grid(row=2, column=col, padx=5, pady=5)
             self.card_info_labels[card] = (card_info_area, card_widget)
             col += 1
@@ -95,6 +109,8 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.player_choice_area.grid_columnconfigure(5, weight=0)
         self.player_choice_area.grid_columnconfigure(6, weight=0)
         self.player_choice_area.grid_columnconfigure(7, weight=1)
+        
+        
             
             
         
@@ -113,10 +129,10 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             col = 0
             row = 0
             for key,values in card.mirage_suits.items():
-                suit_lbl = ctk.CTkLabel(self.center_frame, text=f"{key}:", fg_color="#2B2B2B")
+                suit_lbl = ctk.CTkLabel(self.center_frame, text=f"{key}:", fg_color="#2B2B2B", font=("Georgia", 14, "bold"))
                 suit_lbl.grid(row=row, column=col, sticky="ew", padx=5, pady=5)
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}",
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}", font=("Georgia", 14),
                                                     height=60, command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
                     self.btn_option.grid(row=row, column=col+1, sticky="ew", padx=10, pady=5)
                     
@@ -130,10 +146,10 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             col = 0
             row = 0
             for key,values in card.shape_suits.items():
-                suit_lbl = ctk.CTkLabel(self.center_frame, text=f"{key}:", fg_color="#2B2B2B")
+                suit_lbl = ctk.CTkLabel(self.center_frame, text=f"{key}:", fg_color="#2B2B2B", font=("Georgia", 14, "bold"))
                 suit_lbl.grid(row=row, column=col, sticky="ew", padx=5, pady=5)
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}",
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}", font=("Georgia", 14),
                                                     height=60,
                                                     command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
                     self.btn_option.grid(row=row, column=col+1, sticky="ew", padx=10, pady=5)
@@ -187,13 +203,13 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             
             self.instruction_area_lbl.configure(text="Double-click a card to select it, then choose a suit to change it to.")
             
-            suits_area_lbl = ctk.CTkLabel(self.suits_area, fg_color="#2B2B2B", text="Suits:")
+            suits_area_lbl = ctk.CTkLabel(self.suits_area, fg_color="#2B2B2B", text="Suits:", font=("Georgia", 14, "bold"))
             suits_area_lbl.grid(row=0, column=1,  sticky="nsew", padx=10, pady=5, columnspan=2)
             
             for suit in ALL_SUITS:
                 
                 self.btn_option = ctk.CTkButton(self.suits_area, fg_color="#B7410E", text=f"{suit}",
-                                                height=40,
+                                                height=40, font=("Georgia", 14),
                                                 command=lambda c=card, s=suit: self.book_of_changes_choices(c, self.chosen_card, s))
                 self.btn_option.grid(row=suit_row, column=suit_col, sticky="ew", padx=5, pady=5)
                 suit_col += 1
@@ -203,7 +219,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 
         elif card.original_state["name"] == "Necromancer":
             self.necromancer_card = card
-            self.necro_card_picked = False
+            
             col = 0
             row = 0
             for disc_card in self.discard_area.discard_area_cards:
@@ -219,7 +235,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             self.instruction_area_lbl.configure(text="Double click on a card from discard to add it to your hand.")
             
         elif card.original_state["name"] == "Island":
-            self.island_choice_picked = False
+            
             col = 0
             row = 0
             for island_card in self.player1.cards_in_hand:
@@ -343,5 +359,21 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.destroy()        
         score_screen = ScoreScreen(self.parent, self.player1, self.player2, self.discard_area)
         score_screen.grid(row=0, column=0, sticky="nsew")
+        
+    def open_cards_in_hand_screen(self):
+        if not self.cards_in_hand_screen_open:
+            self.cards_in_hand_screen_open = True
+            self.cards_in_hand_screen = CardsInHandScreen(self.parent, self.hand_images)         
+            self.cards_in_hand_screen.grid(row=0, column=0, sticky="nsew")
+        else:
+            self.cards_in_hand_screen.grid(row=0, column=0, sticky="nsew")
+            
+    def open_card_library(self):
+        if not self.library_open:
+            self.library_open = True
+            self.card_library = CardLibrary(self.parent, self.image_paths)         
+            self.card_library.grid(row=0, column=0, sticky="nsew")
+        else:
+            self.card_library.grid(row=0, column=0, sticky="nsew")
         
     
