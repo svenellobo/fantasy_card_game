@@ -7,7 +7,7 @@ class WarDirigible(Card):
         self.has_blank = True
         self.blanks_self=True 
         self.penalties_suits = {ARMY, WEATHER}
-        self.image = "images/war_dirigible.jpeg"
+        self.image = resource_path("images/war_dirigible.jpeg")
         self.save_original_state()       
        
     

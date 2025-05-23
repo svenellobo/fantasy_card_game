@@ -7,7 +7,7 @@ class GreatFlood(Card):
         self.has_blank = True
         self.penalties_suits = {ARMY, LAND, FLAME}
         self.penalties_names = {"Mountain", "Lightning"}
-        self.image = "images/great_flood.jpeg"
+        self.image = resource_path("images/great_flood.jpeg")
         self.save_original_state()
         
 

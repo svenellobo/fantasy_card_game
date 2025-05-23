@@ -5,7 +5,7 @@ class BookOfChanges(Card):
     def __init__(self):
         super().__init__("Book of Changes", 3, ARTIFACT, 49)
         self.priority = 4
-        self.image = "images/book_of_changes.jpeg"
+        self.image = resource_path("images/book_of_changes.jpeg")
         self.save_original_state()
         
     def card_reset(self, hand):

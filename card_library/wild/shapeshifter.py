@@ -5,7 +5,7 @@ class Shapeshifter(Card):
     def __init__(self):
         super().__init__("Shapeshifter", 0, WILD, 51)
         self.priority = 3
-        self.image = "images/shapeshifter.jpeg"
+        self.image = resource_path("images/shapeshifter.jpeg")
         self.save_original_state()        
         self.shape_suits = {ARTIFACT: ["Shield of Keth", "Gem of Order", "World Tree", "Book of Changes", "Protection Rune"],
                              LEADER: ["King", "Queen", "Princess", "Warlord", "Empress"],

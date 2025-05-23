@@ -3,7 +3,7 @@ from card import *
 class GemOfOrder(Card):
     def __init__(self):
         super().__init__("Gem of Order", 5, ARTIFACT, 47)
-        self.image = "images/gem_of_order.jpeg"
+        self.image = resource_path("images/gem_of_order.jpeg")
         self.save_original_state()
         
         

@@ -3,7 +3,7 @@ from card import *
 class Unicorn(Card):
     def __init__(self):
         super().__init__("Unicorn", 9, BEAST, 36)
-        self.image = "images/unicorn.jpeg"
+        self.image = resource_path("images/unicorn.jpeg")
         self.save_original_state()
         
         

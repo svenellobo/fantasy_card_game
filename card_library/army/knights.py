@@ -5,7 +5,7 @@ class Knights(Card):
         super().__init__("Knights", 20, ARMY, 21)
         self.has_penalty = True
         self.penalties_suits = {LEADER}
-        self.image = "images/knights.jpeg" 
+        self.image = resource_path("images/knights.jpeg" )
         self.save_original_state()  
         
 

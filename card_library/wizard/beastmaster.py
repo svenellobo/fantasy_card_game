@@ -4,7 +4,7 @@ class Beastmaster(Card):
     def __init__(self):
         super().__init__("Beastmaster", 9, WIZARD, 27)      
         self.has_clear = True
-        self.image = "images/beastmaster.jpeg"
+        self.image = resource_path("images/beastmaster.jpeg")
         self.save_original_state()
 
 

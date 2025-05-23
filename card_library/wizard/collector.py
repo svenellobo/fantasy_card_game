@@ -3,7 +3,7 @@ from card import *
 class Collector(Card):
     def __init__(self):
         super().__init__("Collector", 7, WIZARD, 26)
-        self.image = "images/collector.jpeg"
+        self.image = resource_path("images/collector.jpeg")
         self.save_original_state()      
         
 

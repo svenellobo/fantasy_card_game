@@ -5,7 +5,7 @@ class Swamp(Card):
         super().__init__("Swamp", 18, FLOOD, 7)
         self.has_penalty = True
         self.penalties_suits = {ARMY, FLAME}
-        self.image = "images/swamp.jpeg"
+        self.image = resource_path("images/swamp.jpeg")
         self.save_original_state()
         
 

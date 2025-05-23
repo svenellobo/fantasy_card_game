@@ -4,7 +4,7 @@ from card import *
 class BellTower(Card):
   def __init__(self):
     super().__init__("Bell Tower", 8, LAND, 3)
-    self.image = "images/bell_tower.jpeg"    
+    self.image = resource_path("images/bell_tower.jpeg")
     self.save_original_state()   
 
   @Card.not_blank

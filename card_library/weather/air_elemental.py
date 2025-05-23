@@ -4,7 +4,7 @@ from card import *
 class AirElemental(Card):
     def __init__(self):
         super().__init__("Air Elemental", 4, WEATHER, 15)
-        self.image = "images/air_elemental.jpeg"
+        self.image = resource_path("images/air_elemental.jpeg")
         self.save_original_state()
         
 

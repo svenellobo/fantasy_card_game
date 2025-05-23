@@ -5,7 +5,7 @@ class Mountain(Card):
     def __init__(self):
         super().__init__("Mountain", 9, LAND, 1)
         self.has_clear = True
-        self.image = "images/mountain.jpeg"
+        self.image = resource_path("images/mountain.jpeg")
         self.save_original_state()
 
     @Card.not_blank

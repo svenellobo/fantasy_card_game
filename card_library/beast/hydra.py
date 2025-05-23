@@ -3,7 +3,7 @@ from card import *
 class Hydra(Card):
     def __init__(self):
         super().__init__("Hydra", 12, BEAST, 40)
-        self.image = "images/hydra.jpeg"
+        self.image = resource_path("images/hydra.jpeg")
         self.save_original_state()
         
         

@@ -3,7 +3,7 @@ from card import *
 class Forge(Card):
     def __init__(self):
         super().__init__("Forge", 9, FLAME, 18) 
-        self.image = "images/forge.jpeg"
+        self.image = resource_path("images/forge.jpeg")
         self.save_original_state()   
         
 

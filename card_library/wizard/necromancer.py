@@ -5,7 +5,7 @@ class Necromancer(Card):
     def __init__(self):
         super().__init__("Necromancer", 3, WIZARD, 28)
         self.priority = 6
-        self.image = "images/necromancer.jpeg"
+        self.image = resource_path("images/necromancer.jpeg")
         self.discard_suits = {ARMY, LEADER, WIZARD, BEAST}
         self.save_original_state()
         

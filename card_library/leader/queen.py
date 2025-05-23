@@ -4,7 +4,7 @@ from card import *
 class Queen(Card):
     def __init__(self):
         super().__init__("Queen", 6, LEADER, 32) 
-        self.image = "images/queen.jpeg"
+        self.image = resource_path("images/queen.jpeg")
         self.save_original_state()  
 
     @Card.not_blank

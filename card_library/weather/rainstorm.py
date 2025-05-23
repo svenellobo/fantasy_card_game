@@ -8,7 +8,7 @@ class Rainstorm(Card):
         self.has_blank = True        
         self.penalties_suits = {FLAME}    
         self.penalties_names = {"Lightning"}
-        self.image = "images/rainstorm.jpeg"
+        self.image = resource_path("images/rainstorm.jpeg")
         self.save_original_state()
 
     @Card.not_blank

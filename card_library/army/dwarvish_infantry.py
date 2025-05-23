@@ -5,7 +5,7 @@ class DwarvishInfantry(Card):
         super().__init__("Dwarvish Infantry", 15, ARMY, 24)
         self.has_penalty = True
         self.penalties_suits = {ARMY}
-        self.image = "images/dwarvish_infantry.jpeg"
+        self.image = resource_path("images/dwarvish_infantry.jpeg")
         self.save_original_state()  
         
 

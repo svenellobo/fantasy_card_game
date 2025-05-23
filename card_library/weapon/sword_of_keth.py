@@ -3,7 +3,7 @@ from card import *
 class SwordOfKeth(Card):
     def __init__(self):
         super().__init__("Sword of Keth", 7, WEAPON, 43)
-        self.image = "images/sword_of_keth.jpeg"
+        self.image = resource_path("images/sword_of_keth.jpeg")
         self.save_original_state()
         
         

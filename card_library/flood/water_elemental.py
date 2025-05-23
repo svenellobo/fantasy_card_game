@@ -4,7 +4,7 @@ from card import *
 class WaterElemental(Card):
     def __init__(self):
         super().__init__("Water Elemental", 4, FLOOD, 10) 
-        self.image = "images/water_elemental.jpeg"
+        self.image = resource_path("images/water_elemental.jpeg")
         self.save_original_state()   
 
     @Card.not_blank

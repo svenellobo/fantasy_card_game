@@ -7,7 +7,7 @@ class Blizzard(Card):
         self.has_penalty = True
         self.has_blank = True
         self.penalties_suits = {ARMY, LEADER, BEAST, FLAME}
-        self.image = "images/blizzard.jpeg"
+        self.image = resource_path("images/blizzard.jpeg")
         self.save_original_state()    
 
     @Card.not_blank
