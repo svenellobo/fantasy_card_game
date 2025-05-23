@@ -79,7 +79,7 @@ class Game():
         self.game_screen = game_screen
            
        
-        """dragon = Dragon()
+        dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
@@ -88,7 +88,7 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon)"""
+        self.discard_area.discard_area_cards.append(dragon)
         
         """necro = Necromancer()        
         self.player1.cards_in_hand.append(necro)

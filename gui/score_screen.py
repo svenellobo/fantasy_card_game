@@ -101,6 +101,14 @@ class ScoreScreen(ctk.CTkFrame):
             elif point_difference == 0:    
                 point_text = f"+{point_difference}"
                 point_color = "#B0B0B0"
+                
+            suit_text = f"{card.suit} suit" if card.suit and card.suit != card.original_state["suit"] else ""
+            text = (
+                f"{point_text}\n"
+                f"Total power: {card.total_power}\n"
+                f"{card.name if card.suit and card.name != card.original_state['name'] else ''}\n"
+                f"{suit_text}"
+            )
             
             if card.is_blanked:                
                 image = Image.open(card.image)
@@ -110,15 +118,18 @@ class ScoreScreen(ctk.CTkFrame):
                 card_widget = CardWidget(self.player1_cards, card.image, card)
                 card_widget.grid(row=1, column=p1_col, padx=5, pady=5)
                 card_widget.update_image(ctk_image)
-                 
+                
+                
+                                
                 card_info_area = ctk.CTkLabel(self.player1_cards,
-                                               text=f"{point_text}\nTotal power: {card.total_power}\n{card.name if card.suit and card.name != card.original_state['name'] else ''}\n{f"{card.suit} suit" if card.suit and card.suit != card.original_state['suit'] else ''}",
+                                               text=text,
                                                text_color=point_color,
                                                fg_color="#2B2B2B",
                                                font=("Georgia", 14))
                 card_info_area.grid(row=2, column=p1_col, padx=5, pady=5)                            
             
             else:
+                
                 card_widget = CardWidget(self.player1_cards, card.image, card)
                 card_widget.grid(row=1, column=p1_col, padx=5, pady=5)
                 
@@ -146,6 +157,14 @@ class ScoreScreen(ctk.CTkFrame):
                 point_text = f"+{point_difference}"
                 point_color = "#B0B0B0"
                 
+            suit_text = f"{card.suit} suit" if card.suit and card.suit != card.original_state["suit"] else ""
+            text = (
+                f"{point_text}\n"
+                f"Total power: {card.total_power}\n"
+                f"{card.name if card.suit and card.name != card.original_state['name'] else ''}\n"
+                f"{suit_text}"
+            )
+                
             if card.is_blanked:
                 image = Image.open(card.image)
                 grayscale_image = image.convert("L")                
@@ -156,7 +175,7 @@ class ScoreScreen(ctk.CTkFrame):
                 card_widget.update_image(ctk_image)
                 
                 card_info_area = ctk.CTkLabel(self.player2_cards,
-                                               text=f"{point_text}\nTotal power: {card.total_power}\n{card.name if card.suit and card.name != card.original_state['name'] else ''}\n{f"{card.suit} suit" if card.suit and card.suit != card.original_state['suit'] else ''}",
+                                               text=text,
                                                text_color=point_color,
                                                fg_color="#2B2B2B",
                                                font=("Georgia", 14))
@@ -167,7 +186,7 @@ class ScoreScreen(ctk.CTkFrame):
                 card_widget.grid(row=1, column=p2_col, padx=5, pady=5, sticky="nsew")
                 
                 card_info_area = ctk.CTkLabel(self.player2_cards,
-                                               text=f"{point_text}\nTotal power: {card.total_power}\n{card.name if card.suit and card.name != card.original_state['name'] else ''}\n{f"{card.suit} suit" if card.suit and card.suit != card.original_state['suit'] else ''}",
+                                               text=text,
                                                text_color=point_color,
                                                fg_color="#2B2B2B",
                                                font=("Georgia", 14))
