@@ -8,8 +8,7 @@ class ScoreScreen(ctk.CTkFrame):
         super().__init__(parent) 
         self.player1 = player1        
         self.player2 = player2        
-        self.player2.discard_area = discard_area.discard_area_cards
-        
+        self.player2.discard_area = discard_area.discard_area_cards                
         
         self.player1.penalties_and_conditions(self.player1.cards_in_hand)
         self.player2.penalties_and_conditions(self.player2.cards_in_hand)
@@ -41,7 +40,7 @@ class ScoreScreen(ctk.CTkFrame):
         self.winner_area.grid_columnconfigure(0, weight=1)
         
         self.winner_area_lbl = ctk.CTkLabel(self.winner_area, text="", anchor="center")
-        self.winner_area_lbl.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
+        self.winner_area_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=5, sticky="nsew")
         
         self.player_score_area = ctk.CTkFrame(self, fg_color="#4E342E")
         self.player_score_area.grid(row=1, column=0, padx=5, pady=5)        
@@ -177,12 +176,14 @@ class ScoreScreen(ctk.CTkFrame):
             
             
         
+        button_area = ctk.CTkFrame(self, fg_color="#6D4C41")
+        button_area.grid(row=2, column=0, pady=10, padx=10)
         
-        close_button = ctk.CTkButton(self, text="Close Game", font=("Georgia", 14, "bold"), command=self.quit_game, height=50)
-        close_button.grid(row=2, column=0, padx=10, pady=10)
+        close_button = ctk.CTkButton(button_area, text="Close Game", font=("Georgia", 14, "bold"), command=self.quit_game, height=50, fg_color="#800000")
+        close_button.grid(row=0, column=1, padx=10, pady=10)
         
-        play_again_btn = ctk.CTkButton(self, text="Close Game", font=("Georgia", 14, "bold"), command=self.play_again, height=50)
-        play_again_btn.grid(row=2, column=1, padx=10, pady=10)
+        play_again_btn = ctk.CTkButton(button_area, text="Play Again", font=("Georgia", 14, "bold"), command=self.play_again, height=50, fg_color="green")
+        play_again_btn.grid(row=0, column=0, padx=10, pady=10)
         
         
     def declare_winner(self):
@@ -198,10 +199,16 @@ class ScoreScreen(ctk.CTkFrame):
                 
             
         
-    def play_again(self):        
+    def play_again(self):
         self.destroy()
+
         from gui.game_screen import GameScreen
-        GameScreen(self.master, game=self.master.create_game()).grid(row=0, column=0, sticky="nsew")
+        from game import Game
+        
+        game_screen = GameScreen(self.master, None)
+        new_game = Game(game_screen)
+        game_screen.game = new_game       
+        game_screen.grid(row=0, column=0, sticky="nsew")
 
     def quit_game(self):
         self.quit()

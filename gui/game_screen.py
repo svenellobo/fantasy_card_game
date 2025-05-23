@@ -122,13 +122,23 @@ class GameScreen(ctk.CTkFrame):
         
         #end turn and hints
         self.status_area = ctk.CTkFrame(self, height=220, fg_color="#2B2B2B")
-        self.status_area.grid(row=2, column=0, sticky="ew", padx=10, pady=40)
+        self.status_area.grid(row=2, column=3, sticky="nsew", padx=10, pady=40)
+        
+        self.status_area.grid_rowconfigure(0, weight=1)  # Top spacer
+        self.status_area.grid_rowconfigure(1, weight=0)  # Label row
+        self.status_area.grid_rowconfigure(2, weight=1)  # Button row
+        self.status_area.grid_rowconfigure(3, weight=1)  # Bottom spacer
+        self.status_area.grid_columnconfigure(0, weight=1)  # Left spacer
+        self.status_area.grid_columnconfigure(1, weight=0)  # Content column
+        self.status_area.grid_columnconfigure(2, weight=1)
+        
+        
         self.end_turn_btn = ctk.CTkButton(self.status_area, fg_color="#800000", state="normal",
                                           text="End Turn", font=("Georgia", 14, "bold"), height=60, command=lambda: self.game.end_turn())
-        self.end_turn_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
+        self.end_turn_btn.grid(row=2, column=1, sticky="ew", padx=10, pady=10)
         
         self.status_area_lbl = ctk.CTkLabel(self.status_area, font=("Georgia", 14), text="",  wraplength=200)
-        self.status_area_lbl.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
+        self.status_area_lbl.grid(row=1, column=1, sticky="ew", padx=10, pady=10)
 
         self.card_library_btn = ctk.CTkButton(self, text="Card Library", font=("Georgia", 14, "bold"), fg_color="green",height=60, command=lambda: self.open_card_library())
         self.card_library_btn.grid(row=0, column=3)
@@ -189,8 +199,5 @@ class GameScreen(ctk.CTkFrame):
             self.card_library.grid(row=0, column=0, sticky="nsew")
         
         
-        
-    """def back_to_menu(self):        
-        self.grid_forget()  
-        self.parent.initialize_main_menu() """ 
+   
         

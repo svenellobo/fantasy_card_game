@@ -54,6 +54,10 @@ from card_library.leader.warlord import Warlord
 from card_library.weapon.magic_wand import MagicWand
 from card_library.flood.island import Island
 from card_library.weather.air_elemental import AirElemental
+from card_library.land.forest import Forest
+from card_library.beast.unicorn import Unicorn
+from card_library.wizard.warlock_lord import WarlockLord
+from card_library.weapon.elven_longbow import ElvenLongbow
 
 
 
@@ -75,7 +79,7 @@ class Game():
         self.game_screen = game_screen
            
        
-        dragon = Dragon()
+        """dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
@@ -84,40 +88,20 @@ class Game():
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon)
+        self.discard_area.discard_area_cards.append(dragon)"""
         
-        """collector = Collector()
-        self.player2.cards_in_hand.append(collector)
-        whirl = Whirlwind()
-        self.player2.cards_in_hand.append(whirl)
-        blizz = Blizzard()
-        self.player2.cards_in_hand.append(blizz)
-        dop = Doppelganger()
-        self.player2.cards_in_hand.append(dop)
-        rainstorm = Rainstorm()
-        self.player2.cards_in_hand.append(rainstorm)        
-        
-        airelem = AirElemental()
-        self.player2.cards_in_hand.append(airelem)
-        
-        mirage = Mirage()
-        self.player2.cards_in_hand.append(mirage)"""
-        
-        
-        
-        
-        necro = Necromancer()        
+        """necro = Necromancer()        
         self.player1.cards_in_hand.append(necro)
-        """dop = Doppelganger()
+        dop = Doppelganger()
         self.player1.cards_in_hand.append(dop)
         mirage = Mirage()
         self.player1.cards_in_hand.append(mirage)
         shape = Shapeshifter()
         self.player1.cards_in_hand.append(shape)
         boc = BookOfChanges()
-        self.player1.cards_in_hand.append(boc)"""
+        self.player1.cards_in_hand.append(boc)
         island = Island()
-        self.player1.cards_in_hand.append(island)
+        self.player1.cards_in_hand.append(island)"""
         
         
         
@@ -134,7 +118,7 @@ class Game():
         dragon = Dragon()
         self.player2.cards_in_hand.append(dragon)
         fe = FireElemental()
-        self.player2.cards_in_hand.append(fe) """
+        self.player2.cards_in_hand.append(fe)"""
         
         
         
@@ -239,8 +223,7 @@ class Game():
             self.game_screen.status_area_lbl.configure(text="HINT: Double click on an unwanted card in your hand to discard it.")
             self.card_taken = True
             self.game_screen.draw_button.configure(fg_color="#800000", state="disabled")
-        else:
-            print("already drew")
+        
             
         
     def discard_from_hand(self, card):
@@ -257,9 +240,7 @@ class Game():
               
         
     def end_game(self):
-        print("game ended")
-        #self.destroy()
-        if any(card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes"} for card in self.player1.cards_in_hand):
+        if any(card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes", "Island"} for card in self.player1.cards_in_hand):
             self.game_screen.open_choice_screen(self.player1, self.player2, self.discard_area)
         else:       
             self.game_screen.open_score_screen(self.player1, self.player2, self.discard_area) 
@@ -287,8 +268,7 @@ class Game():
         self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
 
     
-    def player_turn_logic(self):
-        print("Player 1's turn...")
+    def player_turn_logic(self):        
         self.current_player = "player"
         self.game_screen.end_turn_btn.configure(fg_color="#800000", state="disabled")
         self.game_screen.draw_button.configure(fg_color="green", state="normal")
@@ -299,8 +279,7 @@ class Game():
         
                 
                 
-    def cpu_turn_logic(self):
-        print("CPU Player's turn...")        
+    def cpu_turn_logic(self):               
         disc_len = len(self.discard_area.discard_area_cards)        
         turn_logic = self.player2.take_turn(self.deck, self.discard_area.discard_area_cards)                
         self.game_screen.display_cards(self.player2.cards_in_hand, "opponent_hand")

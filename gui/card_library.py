@@ -32,7 +32,7 @@ class CardLibrary(ctk.CTkFrame):
         self.card_preview_lbl.grid(row=1, column=0, padx=5, pady=5, sticky="ns")
         
         self.back_button = ctk.CTkButton(self.card_preview_frame, text="Back to Game", fg_color="green", height=60, command=self.back_to_game, font=("Georgia", 14, "bold"))
-        self.back_button.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+        self.back_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
         self.grid_columnconfigure(2, weight=1)
         self.card_preview_frame.grid_rowconfigure(0, weight=0)
         self.card_preview_frame.grid_rowconfigure(1, weight=1)

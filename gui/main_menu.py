@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from gui.game_screen import GameScreen
 from game import Game
+from gui.instructions import Instructions
 
 class MainMenu(ctk.CTkFrame):
     def __init__(self, parent):
@@ -14,13 +15,16 @@ class MainMenu(ctk.CTkFrame):
     
     def init_screen(self):
         self.menu_label = ctk.CTkLabel(self, text="Welcome to Fantasy Realms!", text_color="red", font=("Arial", 24))
-        self.menu_label.grid(row=0, column=0, columnspan=2, pady=20)
+        self.menu_label.grid(row=0, column=0, columnspan=3, pady=20)
         
-        self.start_button = ctk.CTkButton(self, text="Start Game", font=("Georgia", 14, "bold"), command=self.start_game, height=60)
+        self.start_button = ctk.CTkButton(self, text="Start Game", font=("Georgia", 14, "bold"), command=self.start_game, height=60, fg_color="green")
         self.start_button.grid(row=1, column=0, padx=20, pady=10)
 
-        self.exit_button = ctk.CTkButton(self, text="Exit", font=("Georgia", 14, "bold"), command=self.quit_game, height=60)
-        self.exit_button.grid(row=1, column=1, padx=20, pady=10)
+        self.exit_button = ctk.CTkButton(self, text="Exit", font=("Georgia", 14, "bold"), command=self.quit_game, height=60, fg_color="#800000")
+        self.exit_button.grid(row=1, column=2, padx=20, pady=10)
+        
+        self.instructions_button = ctk.CTkButton(self, text="How to Play", font=("Georgia", 14, "bold"), command=self.how_to_play, height=60, fg_color="green")
+        self.instructions_button.grid(row=1, column=1, padx=20, pady=10)
         
         
     def start_game(self):
@@ -33,3 +37,7 @@ class MainMenu(ctk.CTkFrame):
         
     def quit_game(self):
         print("Game quitting...")
+        
+    def how_to_play(self):
+        self.instruction = Instructions(self.parent)
+        self.instruction.grid(row=0, column=0, sticky="nsew")

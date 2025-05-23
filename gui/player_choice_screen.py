@@ -25,6 +25,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.card_info_labels = {}
         self.image_paths = card_images
         
+        
         for card in self.player1.cards_in_hand:
             self.hand_images.append(card.image)
             if card.name in {"Mirage", "Doppelganger", "Shapeshifter", "Necromancer", "Book of Changes", "Island"}:
@@ -67,7 +68,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         card_library_btn.grid(row=2, column=0, padx=5, pady=5) 
         
         
-        self.player1_choice_lbl = ctk.CTkLabel(self.player_choice_area, text=f"Double click a card:", font=("Georgia", 16, "bold"), text_color="orange")
+        self.player1_choice_lbl = ctk.CTkLabel(self.player_choice_area, text=f"Double click on a card.", font=("Georgia", 16, "bold"), text_color="orange", fg_color="#2B2B2B")
         self.player1_choice_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=10, sticky="nsew")
         
         self.choice_area_frame = ctk.CTkFrame(self, fg_color="#6D4C41" ) 
@@ -271,7 +272,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 card_info_area = self.card_info_labels[card][0]
                 card_info_area.configure(text=f"{island_card.name}\n")
                 card_widget = self.card_info_labels[card][1]
-                card_widget.configure(border_color="#DA70D6") 
+                card_widget.configure(border_color="blue") 
                 card_widget.unbind("<Enter>")
                 card_widget.card_label.unbind("<Enter>")
                 card_widget.unbind("<Leave>")
@@ -288,7 +289,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             card_info_area = self.card_info_labels[card][0]            
             card_info_area.configure(text=f"{card.name}\n{card.suit} suit") 
             card_widget = self.card_info_labels[card][1]
-            card_widget.configure(border_color="#DA70D6") 
+            card_widget.configure(border_color="blue") 
             card_widget.unbind("<Enter>")
             card_widget.card_label.unbind("<Enter>")
             card_widget.unbind("<Leave>")
@@ -306,7 +307,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         if card in self.card_info_labels:
             card_info_area = self.card_info_labels[card][0]
             card_info_area.configure(text=f"{dop_card.name}\n{dop_card.suit} suit")
-            card_widget.configure(border_color="#DA70D6") 
+            card_widget.configure(border_color="green") 
             card_widget.unbind("<Enter>")
             card_widget.card_label.unbind("<Enter>")
             card_widget.unbind("<Leave>")
@@ -326,7 +327,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                     card_info_area_card.configure(text=f"{chosen_card.name}\n{suit} suit")
                 card_info_area_boc.configure(text=f"{chosen_card.original_state["name"]}\n{suit} suit")             
                 card_widget = self.card_info_labels[boc][1]
-                card_widget.configure(border_color="#DA70D6") 
+                card_widget.configure(border_color="green") 
                 card_widget.unbind("<Enter>")
                 card_widget.card_label.unbind("<Enter>")
                 card_widget.unbind("<Leave>")
@@ -348,7 +349,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             card_info_area = self.card_info_labels[self.necromancer_card][0]
             card_info_area.configure(text=f"{card.name}")
             card_widget = self.card_info_labels[self.necromancer_card][1]
-            card_widget.configure(border_color="#DA70D6")
+            card_widget.configure(border_color="blue")
             card_widget.unbind("<Enter>")
             card_widget.card_label.unbind("<Enter>")
             card_widget.unbind("<Leave>")

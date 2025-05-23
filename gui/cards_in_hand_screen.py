@@ -25,7 +25,7 @@ class CardsInHandScreen(ctk.CTkFrame):
         center_frame.grid(row=1, column=1)
         center_frame.grid_columnconfigure(0, weight=1)
         
-        title_lbl = ctk.CTkLabel(center_frame, text="Cards in Hand:", font=("Georgia", 16, "bold"), text_color="orange")
+        title_lbl = ctk.CTkLabel(center_frame, text="Cards in Hand:", font=("Georgia", 16, "bold"), text_color="orange", fg_color="#2B2B2B")
         title_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=10)
         
         hand_frame = ctk.CTkFrame(center_frame, fg_color="#6D4C41")
@@ -56,10 +56,10 @@ class CardsInHandScreen(ctk.CTkFrame):
                                              fg_color="#6D4C41", font=("Georgia", 14))
         self.card_preview_lbl.grid(row=0, column=0, padx=5, pady=5)
         
-        self.back_button = ctk.CTkButton(center_frame, text="Back to Choices",
+        self.back_button = ctk.CTkButton(self, text="Back to Choices",
                                          fg_color="green", height=60,
                                          command=self.back_to_game, font=("Georgia", 14, "bold"))
-        self.back_button.grid(row=0, column=1, padx=5, pady=5)
+        self.back_button.grid(row=0, column=2, padx=5, pady=5)
             
         
         

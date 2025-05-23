@@ -5,6 +5,7 @@ class CPUPlayer(Player):
     def __init__(self):
           super().__init__()
           self.hand_total_power = 0
+          self.total_pow_with_disc_card = 0
           
     
     
@@ -85,27 +86,25 @@ class CPUPlayer(Player):
         
         
                 
-          
-          
     def remove_worst_card(self, hand: list):        
-        worst_impact = float("inf")
+        worst_impact = float("inf")        
         worst_card = None
         
         for card in hand:
             temp_hand = copy.deepcopy(hand)
+            
             card_index = hand.index(card)
             temp_hand.pop(card_index)            
             self.penalties_and_conditions(temp_hand)
-            new_power = self.hand_total_power - sum(card.total_power for card in temp_hand)
+            new_power = self.total_pow_with_disc_card - sum(card.total_power for card in temp_hand)
             
             if new_power < worst_impact:
                 worst_impact = new_power
                 worst_card = card
                 
-        if worst_card:            
+        if worst_card:           
             hand.remove(worst_card)
-            return worst_card 
-        
+            return worst_card
         
     
         
@@ -115,28 +114,29 @@ class CPUPlayer(Player):
         best_discard_card = None
         best_impact = -float("inf")          
         self.hand_total_power = sum(card.total_power for card in self.cards_in_hand)
-        print(f"TOTAL POWER: {self.hand_total_power}")
-        for card in self.cards_in_hand:
-            if card.name == "Necromancer":
-                print(f"NECRO: {card}")
+               
 
         if discard_area:
             for discard_card in discard_area:
                 temp_hand = copy.deepcopy(self.cards_in_hand)
                 temp_hand.append(discard_card)
-                removed_card = self.remove_worst_card(temp_hand)                
-                new_total_power = sum(card.total_power for card in temp_hand)
+                self.penalties_and_conditions(temp_hand)
+                self.total_pow_with_disc_card = sum(card.total_power for card in temp_hand)
+                removed_card = self.remove_worst_card(temp_hand)
+                new_total_power = sum(card.total_power for card in temp_hand)                
                 impact = new_total_power - self.hand_total_power
+                
 
                 if impact > best_impact:
                     best_discard_card = discard_card
                     best_impact = impact
-            
+                    
             
 
         if best_discard_card and best_impact >= 25:            
             self.cards_in_hand.append(best_discard_card)
             discard_area.remove(best_discard_card)
+            
         
         else:
             self.cards_in_hand.append(deck.draw_card())
@@ -145,7 +145,8 @@ class CPUPlayer(Player):
         discard_area.append(removed_card)
         for card in discard_area:
                 card.reset()    
-        
+        self.hand_total_power = 0
+        self.total_pow_with_disc_card = 0
         if start_len == len(discard_area):
             return best_discard_card
         
