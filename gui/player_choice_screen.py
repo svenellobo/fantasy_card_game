@@ -325,7 +325,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 if chosen_card in self.cards_with_choice:
                     card_info_area_card = self.card_info_labels[chosen_card][0]
                     card_info_area_card.configure(text=f"{chosen_card.name}\n{suit} suit")
-                card_info_area_boc.configure(text=f"{chosen_card.original_state["name"]}\n{suit} suit")             
+                card_info_area_boc.configure(text=f"{chosen_card.original_state['name']}\n{suit} suit")             
                 card_widget = self.card_info_labels[boc][1]
                 card_widget.configure(border_color="green") 
                 card_widget.unbind("<Enter>")
@@ -338,7 +338,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
     def set_chosen_card(self, card):
         self.chosen_card = card
         card_info_area = self.card_info_labels[self.boc_card][0]
-        card_info_area.configure(text=f"{card.original_state["name"]}")        
+        card_info_area.configure(text=f"{card.original_state['name']}")        
         
     def necromancer_choice(self, card):
         if not self.necro_card_picked:

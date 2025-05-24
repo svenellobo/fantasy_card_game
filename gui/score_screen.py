@@ -59,11 +59,11 @@ class ScoreScreen(ctk.CTkFrame):
         self.player1_cards.grid_rowconfigure(1, weight=1)
         self.player1_cards.grid_rowconfigure(2, weight=1)        
         
-       
+        #, columnspan=len(self.player1.cards_in_hand)
             
         self.player1_score_lbl = ctk.CTkLabel(self.player1_cards,
                                               text=f"Player's hand and score: {self.p1_score}", font=("Georgia", 18, "bold"))
-        self.player1_score_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=len(self.player1.cards_in_hand), sticky="nsew")         
+        self.player1_score_lbl.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")         
         
         
         self.player2_cards = ctk.CTkFrame(self.player_score_area, fg_color="#6D4C41")
@@ -74,10 +74,10 @@ class ScoreScreen(ctk.CTkFrame):
         self.player2_cards.grid_rowconfigure(1, weight=1)
         self.player2_cards.grid_rowconfigure(2, weight=1)
         
-        
+        #, columnspan=len(self.player2.cards_in_hand)
         self.player2_score_lbl = ctk.CTkLabel(self.player2_cards,
                                               text=f"CPU's hand and score: {self.p2_score}", font=("Georgia", 18, "bold"))
-        self.player2_score_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=len(self.player2.cards_in_hand), sticky="nsew") 
+        self.player2_score_lbl.grid(row=0, column=0, padx=5, pady=5, sticky="nsew") 
         
         for col in range(7): 
             self.player1_cards.grid_columnconfigure(col, weight=1)
@@ -90,8 +90,8 @@ class ScoreScreen(ctk.CTkFrame):
         for card in self.player1.cards_in_hand:
             point_difference = card.total_power - card.base_power
             if card.is_blanked:
-                point_text = f"{"BLANKED"}"
-                point_color = "black"       
+                point_text = f"{'BLANKED'}"
+                point_color = "yellow"       
             elif point_difference < 0:
                     point_text = f"-{abs(point_difference)}"
                     point_color = "red"
@@ -134,7 +134,7 @@ class ScoreScreen(ctk.CTkFrame):
                 card_widget.grid(row=1, column=p1_col, padx=5, pady=5)
                 
                 card_info_area = ctk.CTkLabel(self.player1_cards,
-                                               text=f"{point_text}\nTotal power: {card.total_power}\n{card.name if card.suit and card.name != card.original_state['name'] else ''}\n{f"{card.suit} suit" if card.suit and card.suit != card.original_state['suit'] else ''}",
+                                               text=text,
                                                text_color=point_color,
                                                fg_color="#2B2B2B",
                                                font=("Georgia", 14))
@@ -145,8 +145,8 @@ class ScoreScreen(ctk.CTkFrame):
         for card in self.player2.cards_in_hand:
             point_difference = card.total_power - card.base_power      
             if card.is_blanked:
-                point_text = f"{"BLANKED"}"
-                point_color = "black"       
+                point_text = f"{'BLANKED'}"
+                point_color = "yellow"       
             elif point_difference < 0:
                     point_text = f"-{abs(point_difference)}"
                     point_color = "red"

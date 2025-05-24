@@ -58,6 +58,7 @@ from card_library.land.forest import Forest
 from card_library.beast.unicorn import Unicorn
 from card_library.wizard.warlock_lord import WarlockLord
 from card_library.weapon.elven_longbow import ElvenLongbow
+from card_library.leader.empress import Empress
 
 
 
@@ -79,16 +80,18 @@ class Game():
         self.game_screen = game_screen
            
        
-        dragon = Dragon()
+        """dragon = Dragon()
         self.discard_area.discard_area_cards.append(dragon)
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
         self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon) 
-        self.discard_area.discard_area_cards.append(dragon)
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon) 
+        #self.discard_area.discard_area_cards.append(dragon)"""
+        
+        
         
         """necro = Necromancer()        
         self.player1.cards_in_hand.append(necro)
@@ -103,7 +106,23 @@ class Game():
         island = Island()
         self.player1.cards_in_hand.append(island)"""
         
+        """dop = Doppelganger()
+        self.player2.cards_in_hand.append(dop)
+        kn = Knights()
+        self.player2.cards_in_hand.append(kn)
+        lightcaval = LightCavalry()
+        self.player2.cards_in_hand.append(lightcaval)
+        longbow = ElvenLongbow()
+        self.player2.cards_in_hand.append(longbow)
+        arch = ElvenArchers()
+        self.player2.cards_in_hand.append(arch)
+        empress = Empress()
+        self.player2.cards_in_hand.append(empress)
+        warlord = Warlord()
+        self.player2.cards_in_hand.append(warlord)
         
+        dw = DwarvishInfantry()
+        self.deck.cards.insert(0,dw)"""
         
         """bell = BellTower()
         self.player2.cards_in_hand.append(bell)

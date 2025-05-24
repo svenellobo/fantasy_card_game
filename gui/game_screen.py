@@ -63,7 +63,7 @@ class GameScreen(ctk.CTkFrame):
                 card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
                 
             else:
-                card_widget = CardWidget(frame, card.card_back_image, card)
+                card_widget = CardWidget(frame, card.image, card)
                 card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
             col += 1
             

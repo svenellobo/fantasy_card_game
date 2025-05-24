@@ -1,16 +1,17 @@
 import random
 import os
-import importlib
+import importlib, importlib.util
+from utility import resource_path
 
 class Deck():
     def __init__(self):
         self.cards = []
-        self.image = "images/card_back.jpeg"
+        self.image = resource_path("images/card_back.jpeg")
         self.create_deck()
 
     def create_deck(self):    
         self.cards = []
-        card_dir = "card_library"
+        card_dir = resource_path("card_library")
 
         for suit_folder in os.listdir(card_dir):
             suit_path = os.path.join(card_dir, suit_folder)
@@ -19,9 +20,10 @@ class Deck():
                 for card_file in os.listdir(suit_path):
                     if card_file.endswith(".py") and card_file != "__init__.py":
                         card_file_name = card_file[:-3]
-                        module_path = f"{card_dir}.{suit_folder}.{card_file_name}"
-                        
-                        card_module = importlib.import_module(module_path)
+                        file_path = os.path.join(suit_path, card_file)
+                        spec = importlib.util.spec_from_file_location(card_file_name, file_path)
+                        card_module = importlib.util.module_from_spec(spec)
+                        spec.loader.exec_module(card_module)
                         class_name = card_file_name.split("_")
                         class_name = "".join([part.capitalize() for part in class_name])
                         card_class = getattr(card_module, class_name)
