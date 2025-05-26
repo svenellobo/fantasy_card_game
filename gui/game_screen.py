@@ -63,7 +63,7 @@ class GameScreen(ctk.CTkFrame):
                 card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
                 
             else:
-                card_widget = CardWidget(frame, card.image, card)
+                card_widget = CardWidget(frame, card.card_back_image, card)
                 card_widget.grid(row=row, column=col, padx=2, pady=5, sticky="nsew")
             col += 1
             
@@ -121,15 +121,15 @@ class GameScreen(ctk.CTkFrame):
         self.discard_area.bind("<Leave>", self.on_discard_area_leave)
         
         #end turn and hints
-        self.status_area = ctk.CTkFrame(self, height=220, fg_color="#2B2B2B")
-        self.status_area.grid(row=2, column=3, sticky="nsew", padx=10, pady=40)
+        self.status_area = ctk.CTkFrame(self,  height=220, fg_color="#2B2B2B")
+        self.status_area.grid(row=2, column=3, padx=10, pady=40)
         
-        self.status_area.grid_rowconfigure(0, weight=1)  # Top spacer
-        self.status_area.grid_rowconfigure(1, weight=0)  # Label row
-        self.status_area.grid_rowconfigure(2, weight=1)  # Button row
-        self.status_area.grid_rowconfigure(3, weight=1)  # Bottom spacer
-        self.status_area.grid_columnconfigure(0, weight=1)  # Left spacer
-        self.status_area.grid_columnconfigure(1, weight=0)  # Content column
+        self.status_area.grid_rowconfigure(0, weight=1)
+        self.status_area.grid_rowconfigure(1, weight=0)
+        self.status_area.grid_rowconfigure(2, weight=1)
+        self.status_area.grid_rowconfigure(3, weight=1)
+        self.status_area.grid_columnconfigure(0, weight=1)
+        self.status_area.grid_columnconfigure(1, weight=0)  
         self.status_area.grid_columnconfigure(2, weight=1)
         
         
@@ -137,13 +137,13 @@ class GameScreen(ctk.CTkFrame):
                                           text="End Turn", font=("Georgia", 14, "bold"), height=60, command=lambda: self.game.end_turn())
         self.end_turn_btn.grid(row=2, column=1, sticky="ew", padx=10, pady=10)
         
-        self.status_area_lbl = ctk.CTkLabel(self.status_area, font=("Georgia", 14), text="",  wraplength=200)
+        self.status_area_lbl = ctk.CTkLabel(self.status_area, font=("Georgia", 14, "bold"), text="",  wraplength=200)
         self.status_area_lbl.grid(row=1, column=1, sticky="ew", padx=10, pady=10)
 
         self.card_library_btn = ctk.CTkButton(self, text="Card Library", font=("Georgia", 14, "bold"), fg_color="green",height=60, command=lambda: self.open_card_library())
         self.card_library_btn.grid(row=0, column=3)
         
-        self.card_preview_lbl = ctk.CTkLabel(self, text="Right click on a card to view it", font=("Georgia", 14), fg_color="#6D4C41", height=220, width=150)
+        self.card_preview_lbl = ctk.CTkLabel(self, text="Right click on a card to view it", font=("Georgia", 14, "bold"), fg_color="#6D4C41", height=220, width=150)
         self.card_preview_lbl.grid(row=1, column=3, padx=10, pady=10, sticky="nsew")
         self.rowconfigure(1, weight=4)
         self.columnconfigure(3, weight=1)

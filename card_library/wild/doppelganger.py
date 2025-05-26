@@ -66,7 +66,11 @@ class Doppelganger(Card):
                     self.base_power = card.base_power                        
                     self.is_blanked = card.is_blanked
                     if self.is_blanked:
-                        self.blank()
+                        self.blank()                    
+                    if card.has_blank and not any(card.original_state["name"] == "Protection Rune" for card in hand):
+                        card.has_penalty = True
+                        card.activate_blank(hand)
+                        card.has_penalty = False
                     if card.total_power < card.base_power:
                         self.total_power = card.total_power                        
                     else:
@@ -110,7 +114,12 @@ class Doppelganger(Card):
             self.penalties_and_conditions(temp_hand)
             if temp_card.has_penalty and not temp_card.is_blanked:
                 dop_card.total_power = temp_card.total_power
-                
+
+            if temp_card.has_blank and not any(card.original_state["name"] == "Protection Rune" for card in hand):                
+                temp_card.has_penalty = True
+                temp_card.activate_blank(hand)
+                temp_card.has_penalty = False
+
             if temp_card.is_blanked:
                 dop_card.total_power = 0
             

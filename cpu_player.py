@@ -37,6 +37,17 @@ class CPUPlayer(Player):
             else:
                 card.activate_blank(cards_with_blank)
                 
+
+        for card in hand:
+            if card.priority == 2:                
+                card.effect(hand) 
+                
+                 
+        for card in hand:
+            if card.priority == 3:                
+                card.effect(hand)
+
+                
         for card in hand:
             if card.has_blank:
                 card.activate_blank(hand)
@@ -52,16 +63,6 @@ class CPUPlayer(Player):
             
         for card in hand:
             if card.priority == 1:                
-                card.effect(hand)
-        
-                
-        for card in hand:
-            if card.priority == 2:                
-                card.effect(hand) 
-        
-                 
-        for card in hand:
-            if card.priority == 3:                
                 card.effect(hand)
         
 
@@ -84,6 +85,15 @@ class CPUPlayer(Player):
             if card.original_state["name"] == "Doppelganger":
                 card.final_activation(hand)  
         
+        """wild_card_list = []
+        for card in hand:
+            if card.original_state["suit"] == "Wild":                
+                card.is_blanked = False                
+                wild_card_list.append(card)
+        
+        for card in hand:
+            if card.has_blank:
+                card.activate_blank(wild_card_list)"""
         
                 
     def remove_worst_card(self, hand: list):        

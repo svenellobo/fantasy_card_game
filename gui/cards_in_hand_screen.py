@@ -53,13 +53,13 @@ class CardsInHandScreen(ctk.CTkFrame):
         card_preview_frame.grid(row=2, column=0, padx=10, pady=10)
         
         self.card_preview_lbl = ctk.CTkLabel(card_preview_frame, text="Right click on a card to view it",
-                                             fg_color="#6D4C41", font=("Georgia", 14))
+                                             fg_color="#6D4C41", font=("Georgia", 14, "bold"))
         self.card_preview_lbl.grid(row=0, column=0, padx=5, pady=5)
         
         self.back_button = ctk.CTkButton(self, text="Back to Choices",
                                          fg_color="green", height=60,
                                          command=self.back_to_game, font=("Georgia", 14, "bold"))
-        self.back_button.grid(row=0, column=2, padx=5, pady=5)
+        self.back_button.grid(row=0, column=1, padx=5, pady=5)
             
         
         

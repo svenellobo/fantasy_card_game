@@ -26,7 +26,7 @@ class Instructions(ctk.CTkFrame):
         self.info_area = ctk.CTkFrame(self.instruction_canvas)
         self.instruction_canvas.create_window((0, 0), window=self.info_area, anchor="nw")
         
-        self.info_lbl = ctk.CTkLabel(self.info_area, text="", fg_color="#6D4C41", font=("Georgia", 16), justify="left")
+        self.info_lbl = ctk.CTkLabel(self.info_area, text="", fg_color="#2B2B2B", font=("Georgia", 16, "bold"), justify="left", text_color="orange")
         self.info_lbl.grid(row=0, column=0, padx=10, pady=10)
         
         self.back_to_menu_btn = ctk.CTkButton(self, text="Main Menu",
@@ -38,7 +38,9 @@ class Instructions(ctk.CTkFrame):
         Objective:
         
         
-        Create the best-scoring hand of 7 cards by drawing and discarding strategically. The player with the highest total score wins.
+        Create the best-scoring hand of 7 cards by drawing and discarding strategically.
+
+        The player with the highest total score wins.
         
         
         Each card includes:
@@ -48,7 +50,7 @@ class Instructions(ctk.CTkFrame):
 
             2. Suit - One of 11 types (Army, Leader, Wizard, Weapon, Artifact, Beast, Land, Weather, Flood, Flame, Wild).
 
-            3. Base Strength  A number located on the top left corner of the card.
+            3. Base Strength - A number located on the top left corner of the card.
 
             4. Bonus/Penalty - Additional effects that raise or lower the score based on other cards. 
                    
@@ -66,12 +68,12 @@ class Instructions(ctk.CTkFrame):
         End of Game:
         
 
-        The game ends immediately when there are 10 cards in the discard area.
+            The game ends immediately when there are 10 cards in the discard area.
 
-        The highest total score wins. In a tie, all tied players share victory.
+            The highest total score wins. In a tie, all tied players share victory.
         
         
-        Card Effects Explained:
+        Card Effects:
         
         
         BONUS
@@ -89,7 +91,14 @@ class Instructions(ctk.CTkFrame):
 
         CLEARS
 
-            Removes penalties from other cards. Clear effect happens before other effects.  
+            Removes penalties from other cards. Clear effect happens before other effects.
+
+
+        There are rare circumstances where a chain of cards will affect one another.
+
+        In these cases, the order of execution is: Doppelganger, Mirage, Shapeshifter and then Book of Changes.
+
+        After those cards resolve their effects, other card effects like CLEAR, BONUS or PENALTY are resolved.
         """
         
         self.info_lbl.configure(text=instruction_text)

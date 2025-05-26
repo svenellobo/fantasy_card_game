@@ -28,11 +28,11 @@ class CardLibrary(ctk.CTkFrame):
         self.card_preview_frame = ctk.CTkFrame(self, fg_color="#4E342E")
         self.card_preview_frame.grid(row=0, column=2, padx=10, pady=10, sticky="ns")
         
-        self.card_preview_lbl = ctk.CTkLabel(self.card_preview_frame, text="Right click on a card to view it", fg_color="#4E342E", font=("Georgia", 14))
+        self.card_preview_lbl = ctk.CTkLabel(self.card_preview_frame, text="Right click on a card to view it", fg_color="#4E342E", font=("Georgia", 14, "bold"))
         self.card_preview_lbl.grid(row=1, column=0, padx=5, pady=5, sticky="ns")
         
         self.back_button = ctk.CTkButton(self.card_preview_frame, text="Back to Game", fg_color="green", height=60, command=self.back_to_game, font=("Georgia", 14, "bold"))
-        self.back_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        self.back_button.grid(row=0, column=0, padx=5, pady=(25,5))
         self.grid_columnconfigure(2, weight=1)
         self.card_preview_frame.grid_rowconfigure(0, weight=0)
         self.card_preview_frame.grid_rowconfigure(1, weight=1)
@@ -77,7 +77,7 @@ class CardLibrary(ctk.CTkFrame):
     def on_right_click(self, image, event):
         enlarged_image = Image.open(image) 
         resized_image = enlarged_image.resize((300, 450))  
-        self.preview_ctk_image = ctk.CTkImage(resized_image, size=(300, 450))
+        self.preview_ctk_image = ctk.CTkImage(resized_image, size=(350, 500))
         self.card_preview_lbl.configure(image=self.preview_ctk_image, text='')  
         self.card_preview_lbl.image = self.preview_ctk_image
         

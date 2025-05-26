@@ -69,7 +69,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         
         
         self.player1_choice_lbl = ctk.CTkLabel(self.player_choice_area, text=f"Double click on a card.", font=("Georgia", 16, "bold"), text_color="orange", fg_color="#2B2B2B")
-        self.player1_choice_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=10, sticky="nsew")
+        self.player1_choice_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=10)
         
         self.choice_area_frame = ctk.CTkFrame(self, fg_color="#6D4C41" ) 
         self.choice_area_frame.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
@@ -97,7 +97,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                                                text="",
                                                text_color="green",
                                                fg_color="#2B2B2B",
-                                               font=("Georgia", 14))
+                                               font=("Georgia", 14, "bold"))
             card_info_area.grid(row=2, column=col, padx=5, pady=5)
             self.card_info_labels[card] = (card_info_area, card_widget)
             col += 1
@@ -133,7 +133,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 suit_lbl = ctk.CTkLabel(self.center_frame, text=f"{key}:", fg_color="#2B2B2B", font=("Georgia", 14, "bold"))
                 suit_lbl.grid(row=row, column=col, sticky="ew", padx=5, pady=5)
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}", font=("Georgia", 14),
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}", font=("Georgia", 14, "bold"),
                                                     height=60, command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
                     self.btn_option.grid(row=row, column=col+1, sticky="ew", padx=10, pady=5)
                     
@@ -150,7 +150,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 suit_lbl = ctk.CTkLabel(self.center_frame, text=f"{key}:", fg_color="#2B2B2B", font=("Georgia", 14, "bold"))
                 suit_lbl.grid(row=row, column=col, sticky="ew", padx=5, pady=5)
                 for value in values:
-                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}", font=("Georgia", 14),
+                    self.btn_option = ctk.CTkButton(self.center_frame, fg_color="#B7410E", text=f"{value}", font=("Georgia", 14, "bold"),
                                                     height=60,
                                                     command=lambda k=key, v=value: self.mirage_shapeshift_choice(card, k, v))
                     self.btn_option.grid(row=row, column=col+1, sticky="ew", padx=10, pady=5)
@@ -210,7 +210,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
             for suit in ALL_SUITS:
                 
                 self.btn_option = ctk.CTkButton(self.suits_area, fg_color="#B7410E", text=f"{suit}",
-                                                height=40, font=("Georgia", 14),
+                                                height=40, font=("Georgia", 14, "bold"),
                                                 command=lambda c=card, s=suit: self.book_of_changes_choices(c, self.chosen_card, s))
                 self.btn_option.grid(row=suit_row, column=suit_col, sticky="ew", padx=5, pady=5)
                 suit_col += 1
