@@ -4,6 +4,7 @@ from PIL import Image
 from gui.score_screen import ScoreScreen
 from gui.player_choice_screen import PlayerChoiceScreen
 from gui.card_library import CardLibrary
+from utility import resource_path
 
 
 class GameScreen(ctk.CTkFrame):
@@ -93,14 +94,15 @@ class GameScreen(ctk.CTkFrame):
         self.draw_button.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
         
         #hands and draw
-        draw_image = Image.open("images/card_back.jpeg")
+        draw_image = Image.open(resource_path("images/card_back.jpeg"))
         draw_image_tk = ctk.CTkImage(light_image=draw_image, size=(150, 220)) 
         self.draw_deck = ctk.CTkLabel(self.draw_deck_frame, image=draw_image_tk,
                                       text="", height=230, width=160)
         self.draw_deck.grid(row=1, column=0, padx=5, pady=5) 
         
-        self.hand_frame = ctk.CTkFrame(self, height=220, fg_color="#6D4C41") 
+        self.hand_frame = ctk.CTkFrame(self, height=240, fg_color="#6D4C41", width=1320) 
         self.hand_frame.grid(row=2, column=1, sticky="ew", padx=10, pady=10)
+        self.hand_frame.grid_propagate(False)
              
              
         self.opponent_frame = ctk.CTkFrame(self, height=240, fg_color="#6D4C41") 

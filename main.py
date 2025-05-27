@@ -18,7 +18,7 @@ class App(ctk.CTk):
         ctk.set_default_color_theme("green") 
         if platform.system() == "Windows":
             ctk.set_widget_scaling(0.8)
-            self.attributes("-fullscreen", True)
+            self.state("zoomed")
         else:
             ctk.set_widget_scaling(1.0)
             try:
