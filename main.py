@@ -1,25 +1,41 @@
 import customtkinter as ctk
 from gui.main_menu import MainMenu
+import ctypes
+import platform
 
 
 
 class App(ctk.CTk):
     
-    def __init__(self, title, geo):
-        super().__init__()
+    def __init__(self, title):
+        super().__init__()        
+        try:
+            ctypes.windll.shcore.SetProcessDpiAwareness(1)
+        except Exception:
+            pass
+        
         ctk.set_appearance_mode("dark")
-        ctk.set_default_color_theme("green")        
-        self.geometry(geo)
+        ctk.set_default_color_theme("green") 
+        if platform.system() == "Windows":
+            ctk.set_widget_scaling(0.8)
+            self.attributes("-fullscreen", True)
+        else:
+            ctk.set_widget_scaling(1.0)
+            try:
+                self.attributes('-zoomed', True)
+            except Exception:                
+                screen_width = self.winfo_screenwidth() - 10
+                screen_height = self.winfo_screenheight() - 50
+                self.geometry(f"{screen_width}x{screen_height}+0+0")
+        try:
+            self.state("zoomed")
+            self.attributes('-zoomed', True)
+        except Exception:
+            pass               
         self.title(title)       
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
-        
-        #self.attributes("-fullscreen", True)
-        screen_width = self.winfo_screenwidth() -35 
-        screen_height = self.winfo_screenheight() -35
-        self.geometry(f"{screen_width}x{screen_height}")
         self.bind("<Escape>", lambda event: self.attributes("-fullscreen", False))
-        
     
         self.main_menu = None
         self.initialize_main_menu()
@@ -37,5 +53,5 @@ class App(ctk.CTk):
     
     
 if __name__ == "__main__":
-    app = App("Fantasy Realms", "1200x800")
+    app = App("Fantasy Realms")
     app.mainloop()   

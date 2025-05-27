@@ -5,6 +5,7 @@ __pycache__/
 
 dist/
 *.exe
+main.spec
 
 .env
 .venv
