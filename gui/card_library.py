@@ -12,7 +12,7 @@ class CardLibrary(ctk.CTkFrame):
 
     
     def init_screen(self):
-        self.card_library_canvas = ctk.CTkCanvas(self, width=900, height=600, bg="#4E342E")
+        self.card_library_canvas = ctk.CTkCanvas(self, width=1000, height=600, bg="#4E342E")
         scrollbar = ctk.CTkScrollbar(self, orientation="vertical", command=self.card_library_canvas.yview)
         self.card_library_canvas.configure(yscrollcommand=scrollbar.set)
         self.card_library_canvas.grid(row=0, column=0, pady=5, padx=5, sticky="nsew")

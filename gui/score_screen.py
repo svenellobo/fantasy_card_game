@@ -16,14 +16,6 @@ class ScoreScreen(ctk.CTkFrame):
         self.p2_score = self.player2.calculate_total_points()
         self.configure(fg_color="#4E342E")
         
-        print("PLAYER 1 CARDS")
-        for card in self.player1.cards_in_hand:            
-            print(card)
-            
-        print("PLAYER 2 CARDS")    
-        for card in self.player2.cards_in_hand:            
-            print(card)
-        
               
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)

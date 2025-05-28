@@ -27,8 +27,7 @@ class MainMenu(ctk.CTkFrame):
         self.instructions_button.grid(row=1, column=1, padx=20, pady=10)
         
         
-    def start_game(self):
-        print("Game starting...")
+    def start_game(self):        
         self.grid_forget()        
         self.game_screen = GameScreen(self.parent, None)
         self.game = Game(self.game_screen)
@@ -36,7 +35,7 @@ class MainMenu(ctk.CTkFrame):
         
         
     def quit_game(self):
-        print("Game quitting...")
+        self.quit()
         
     def how_to_play(self):
         self.instruction = Instructions(self.parent)

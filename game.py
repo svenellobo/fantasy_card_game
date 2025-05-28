@@ -5,60 +5,6 @@ from discard_area import DiscardArea
 from gui.game_screen import GameScreen
 from gui.card_widget import CardWidget
 from gui.score_screen import ScoreScreen
-from card_library.beast.dragon import Dragon
-from card_library.wild.doppelganger import Doppelganger
-from card_library.wild.mirage import Mirage
-from card_library.wild.shapeshifter import Shapeshifter
-from card_library.artifact.book_of_changes import BookOfChanges
-from card_library.wizard.necromancer import Necromancer
-from card_library.artifact.book_of_changes import BookOfChanges
-from card_library.army.dwarvish_infantry import DwarvishInfantry
-from card_library.army.knights import Knights
-from card_library.flame.fire_elemental import FireElemental
-from card_library.flame.forge import Forge
-from card_library.leader.queen import Queen
-from card_library.beast.basilisk import Basilisk
-from card_library.wizard.beastmaster import Beastmaster
-from card_library.land.bell_tower import BellTower
-from card_library.flame.wildfire import Wildfire
-from card_library.land.mountain import Mountain
-from card_library.flood.great_flood import GreatFlood
-from card_library.army.elven_archers import ElvenArchers
-from card_library.wizard.necromancer import Necromancer
-from card_library.flood.water_elemental import WaterElemental
-from card_library.beast.hydra import Hydra
-from card_library.flame.candle import Candle
-from card_library.army.light_cavalry import LightCavalry
-from card_library.leader.princess import Princess
-from card_library.army.rangers import Rangers
-from card_library.weather.rainstorm import Rainstorm
-from card_library.wizard.collector import Collector
-from card_library.wild.doppelganger import Doppelganger
-from card_library.weather.blizzard import Blizzard
-from card_library.land.cavern import Cavern
-from card_library.artifact.protection_rune import ProtectionRune
-from card_library.wild.mirage import Mirage
-from card_library.leader.king import King
-from card_library.wizard.enchantress import Enchantress
-from card_library.artifact.world_tree import WorldTree
-from card_library.flood.fountain_of_life import FountainOfLife
-from card_library.weapon.warship import Warship
-from card_library.weapon.war_dirigible import WarDirigible
-from card_library.weather.whirlwind import Whirlwind
-from card_library.weapon.sword_of_keth import SwordOfKeth
-from card_library.artifact.shield_of_keth import ShieldOfKeth
-from card_library.wild.shapeshifter import Shapeshifter
-from card_library.beast.dragon import Dragon
-from card_library.weather.smoke import Smoke
-from card_library.leader.warlord import Warlord
-from card_library.weapon.magic_wand import MagicWand
-from card_library.flood.island import Island
-from card_library.weather.air_elemental import AirElemental
-from card_library.land.forest import Forest
-from card_library.beast.unicorn import Unicorn
-from card_library.wizard.warlock_lord import WarlockLord
-from card_library.weapon.elven_longbow import ElvenLongbow
-from card_library.leader.empress import Empress
 
 
 
@@ -77,7 +23,7 @@ class Game():
         self.current_player = None
         self.card_taken = False
         self.card_discarded = False        
-        self.game_screen = game_screen
+        self.game_screen = game_screen        
 
         self.play()
             
