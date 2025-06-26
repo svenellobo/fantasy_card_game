@@ -32,7 +32,7 @@ class CardLibrary(ctk.CTkFrame):
         self.card_preview_frame = ctk.CTkFrame(self, fg_color="#4E342E")
         self.card_preview_frame.grid(row=0, column=2, padx=10, pady=10, sticky="ns")
         
-        self.card_preview_lbl = ctk.CTkLabel(self.card_preview_frame, text="Right click on a card to view it", fg_color="#2B2B2B", font=("Verdana Arial", 14, "bold"))
+        self.card_preview_lbl = ctk.CTkLabel(self.card_preview_frame, text="Right click on a card to view it", text_color="orange", font=("Verdana Arial", 14, "bold"))
         self.card_preview_lbl.grid(row=1, column=0, padx=5, pady=5, sticky="ns")
         
         self.back_button = ctk.CTkButton(self.card_preview_frame, text="Back to Game", fg_color="green", height=60, command=self.back_to_game, font=("Verdana Arial", 14, "bold"))

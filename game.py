@@ -80,13 +80,14 @@ class Game():
         
         
     
-    def end_turn(self):        
+    def end_turn(self):
+        self.game_screen.end_turn_btn.configure(state="disabled", fg_color="#800000")        
         if len(self.discard_area.discard_area_cards) >= 10:
             self.end_game()
         else: 
             if self.current_player == "player":                
                 self.current_player = "cpu"
-                self.game_screen.after(1000, self.cpu_turn_logic)                
+                self.game_screen.after(500, self.cpu_turn_logic)                
             elif self.current_player == "cpu":                                
                 self.current_player = "player"
                 self.player_turn_logic()
@@ -133,6 +134,7 @@ class Game():
             self.player_turn_logic()
         else:
             self.game_screen.draw_button.configure(fg_color="#800000", state="disabled")
+            self.game_screen.end_turn_btn.configure(state="disabled", fg_color="#800000")
             self.game_screen.status_area_lbl.configure(text="OPPONENT's TURN")
             self.game_screen.show_temporary_discard_message("Your opponent goes first.")             
             self.game_screen.after(5000, self.cpu_turn_logic)

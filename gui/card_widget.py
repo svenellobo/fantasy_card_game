@@ -52,7 +52,10 @@ class CardWidget(ctk.CTkFrame):
             self.bind("<ButtonRelease-1>", self.on_drag_stop)
             self.card_label.bind("<ButtonPress-1>", self.on_drag_start)
             self.card_label.bind("<B1-Motion>", self.on_drag_motion)
-            self.card_label.bind("<ButtonRelease-1>", self.on_drag_stop)        
+            self.card_label.bind("<ButtonRelease-1>", self.on_drag_stop)  
+
+
+    
              
         
     def on_drag_start(self, event):        

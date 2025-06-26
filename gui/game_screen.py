@@ -215,8 +215,9 @@ class GameScreen(ctk.CTkFrame):
         
         for index, widget in enumerate(widgets):
             widget.grid(row=0, column=index, padx=5, pady=5, sticky="nsew")
-        self.display_cards(self.game.player1.cards_in_hand, "player_hand")
-        
+        self.display_cards(self.game.player1.cards_in_hand, "player_hand")    
+    
+            
     def open_card_library(self):
         if not self.library_open:
             self.library_open = True

@@ -29,7 +29,7 @@ class Instructions(ctk.CTkFrame):
         self.info_lbl = ctk.CTkLabel(self.info_area, text="", fg_color="#2B2B2B", font=("Verdana Arial", 16, "bold"), justify="left", text_color="orange")
         self.info_lbl.grid(row=0, column=0, padx=10, pady=10)
         
-        self.back_to_menu_btn = ctk.CTkButton(self, text="Main Menu",
+        self.back_to_menu_btn = ctk.CTkButton(self, text="Back",
                                               fg_color="green", height=60,
                                               command=self.back_to_menu, font=("Verdana Arial", 14, "bold"))
         self.back_to_menu_btn.grid(row=0, column=1, padx=5, pady=5)
