@@ -29,20 +29,6 @@ class Game():
         self.card_discarded = False        
         self.game_screen = game_screen 
 
-        boc = BookOfChanges()
-        self.discard_area.discard_area_cards.append(boc)
-        self.discard_area.discard_area_cards.append(boc)  
-        self.discard_area.discard_area_cards.append(boc)  
-        self.discard_area.discard_area_cards.append(boc)  
-        self.discard_area.discard_area_cards.append(boc)  
-        self.discard_area.discard_area_cards.append(boc)  
-        self.discard_area.discard_area_cards.append(boc)  
-        self.discard_area.discard_area_cards.append(boc)  
-        self.discard_area.discard_area_cards.append(boc) 
-
-        necro = Necromancer()
-        self.player2.cards_in_hand.append(necro)        
-
         self.play()
             
         
