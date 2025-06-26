@@ -73,7 +73,7 @@ class CardWidget(ctk.CTkFrame):
             return        
         dx = abs(self.winfo_x() - self.drag_data["start_x"])
         dy = abs(self.winfo_y() - self.drag_data["start_y"])
-        if dx < 2 and dy < 2:            
+        if dx < 5 and dy < 5:            
             pass
         else:
             if self.drag_callback:

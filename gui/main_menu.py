@@ -17,13 +17,13 @@ class MainMenu(ctk.CTkFrame):
         self.menu_label = ctk.CTkLabel(self, text="Welcome to Fantasy Realms!", text_color="red", font=("Arial", 24))
         self.menu_label.grid(row=0, column=0, columnspan=3, pady=20)
         
-        self.start_button = ctk.CTkButton(self, text="Start Game", font=("Georgia", 14, "bold"), command=self.start_game, height=60, fg_color="green")
+        self.start_button = ctk.CTkButton(self, text="Start Game", font=("Verdana Arial", 14, "bold"), command=self.start_game, height=60, fg_color="green")
         self.start_button.grid(row=1, column=0, padx=20, pady=10)
 
-        self.exit_button = ctk.CTkButton(self, text="Exit", font=("Georgia", 14, "bold"), command=self.quit_game, height=60, fg_color="#800000")
+        self.exit_button = ctk.CTkButton(self, text="Exit", font=("Verdana Arial", 14, "bold"), command=self.quit_game, height=60, fg_color="#800000")
         self.exit_button.grid(row=1, column=2, padx=20, pady=10)
         
-        self.instructions_button = ctk.CTkButton(self, text="How to Play", font=("Georgia", 14, "bold"), command=self.how_to_play, height=60, fg_color="green")
+        self.instructions_button = ctk.CTkButton(self, text="How to Play", font=("Verdana Arial", 14, "bold"), command=self.how_to_play, height=60, fg_color="green")
         self.instructions_button.grid(row=1, column=1, padx=20, pady=10)
         
         

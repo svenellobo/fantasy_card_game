@@ -1,14 +1,18 @@
 import customtkinter as ctk
 from gui.card_widget import CardWidget
 from PIL import Image, ImageTk
+from gui.card_library import CardLibrary
 
 
 class ScoreScreen(ctk.CTkFrame):
-    def __init__(self, parent, player1, player2, discard_area):
-        super().__init__(parent) 
+    def __init__(self, parent, player1, player2, discard_area, card_images):
+        super().__init__(parent)
+        self.parent = parent 
         self.player1 = player1        
         self.player2 = player2        
-        self.player2.discard_area = discard_area.discard_area_cards                
+        self.player2.discard_area = discard_area.discard_area_cards
+        self.card_images = card_images
+        self.library_open = False                
         
         self.player1.penalties_and_conditions(self.player1.cards_in_hand)
         self.player2.penalties_and_conditions(self.player2.cards_in_hand)
@@ -55,7 +59,7 @@ class ScoreScreen(ctk.CTkFrame):
         
             
         self.player1_score_lbl = ctk.CTkLabel(self.player1_cards,
-                                              text=f"Player's hand and score: {self.p1_score}", font=("Georgia", 20, "bold"), fg_color="#2B2B2B", text_color="orange")
+                                              text=f"Player's hand and score: {self.p1_score}", font=("Verdana Arial", 20, "bold"), fg_color="#2B2B2B", text_color="orange")
         self.player1_score_lbl.grid(row=0, column=0, padx=5, pady=5,  sticky="nsew", columnspan=len(self.player1.cards_in_hand))         
         
         
@@ -69,7 +73,7 @@ class ScoreScreen(ctk.CTkFrame):
         
         
         self.player2_score_lbl = ctk.CTkLabel(self.player2_cards,
-                                              text=f"CPU's hand and score: {self.p2_score}", font=("Georgia", 20, "bold"),fg_color="#2B2B2B", text_color="orange")
+                                              text=f"CPU's hand and score: {self.p2_score}", font=("Verdana Arial", 20, "bold"),fg_color="#2B2B2B", text_color="orange")
         self.player2_score_lbl.grid(row=0, column=0, padx=5, pady=5, sticky="nsew", columnspan=len(self.player2.cards_in_hand)) 
         
         for col in range(7): 
@@ -118,8 +122,8 @@ class ScoreScreen(ctk.CTkFrame):
                                                text=text,
                                                text_color=point_color,
                                                fg_color="#2B2B2B",
-                                               font=("Georgia", 14, "bold"))
-                card_info_area.grid(row=2, column=p1_col, padx=5, pady=5)                            
+                                               font=("Verdana Arial", 14, "bold"))
+                card_info_area.grid(row=2, column=p1_col, padx=10, pady=10)                            
             
             else:
                 
@@ -130,8 +134,8 @@ class ScoreScreen(ctk.CTkFrame):
                                                text=text,
                                                text_color=point_color,
                                                fg_color="#2B2B2B",
-                                               font=("Georgia", 14, "bold"))
-                card_info_area.grid(row=2, column=p1_col, padx=5, pady=5)               
+                                               font=("Verdana Arial", 14, "bold"))
+                card_info_area.grid(row=2, column=p1_col, padx=10, pady=10)               
             
             p1_col += 1
             
@@ -164,15 +168,15 @@ class ScoreScreen(ctk.CTkFrame):
                 ctk_image = ctk.CTkImage(grayscale_image, size=(150, 220))
                 
                 card_widget = CardWidget(self.player2_cards, card.image, card)
-                card_widget.grid(row=1, column=p2_col, padx=5, pady=5)
+                card_widget.grid(row=1, column=p2_col, padx=10, pady=10)
                 card_widget.update_image(ctk_image)
                 
                 card_info_area = ctk.CTkLabel(self.player2_cards,
                                                text=text,
                                                text_color=point_color,
                                                fg_color="#2B2B2B",
-                                               font=("Georgia", 14, "bold"))
-                card_info_area.grid(row=2, column=p2_col, padx=5, pady=5)
+                                               font=("Verdana Arial", 14, "bold"))
+                card_info_area.grid(row=2, column=p2_col, padx=10, pady=10)
             
             else:
                 card_widget = CardWidget(self.player2_cards, card.image, card)
@@ -182,20 +186,24 @@ class ScoreScreen(ctk.CTkFrame):
                                                text=text,
                                                text_color=point_color,
                                                fg_color="#2B2B2B",
-                                               font=("Georgia", 14, "bold"))
-                card_info_area.grid(row=2, column=p2_col, padx=5, pady=5) 
+                                               font=("Verdana Arial", 14, "bold"))
+                card_info_area.grid(row=2, column=p2_col, padx=10, pady=10) 
             p2_col += 1
             
             
-        
+        #button area
         button_area = ctk.CTkFrame(self.player_score_area, fg_color="#6D4C41")
         button_area.grid(row=3, column=0, pady=10, padx=10)
         
-        close_button = ctk.CTkButton(button_area, text="Close Game", font=("Georgia", 14, "bold"), command=self.quit_game, height=50, fg_color="#800000")
-        close_button.grid(row=0, column=1, padx=10, pady=10)
+        close_button = ctk.CTkButton(button_area, text="Close Game", font=("Verdana Arial", 14, "bold"), command=self.quit_game, height=50, fg_color="#800000")
+        close_button.grid(row=0, column=2, padx=10, pady=10)
         
-        play_again_btn = ctk.CTkButton(button_area, text="Play Again", font=("Georgia", 14, "bold"), command=self.play_again, height=50, fg_color="green")
+        play_again_btn = ctk.CTkButton(button_area, text="Play Again", font=("Verdana Arial", 14, "bold"), command=self.play_again, height=50, fg_color="green")
         play_again_btn.grid(row=0, column=0, padx=10, pady=10)
+
+        card_library_btn = ctk.CTkButton(button_area, fg_color="green",
+                                          text="Card Library", height=60, font=("Verdana Arial", 14, "bold"), command=self.open_card_library)
+        card_library_btn.grid(row=0, column=1, padx=5, pady=5)
         
         
     def declare_winner(self):
@@ -224,4 +232,12 @@ class ScoreScreen(ctk.CTkFrame):
 
     def quit_game(self):
         self.quit()
+
+    def open_card_library(self):
+        if not self.library_open:
+            self.library_open = True
+            self.card_library = CardLibrary(self.parent, self.card_images)         
+            self.card_library.grid(row=0, column=0, sticky="nsew")
+        else:
+            self.card_library.grid(row=0, column=0, sticky="nsew")
     

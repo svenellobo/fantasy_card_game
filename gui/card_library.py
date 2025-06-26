@@ -6,7 +6,7 @@ class CardLibrary(ctk.CTkFrame):
         super().__init__(parent)
         self.images = card_images
         self.tk_images = []
-        self.grid_rowconfigure(0, weight=1)       
+        self.grid_rowconfigure(0, weight=1)               
         self.configure(fg_color="#4E342E")
         self.init_screen()
 
@@ -16,7 +16,11 @@ class CardLibrary(ctk.CTkFrame):
         scrollbar = ctk.CTkScrollbar(self, orientation="vertical", command=self.card_library_canvas.yview)
         self.card_library_canvas.configure(yscrollcommand=scrollbar.set)
         self.card_library_canvas.grid(row=0, column=0, pady=5, padx=5, sticky="nsew")
-        scrollbar.grid(row=0, column=1, sticky="ns")        
+        scrollbar.grid(row=0, column=1, sticky="ns")
+
+        h_scrollbar = ctk.CTkScrollbar(self, orientation="horizontal", command=self.card_library_canvas.xview)
+        self.card_library_canvas.configure(xscrollcommand=h_scrollbar.set)
+        h_scrollbar.grid(row=1, column=0, sticky="ew", padx=5)        
 
         self.image_area = ctk.CTkFrame(self.card_library_canvas)
         self.card_library_canvas.create_window((0, 0), window=self.image_area, anchor="nw")
@@ -28,10 +32,10 @@ class CardLibrary(ctk.CTkFrame):
         self.card_preview_frame = ctk.CTkFrame(self, fg_color="#4E342E")
         self.card_preview_frame.grid(row=0, column=2, padx=10, pady=10, sticky="ns")
         
-        self.card_preview_lbl = ctk.CTkLabel(self.card_preview_frame, text="Right click on a card to view it", fg_color="#4E342E", font=("Georgia", 14, "bold"))
+        self.card_preview_lbl = ctk.CTkLabel(self.card_preview_frame, text="Right click on a card to view it", fg_color="#2B2B2B", font=("Verdana Arial", 14, "bold"))
         self.card_preview_lbl.grid(row=1, column=0, padx=5, pady=5, sticky="ns")
         
-        self.back_button = ctk.CTkButton(self.card_preview_frame, text="Back to Game", fg_color="green", height=60, command=self.back_to_game, font=("Georgia", 14, "bold"))
+        self.back_button = ctk.CTkButton(self.card_preview_frame, text="Back to Game", fg_color="green", height=60, command=self.back_to_game, font=("Verdana Arial", 14, "bold"))
         self.back_button.grid(row=0, column=0, padx=5, pady=(25,5))
         self.grid_columnconfigure(2, weight=1)
         self.card_preview_frame.grid_rowconfigure(0, weight=0)

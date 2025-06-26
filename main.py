@@ -27,11 +27,7 @@ class App(ctk.CTk):
                 screen_width = self.winfo_screenwidth() - 10
                 screen_height = self.winfo_screenheight() - 50
                 self.geometry(f"{screen_width}x{screen_height}+0+0")
-        try:
-            self.state("zoomed")
-            self.attributes('-zoomed', True)
-        except Exception:
-            pass               
+                    
         self.title(title)       
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)

@@ -26,12 +26,12 @@ class Instructions(ctk.CTkFrame):
         self.info_area = ctk.CTkFrame(self.instruction_canvas)
         self.instruction_canvas.create_window((0, 0), window=self.info_area, anchor="nw")
         
-        self.info_lbl = ctk.CTkLabel(self.info_area, text="", fg_color="#2B2B2B", font=("Georgia", 16, "bold"), justify="left", text_color="orange")
+        self.info_lbl = ctk.CTkLabel(self.info_area, text="", fg_color="#2B2B2B", font=("Verdana Arial", 16, "bold"), justify="left", text_color="orange")
         self.info_lbl.grid(row=0, column=0, padx=10, pady=10)
         
         self.back_to_menu_btn = ctk.CTkButton(self, text="Main Menu",
                                               fg_color="green", height=60,
-                                              command=self.back_to_menu, font=("Georgia", 14, "bold"))
+                                              command=self.back_to_menu, font=("Verdana Arial", 14, "bold"))
         self.back_to_menu_btn.grid(row=0, column=1, padx=5, pady=5)
         
         instruction_text = """
