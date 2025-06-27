@@ -76,7 +76,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
         self.instructions_button.grid(row=3, column=0, padx=5, pady=5)
         
         
-        self.player1_choice_lbl = ctk.CTkLabel(self.player_choice_area, text=f"Double click on a card.", font=("Verdana Arial", 16, "bold"), text_color="orange", fg_color="#2B2B2B")
+        self.player1_choice_lbl = ctk.CTkLabel(self.player_choice_area, text=f"Double-click on a card.", font=("Verdana Arial", 16, "bold"), text_color="orange", fg_color="#2B2B2B")
         self.player1_choice_lbl.grid(row=0, column=0, padx=5, pady=5, columnspan=10)
         
         self.choice_area_frame = ctk.CTkFrame(self, fg_color="#6D4C41" ) 
@@ -171,7 +171,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                 if col >= 5:
                     col = 0
                     row += 1
-            self.instruction_area_lbl.configure(text="Double click on a card for 'Doppelganger' to duplicate.")
+            self.instruction_area_lbl.configure(text="Double-click on a card for 'Doppelganger' to duplicate.")
                 
         elif card.original_state["name"] == "Book of Changes":
             self.boc_card_picked = False
@@ -238,7 +238,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                             col = 0
                             row = 1
                             
-                self.instruction_area_lbl.configure(text="Double click on a card from discard to add it to your hand.")
+                self.instruction_area_lbl.configure(text="Double-click on a card from discard to add it to your hand.")
             
         elif card.original_state["name"] == "Island":
             
@@ -254,7 +254,7 @@ class PlayerChoiceScreen(ctk.CTkFrame):
                         col = 0
                         row = 1
     
-            self.instruction_area_lbl.configure(text="Double click on a card to clear its penalties.")
+            self.instruction_area_lbl.configure(text="Double-click on a card to clear its penalties.")
     
     
     

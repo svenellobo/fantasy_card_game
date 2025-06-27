@@ -38,7 +38,7 @@ class Game():
             self.player1.cards_in_hand.append(card)        
             self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
             self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
-            self.game_screen.status_area_lbl.configure(text="DISCARD PHASE: Double click on an unwanted card in your hand to discard it.")
+            self.game_screen.status_area_lbl.configure(text="DISCARD PHASE: Double-click on an unwanted card in your hand to discard it.")
             self.game_screen.draw_button.configure(fg_color="#800000", state="disabled")
             self.card_taken = True
     
@@ -47,7 +47,7 @@ class Game():
             card = self.deck.draw_card()
             self.player1.cards_in_hand.append(card)        
             self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
-            self.game_screen.status_area_lbl.configure(text="DISCARD PHASE: Double click on an unwanted card in your hand to discard it.")
+            self.game_screen.status_area_lbl.configure(text="DISCARD PHASE: Double-click on an unwanted card in your hand to discard it.")
             self.card_taken = True
             self.game_screen.draw_button.configure(fg_color="#800000", state="disabled")
         
@@ -103,9 +103,10 @@ class Game():
         self.current_player = "player"
         self.game_screen.end_turn_btn.configure(fg_color="#800000", state="disabled")
         self.game_screen.draw_button.configure(fg_color="green", state="normal")
-        self.game_screen.status_area_lbl.configure(text="DRAW PHASE: Draw a card from the deck or take one from the discard area.")
+        self.game_screen.status_area_lbl.configure(text="Draw from the deck or double-click a discard area card to take it.")
         self.card_taken = False
-        self.card_discarded = False      
+        self.card_discarded = False  
+        #"DRAW PHASE: Draw a card from the deck or take one from the discard area."    
         
         
                 
