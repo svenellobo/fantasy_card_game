@@ -67,7 +67,7 @@ class Game():
                 self.game_screen.status_area_lbl.configure(text="END TURN: Click on the 'End Turn' button")
             else:
                 self.game_screen.end_turn_btn.configure(fg_color="green", state="normal", text="End Game")
-                self.game_screen.status_area_lbl.configure(text="End the Game:")
+                self.game_screen.status_area_lbl.configure(text="END GAME: Click on the 'End Game' button")
               
         
     def end_game(self):

@@ -70,6 +70,7 @@ class CardWidget(ctk.CTkFrame):
         x = self.winfo_x() - self.drag_data["x"] + event.x
         y = self.winfo_y() - self.drag_data["y"] + event.y
         self.place(x=x, y=y)
+    
 
     def on_drag_stop(self, event):
         if "start_x" not in self.drag_data or "start_y" not in self.drag_data:
@@ -79,7 +80,7 @@ class CardWidget(ctk.CTkFrame):
         if dx < 5 and dy < 5:            
             pass
         else:
-            if self.drag_callback:
+           if self.drag_callback:
                 self.drag_callback(self)
                 
         self.drag_data = {"x": 0, "y": 0, "widget": None}

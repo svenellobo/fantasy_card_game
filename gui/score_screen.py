@@ -73,7 +73,7 @@ class ScoreScreen(ctk.CTkFrame):
         
         
         self.player2_score_lbl = ctk.CTkLabel(self.player2_cards,
-                                              text=f"CPU's hand and score: {self.p2_score}", font=("Verdana Arial", 20, "bold"),fg_color="#2B2B2B", text_color="orange")
+                                              text=f"Opponent's hand and score: {self.p2_score}", font=("Verdana Arial", 20, "bold"),fg_color="#2B2B2B", text_color="orange")
         self.player2_score_lbl.grid(row=0, column=0, padx=5, pady=5, sticky="nsew", columnspan=len(self.player2.cards_in_hand)) 
         
         for col in range(7): 
@@ -202,7 +202,7 @@ class ScoreScreen(ctk.CTkFrame):
         play_again_btn.grid(row=0, column=0, padx=10, pady=10)
 
         card_library_btn = ctk.CTkButton(button_area, fg_color="green",
-                                          text="Card Library", height=60, font=("Verdana Arial", 14, "bold"), command=self.open_card_library)
+                                          text="Card Library", height=50, font=("Verdana Arial", 14, "bold"), command=self.open_card_library)
         card_library_btn.grid(row=0, column=1, padx=5, pady=5)
         
         

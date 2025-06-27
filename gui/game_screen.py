@@ -6,6 +6,7 @@ from gui.player_choice_screen import PlayerChoiceScreen
 from gui.card_library import CardLibrary
 from gui.instructions import Instructions
 from utility import resource_path
+import tkinter.messagebox as mb
 
 
 class GameScreen(ctk.CTkFrame):
@@ -158,17 +159,23 @@ class GameScreen(ctk.CTkFrame):
                                                   height=60, fg_color="green")
         self.instructions_button.grid(row=1, column=0, padx=10, pady=10)
 
+        close_button = ctk.CTkButton(self.menu_area, text="Close Game", font=("Verdana Arial", 14, "bold"), command=self.quit_game, height=60, fg_color="#800000")
+        close_button.grid(row=1, column=1, padx=10, pady=10)
+        
+        play_again_btn = ctk.CTkButton(self.menu_area, text="Restart", font=("Verdana Arial", 14, "bold"), command=self.play_again, height=60, fg_color="#800000")
+        play_again_btn.grid(row=0, column=1, padx=10, pady=10)
+
         #card preview area
         self.card_preview_frame = ctk.CTkFrame(self, fg_color="#2B2B2B")
         self.card_preview_frame.grid(row=1, column=3, padx=10, pady=10, sticky="nsew")
         self.card_preview_frame.grid_rowconfigure(1, weight=1)
         self.card_preview_frame.grid_columnconfigure(0, weight=1)
 
-        self.card_preview_info = ctk.CTkLabel(self.card_preview_frame, text="Right click on a card to view it",
-                                              text_color="orange", font=("Verdana Arial", 16, "bold"), fg_color="#2B2B2B")
+        self.card_preview_info = ctk.CTkLabel(self.card_preview_frame, text="",
+                                              text_color="orange", font=("Verdana Arial", 20, "bold"), fg_color="#2B2B2B")
         self.card_preview_info.grid(row=0, column=0, padx=10, pady=(10,0), sticky="nsew")
         
-        self.card_preview_lbl = ctk.CTkLabel(self.card_preview_frame, text="",
+        self.card_preview_lbl = ctk.CTkLabel(self.card_preview_frame, text="Right click on a card to view it",
                                               text_color="orange", font=("Verdana Arial", 14, "bold"), height=220, width=150)        
         self.card_preview_lbl.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
         self.rowconfigure(1, weight=4)
@@ -184,7 +191,7 @@ class GameScreen(ctk.CTkFrame):
         self.preview_ctk_image = ctk.CTkImage(resized_image, size=(300, 450))
         self.card_preview_lbl.configure(image=self.preview_ctk_image, text='')  
         self.card_preview_lbl.image = self.preview_ctk_image
-        self.card_preview_info.configure(text="Right click on a card to view it")
+        self.card_preview_info.configure(text="")
         
     
     
@@ -205,7 +212,11 @@ class GameScreen(ctk.CTkFrame):
         self.destroy()
         player_choice_screen = PlayerChoiceScreen(self.parent, player1, player2, discard_area, self.game.image_paths)
         player_choice_screen.grid(row=0, column=0, sticky="nsew")
-        
+   
+
+    
+
+
     def reorder_cards(self, dragged_card_widget):
         widgets = sorted(
             self.hand_frame.winfo_children(),
@@ -215,7 +226,7 @@ class GameScreen(ctk.CTkFrame):
         
         for index, widget in enumerate(widgets):
             widget.grid(row=0, column=index, padx=5, pady=5, sticky="nsew")
-        self.display_cards(self.game.player1.cards_in_hand, "player_hand")    
+        self.display_cards(self.game.player1.cards_in_hand, "player_hand")
     
             
     def open_card_library(self):
@@ -245,6 +256,22 @@ class GameScreen(ctk.CTkFrame):
         if hasattr(self, "temp_discard_label") and self.temp_discard_label:
             self.temp_discard_label.destroy()
             self.temp_discard_label = None
+
+    def play_again(self):
+        if mb.askyesno("Restart Game", "Are you sure you want to restart?"):
+            self.destroy()
+
+            from gui.game_screen import GameScreen
+            from game import Game
+            
+            game_screen = GameScreen(self.master, None)
+            new_game = Game(game_screen)
+            game_screen.game = new_game       
+            game_screen.grid(row=0, column=0, sticky="nsew")
+
+    def quit_game(self):
+        if mb.askyesno("Quit Game", "Are you sure you want to quit the game?"):
+            self.quit()
         
         
    

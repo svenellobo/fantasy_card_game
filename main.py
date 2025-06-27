@@ -21,8 +21,8 @@ class App(ctk.CTk):
             ctk.set_window_scaling(0.8)
             self.state("zoomed")
         else:
-            ctk.set_widget_scaling(1.1)
-            ctk.set_window_scaling(1.1)
+            ctk.set_widget_scaling(1.0)
+            ctk.set_window_scaling(1.0)
             try:
                 self.attributes('-zoomed', True)
             except Exception:                
