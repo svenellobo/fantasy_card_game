@@ -103,10 +103,10 @@ class Game():
         self.current_player = "player"
         self.game_screen.end_turn_btn.configure(fg_color="#800000", state="disabled")
         self.game_screen.draw_button.configure(fg_color="green", state="normal")
-        self.game_screen.status_area_lbl.configure(text="Draw from the deck or double-click a discard area card to take it.")
+        self.game_screen.status_area_lbl.configure(text="DRAW PHASE: Draw from the deck or double-click a discard area card to take it.")
         self.card_taken = False
         self.card_discarded = False  
-        #"DRAW PHASE: Draw a card from the deck or take one from the discard area."    
+         
         
         
                 
