@@ -45,6 +45,15 @@ def update_player_joined_room(room_name, player_name):
         )
         conn.commit()
 
+
+def update_player_is_host(player_name, is_host):
+    with sqlite3.connect("game.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE players SET is_host = ? WHERE player_name = ?", (is_host, player_name)
+        )
+        conn.commit()
+
 def remove_player(player_name):
     with sqlite3.connect("game.db") as conn:
         cursor = conn.cursor()
@@ -82,6 +91,15 @@ def update_room_status(status, room_name):
         cursor.execute(
             "UPDATE rooms SET status = ? WHERE room_name = ?",
             (status, room_name)
+        )
+        conn.commit()
+
+def update_room_host(room_name, host_name):
+    with sqlite3.connect("game.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE rooms SET host_player = ? WHERE room_name = ?",
+            (host_name, room_name)
         )
         conn.commit()
 
