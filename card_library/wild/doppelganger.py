@@ -54,20 +54,22 @@ class Doppelganger(Card):
         for card in hand:
             if card.original_state["name"] == self.name and card.original_state["name"] != "Doppelganger":                
                 if card.name == "Basilisk" and card.has_penalty:
-                    self.blank()
+                    self.blank()                    
                     if card.suit in {ARMY, LEADER, BEAST}:
                         card.blank()
                     
-                else:                                        
+                else: 
                     self.name = card.original_state["name"]                                        
                     self.suit = card.original_state["suit"]                    
                     self.has_penalty = card.has_penalty
                     self.has_blank = card.has_blank
                     self.base_power = card.base_power                        
                     self.is_blanked = card.is_blanked
+                    
                     if self.is_blanked:
-                        self.blank()                    
-                    if card.has_blank and not any(card.original_state["name"] == "Protection Rune" for card in hand):
+                        self.blank() 
+                    
+                    if card.has_penalty and not any(card.original_state["name"] == "Protection Rune" for card in hand):
                         card.has_penalty = True
                         card.activate_blank(hand)
                         card.has_penalty = False
@@ -115,7 +117,7 @@ class Doppelganger(Card):
             if temp_card.has_penalty and not temp_card.is_blanked:
                 dop_card.total_power = temp_card.total_power
 
-            if temp_card.has_blank and not any(card.original_state["name"] == "Protection Rune" for card in hand):                
+            if temp_card.has_blank and not any(card.original_state["name"] in {"Protection Rune"} for card in hand):                
                 temp_card.has_penalty = True
                 temp_card.activate_blank(hand)
                 temp_card.has_penalty = False

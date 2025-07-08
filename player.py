@@ -14,8 +14,7 @@ class Player():
             
     def penalties_and_conditions(self, hand):
         cards_with_blank = []
-        order_exception = {"Great Flood", "Blizzard", "Wildfire"}      
-      
+        order_exception = {"Great Flood", "Blizzard", "Wildfire"}  
                 
         for card in hand:
             if card.has_clear and card.original_state["name"] != "Island":
@@ -37,6 +36,7 @@ class Player():
                     card.activate_blank(cards_with_blank)                
             else:
                 card.activate_blank(cards_with_blank)
+
                 
         for card in hand:
             if card.has_blank:
@@ -44,7 +44,8 @@ class Player():
                 
         for card in hand:
             if card.has_blank:
-                card.activate_blank(hand) 
+                card.activate_blank(hand)
+        
         
         for card in hand:
             if card.priority == 5:                
@@ -53,10 +54,16 @@ class Player():
         for card in hand:
             if card.priority == 5:
                 card.penalty(hand)
+        
                     
         for card in hand:
             if card.original_state["name"] == "Doppelganger":
                 card.final_activation(hand)
+                
+        
+        
+                
+                
                 
     def take_turn(self, deck, discard_area, area, selected_card=None):
         pass

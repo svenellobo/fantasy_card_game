@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime, UTC
 import database as db
+from multiplayer_game import MultiplayerGame
 
 app = FastAPI()
 
@@ -173,6 +174,16 @@ def disconnect(player_name: str):
             
     db.remove_player(stored_player[1])
     return {"message": f"Player '{stored_player[1]}' disconnected successfully."}
+
+
+
+@app.post("/start_game")
+def start_game(room_name: str):
+    game = MultiplayerGame()
+    deck = Dec
+
+
+
 
 
 """@app.post("/post_message")

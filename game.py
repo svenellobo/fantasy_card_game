@@ -6,8 +6,6 @@ from gui.game_screen import GameScreen
 from gui.card_widget import CardWidget
 from gui.score_screen import ScoreScreen
 import random
-from card_library.artifact.book_of_changes import BookOfChanges
-from card_library.wizard.necromancer import Necromancer
 
 
 
