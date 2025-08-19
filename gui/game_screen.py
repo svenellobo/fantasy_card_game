@@ -264,7 +264,7 @@ class GameScreen(ctk.CTkFrame):
             from gui.game_screen import GameScreen
             from game import Game
             
-            game_screen = GameScreen(self.master, None)
+            game_screen = GameScreen(self.parent, None)
             new_game = Game(game_screen)
             game_screen.game = new_game       
             game_screen.grid(row=0, column=0, sticky="nsew")

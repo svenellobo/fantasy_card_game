@@ -9,6 +9,8 @@ app = FastAPI()
 
 db.create_tables()
 
+games = {}
+
 
 class Player(BaseModel):
     player_name: str
@@ -75,7 +77,7 @@ def join_room(player_name: str, room_name: str):
             raise HTTPException(status_code=403, detail="Cannot join; game already in progress.")
         
         if stored_player[2] == room_name:
-            return {"error": f"{stored_player[1]} is already in the room."}
+            raise HTTPException(status_code=400, detail=f"{stored_player[1]} is already in the room.")
                 
         list_players = db.list_players_in_room(room_name)
         if len(list_players) >= 6:            
@@ -101,7 +103,9 @@ def leave_room(req: LeaveRoomRequest):
             db.update_player_joined_room(None, stored_player[1])
 
             list_players = db.list_players_in_room(fetched_room[1])
-            if len(list_players) == 0:
+            if len(list_players) <= 1:                
+                if len(list_players) == 1:
+                    db.update_player_joined_room(None, list_players[0][1])
                 db.delete_room(fetched_room[1])
                 return {"message": f"'{req.room_name}' room was closed because there are no players left."}          
 
@@ -132,15 +136,6 @@ def list_rooms():
         for room in list_of_rooms
     ]
 
-@app.post("/start_game")
-def start_game(room_name: str):
-    fetched_room = db.get_room(room_name)
-    if fetched_room:
-        if fetched_room[3] != "waiting":
-            raise HTTPException(status_code=400, detail="Game already started or room not in waiting state.")
-        db.update_room_status("playing", fetched_room[1])
-        return {"message": f"Game in room '{room_name}' started successfully."}
-    raise HTTPException(status_code=404, detail="Room not found.")
 
 @app.post("/end_game")
 def end_game(room_name: str):
@@ -164,7 +159,9 @@ def disconnect(player_name: str):
         db.update_player_joined_room(None, stored_player[1])
 
         list_players = db.list_players_in_room(fetched_room[1])
-        if len(list_players) == 0:
+        if len(list_players) <= 1:                
+            if len(list_players) == 1:
+                db.update_player_joined_room(None, list_players[0][1])
             db.delete_room(fetched_room[1])
             return {"message": f"Player '{stored_player[1]}' disconnected successfully. Room '{fetched_room[1]}' was closed because it had no players."}
         
@@ -176,13 +173,64 @@ def disconnect(player_name: str):
     return {"message": f"Player '{stored_player[1]}' disconnected successfully."}
 
 
-
 @app.post("/start_game")
 def start_game(room_name: str):
-    game = MultiplayerGame()
-    deck = Dec
+    fetched_room = db.get_room(room_name)
+    if not fetched_room:
+        raise HTTPException(status_code=404, detail="Room not found.")
+
+    if fetched_room[3] != "waiting":
+        raise HTTPException(status_code=400, detail="Game already started or room not in waiting state.")
+
+    db.update_room_status("playing", fetched_room[1])
+    players = db.list_players_in_room(room_name)
+    player_names = [p[1] for p in players]
+    game = MultiplayerGame(player_names)
+    games[room_name] = game
+
+    return {"message": f"Game in room '{room_name}' started successfully.", "players": player_names}
+    
+
+@app.post("/draw_card")
+def draw_card(room_name: str, player_name: str):
+    game = games.get(room_name)
+    if not game:
+        raise HTTPException(status_code=404, detail="Game not running in this room.")
+    card = game.deck.draw_card()
+    player = game.players[player_name]    
+    if not player:
+        raise HTTPException(status_code=404, detail="Player not found in game.")
+    player.cards_in_hand.append(card)
+    return {"card_name": card.name}
+
+@app.post("/discard_card")
+def discard_card(room_name: str, player_name: str, card_name: str):
+    game = games.get(room_name)
+    if not game:
+        raise HTTPException(status_code=404, detail="Room not found.")
+    player = game.players[player_name]
+    if not player:
+        raise HTTPException(status_code=404, detail="Player not found in game.")
+
+    disc_card = next((card for card in player.cards_in_hand if card.name == card_name), None)
+
+    if not disc_card:
+        raise HTTPException(status_code=404, detail="Card not found in hand.")
+    player.cards_in_hand.remove(disc_card)
+    game.discard_area.discard_area_cards.append(disc_card)
+    return {"message": f"{disc_card.name} discarded successfully"}
 
 
+@app.post("/end_turn")
+def end_turn(room_name: str, player_name: str):
+    game = games.get(room_name)
+    if not game:
+        raise HTTPException(status_code=404, detail="Room not found.")
+    
+    if game.current_player_name != player_name:
+        raise HTTPException(status_code=403, detail="It is not your turn.")
+    game.end_turn()
+    return {"message": "Turn ended", "next_player": game.get_current_player()}
 
 
 

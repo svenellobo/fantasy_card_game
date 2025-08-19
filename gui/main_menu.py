@@ -2,6 +2,8 @@ import customtkinter as ctk
 from gui.game_screen import GameScreen
 from game import Game
 from gui.instructions import Instructions
+from gui.mp_name_screen import MpNameScreen
+from database import create_tables
 
 class MainMenu(ctk.CTkFrame):
     def __init__(self, parent):
@@ -25,6 +27,9 @@ class MainMenu(ctk.CTkFrame):
         
         self.instructions_button = ctk.CTkButton(self, text="How to Play", font=("Verdana Arial", 14, "bold"), command=self.how_to_play, height=60, fg_color="green")
         self.instructions_button.grid(row=1, column=1, padx=20, pady=10)
+
+        self.multiplayer_mode_btn = ctk.CTkButton(self, text="Multiplayer", font=("Verdana Arial", 14, "bold"), command=self.start_multiplayer, height=60, fg_color="green")
+        self.multiplayer_mode_btn.grid(row=2, column=0, padx=20, pady=10)
         
         
     def start_game(self):        
@@ -40,3 +45,9 @@ class MainMenu(ctk.CTkFrame):
     def how_to_play(self):
         self.instruction = Instructions(self.parent)
         self.instruction.grid(row=0, column=0, sticky="nsew")
+
+    def start_multiplayer(self):
+        self.grid_forget()
+        create_tables()
+        self.multiplayer = MpNameScreen(self.parent)
+        self.multiplayer.grid(row=0, column=0, sticky="nsew")
