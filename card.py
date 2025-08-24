@@ -94,5 +94,21 @@ class Card():
         self.has_clear = self.original_state["has_clear"]
         self.penalties_suits = self.original_state["penalties_suits"]
         self.penalties_names = self.original_state["penalties_names"]
+        
 
-    
+    def to_dict(self):       
+        return {
+            "name": self.name,
+            "power": self.base_power,
+            "suit": self.suit,
+            "card_nmb": self.card_nmb,
+        }
+
+    @classmethod
+    def from_dict(cls, data):        
+        return cls(
+            name=data["name"],
+            power=data["power"],
+            suit=data["suit"],
+            card_nmb=data["card_nmb"],
+        )

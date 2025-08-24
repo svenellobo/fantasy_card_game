@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime, UTC
 import database as db
-from multiplayer_game import MultiplayerGame
+from local_multiplayer_game import MultiplayerGame
 
 app = FastAPI()
 
@@ -201,7 +201,7 @@ def draw_card(room_name: str, player_name: str):
     if not player:
         raise HTTPException(status_code=404, detail="Player not found in game.")
     player.cards_in_hand.append(card)
-    return {"card_name": card.name}
+    return card.to_dict()
 
 @app.post("/discard_card")
 def discard_card(room_name: str, player_name: str, card_name: str):

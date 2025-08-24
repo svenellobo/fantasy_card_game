@@ -1,6 +1,9 @@
 import customtkinter as ctk
-from database import list_rooms, get_room, update_room_status, delete_room, remove_player, update_player_joined_room
+from database import list_rooms, get_room, update_room_status, delete_room, remove_player, update_player_joined_room, list_players_in_room
 from tkinter import messagebox as mb
+from gui.multiplayer_game_screen import MultiplayerGameScreen
+from local_multiplayer_game import MultiplayerGame
+
 
 
 class LobbyScreen(ctk.CTkFrame):
@@ -77,7 +80,7 @@ class LobbyScreen(ctk.CTkFrame):
             room_name = room[1]
             host_name = room[2]
             status = room[3]
-            text = f"{room_name} ({status}) Host:{host_name}"
+            text = f"{room_name} ({status}) Host: {host_name}"
 
             btn = ctk.CTkButton(
             self.room_list_frame,
@@ -112,8 +115,14 @@ class LobbyScreen(ctk.CTkFrame):
         
 
     def start_game(self):
-        update_room_status(self.selected_room_name, "in_progress")
-        #tu pokrenuti multiplayer game screen
+        update_room_status(self.selected_room_name, "in_progress")               
+        self.grid_forget()
+        players_in_game = list_players_in_room(self.selected_room_name)
+        player_names_list = [player[1] for player in players_in_game]        
+        self.mp_game_screen = MultiplayerGameScreen(self.parent, None)
+        self.mp_game = MultiplayerGame(player_names_list, self.mp_game_screen, self.player_name, self.selected_room_name)
+        self.mp_game_screen.mp_game = self.mp_game
+        
 
     def delete_room(self):
         delete_room(self.selected_room_name)
