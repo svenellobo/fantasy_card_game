@@ -2,6 +2,7 @@ class Player():
     def __init__(self):
         self.cards_in_hand = []
         self.discard_area = None
+        self.total_score = 0
 
     def calculate_total_points(self):    
         return sum(card.total_power for card in self.cards_in_hand)

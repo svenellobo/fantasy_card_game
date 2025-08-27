@@ -7,7 +7,7 @@ from gui.card_library import CardLibrary
 from gui.instructions import Instructions
 from utility import resource_path
 import tkinter.messagebox as mb
-from database import remove_player
+
 
 
 
@@ -46,7 +46,7 @@ class MultiplayerGameScreen(ctk.CTkFrame):
                 frame.grid_columnconfigure(6, weight=1)
                 
                 card_widget = CardWidget(frame, card.image, card,
-                                         click_action=lambda c=card: self.game.take_card_from_discard(c),
+                                         click_action=lambda c=card: self.mp_game.take_card_from_discard(c),
                                          right_click_action=lambda path=card.image: self.card_preview(path),
                                          )
                 card_widget.grid(row=row, column=disc_col, padx=2, pady=5, sticky="nsew") 
@@ -57,7 +57,7 @@ class MultiplayerGameScreen(ctk.CTkFrame):
                     
             elif frame == self.hand_frame:
                 card_widget = CardWidget(frame, card.image, card,
-                                         click_action=lambda c=card: self.game.discard_from_hand(c),
+                                         click_action=lambda c=card: self.mp_game.discard_from_hand(c),
                                          right_click_action=lambda path=card.image: self.card_preview(path),
                                          drag_callback=self.reorder_cards,
                                          interactive=True)
@@ -79,7 +79,7 @@ class MultiplayerGameScreen(ctk.CTkFrame):
         self.draw_deck_frame.grid(row=1, column=0, sticky="ew", padx=40, pady=40)
         
         self.draw_button = ctk.CTkButton(self.draw_deck_frame, fg_color="green", state="normal",
-                                         text="Draw from deck", font=("Verdana Arial", 14, "bold"), height=50, command=lambda: self.game.draw_from_deck())
+                                         text="Draw from deck", font=("Verdana Arial", 14, "bold"), height=50, command=lambda: self.mp_game.draw_from_deck())
         self.draw_button.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
         
         #hands and draw
@@ -141,7 +141,7 @@ class MultiplayerGameScreen(ctk.CTkFrame):
         
         #right side buttons area
         self.end_turn_btn = ctk.CTkButton(self.status_area, fg_color="#800000", state="normal",
-                                          text="End Turn", font=("Verdana Arial", 14, "bold"), height=60, command=lambda: self.game.end_turn())
+                                          text="End Turn", font=("Verdana Arial", 14, "bold"), height=60, command=lambda: self.mp_game.end_turn())
         self.end_turn_btn.grid(row=2, column=1, sticky="ew", padx=10, pady=10)
         
         self.status_area_lbl = ctk.CTkLabel(self.status_area, font=("Georgia", 14, "bold"), text="", text_color="orange",  wraplength=200)
@@ -218,17 +218,17 @@ class MultiplayerGameScreen(ctk.CTkFrame):
             key=lambda widget: widget.winfo_x(),
         )
 
-        self.mp_game.current_player.cards_in_hand = [widget.card for widget in widgets]
+        self.mp_game.player_hand = [widget.card for widget in widgets]
         
         for index, widget in enumerate(widgets):
             widget.grid(row=0, column=index, padx=5, pady=5, sticky="nsew")
-        self.display_cards(self.mp_game.current_player.cards_in_hand, "player_hand")
+        self.display_cards(self.mp_game.player_hand, "player_hand")
     
             
     def open_card_library(self):
         if not self.library_open:
             self.library_open = True
-            self.card_library = CardLibrary(self.parent, self.game.image_paths)         
+            self.card_library = CardLibrary(self.parent, self.mp_game.image_paths)         
             self.card_library.grid(row=0, column=0, sticky="nsew")
         else:
             self.card_library.grid(row=0, column=0, sticky="nsew")
@@ -253,19 +253,6 @@ class MultiplayerGameScreen(ctk.CTkFrame):
             self.temp_discard_label.destroy()
             self.temp_discard_label = None
 
-    def play_again(self):
-        if mb.askyesno("Restart Game", "Are you sure you want to restart?"):
-            self.destroy()
+    
 
-            from gui.game_screen import GameScreen
-            from game import Game
-            
-            game_screen = GameScreen(self.parent, None)
-            new_game = Game(game_screen)
-            game_screen.game = new_game       
-            game_screen.grid(row=0, column=0, sticky="nsew")
-
-    def quit_game(self):
-        if mb.askyesno("Quit Game", "Are you sure you want to quit the game?"):
-            self.quit()
-            remove_player(self.player_name)
+    

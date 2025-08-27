@@ -102,13 +102,31 @@ class Card():
             "power": self.base_power,
             "suit": self.suit,
             "card_nmb": self.card_nmb,
+            "image": self.image
         }
 
     @classmethod
-    def from_dict(cls, data):        
-        return cls(
+    def from_dict(cls, data: dict):        
+        card = cls(
             name=data["name"],
-            power=data["power"],
+            power=data["base_power"],
             suit=data["suit"],
-            card_nmb=data["card_nmb"],
+            card_nmb=data["card_nmb"]
         )
+        
+        card.image = data.get("image")        
+        return card
+    
+
+    def to_score_dict(self):
+        return {
+            "name": self.name,
+            "base_power": self.base_power,
+            "total_power": self.total_power,
+            "suit": self.suit,
+            "card_nmb": self.card_nmb,
+            "image": self.image,
+            "is_blanked": self.is_blanked,
+                      
+        }
+        

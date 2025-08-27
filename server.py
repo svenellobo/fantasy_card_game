@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime, UTC
 import database as db
-from local_multiplayer_game import MultiplayerGame
+from server_multiplayer_game import ServerMultiplayerGame
 
 app = FastAPI()
 
@@ -140,6 +140,7 @@ def list_rooms():
 @app.post("/end_game")
 def end_game(room_name: str):
     fetched_room = db.get_room(room_name)
+    #game = games.get(room_name)
     if fetched_room:
         if fetched_room[3] != "playing":
             raise HTTPException(status_code=400, detail="Game is not in progress.")
@@ -185,7 +186,7 @@ def start_game(room_name: str):
     db.update_room_status("playing", fetched_room[1])
     players = db.list_players_in_room(room_name)
     player_names = [p[1] for p in players]
-    game = MultiplayerGame(player_names)
+    game = ServerMultiplayerGame(player_names)
     games[room_name] = game
 
     return {"message": f"Game in room '{room_name}' started successfully.", "players": player_names}
@@ -201,24 +202,44 @@ def draw_card(room_name: str, player_name: str):
     if not player:
         raise HTTPException(status_code=404, detail="Player not found in game.")
     player.cards_in_hand.append(card)
-    return card.to_dict()
+    return {"card": card.to_dict()}
 
 @app.post("/discard_card")
 def discard_card(room_name: str, player_name: str, card_name: str):
     game = games.get(room_name)
     if not game:
         raise HTTPException(status_code=404, detail="Room not found.")
-    player = game.players[player_name]
+    player = game.players.get(player_name)
     if not player:
         raise HTTPException(status_code=404, detail="Player not found in game.")
 
     disc_card = next((card for card in player.cards_in_hand if card.name == card_name), None)
 
     if not disc_card:
-        raise HTTPException(status_code=404, detail="Card not found in hand.")
+        raise HTTPException(status_code=404, detail="Card not found in discard area.")
     player.cards_in_hand.remove(disc_card)
     game.discard_area.discard_area_cards.append(disc_card)
     return {"message": f"{disc_card.name} discarded successfully"}
+
+
+@app.post("/take_from_discard")
+def take_from_discard(room_name: str, player_name: str, card_name: str):
+    game = games.get(room_name)
+    if not game:
+        raise HTTPException(status_code=404, detail="Room not found.")
+    player = game.players.get(player_name)
+    if not player:
+        raise HTTPException(status_code=404, detail="Player not found in game.")
+    
+    disc_card = next((card for card in game.discard_area.discard_area_cards if card.name == card_name), None)
+    if not disc_card:
+        raise HTTPException(status_code=404, detail="Card not found in hand.")
+    
+    player.cards_in_hand.append(disc_card)
+    game.discard_area.discard_area_cards.remove(disc_card)
+    return {"card": disc_card.to_dict()}
+
+
 
 
 @app.post("/end_turn")
@@ -230,26 +251,19 @@ def end_turn(room_name: str, player_name: str):
     if game.current_player_name != player_name:
         raise HTTPException(status_code=403, detail="It is not your turn.")
     game.end_turn()
+    if game.game_over:        
+        db.update_room_status("finished", room_name)
+
+        players_hands = {}
+        for pname, player in game.players.items():
+            players_hands[pname] = [card.to_score_dict() for card in player.cards_in_hand]
+        return {
+            "message": "Game ended",
+            "player_scores": players_hands
+        }
+        
+        
+
+
     return {"message": "Turn ended", "next_player": game.get_current_player()}
-
-
-
-"""@app.post("/post_message")
-def post_message(msg: Message):
-    if not msg.author.strip():
-        raise HTTPException(status_code=400, detail="Author cannot be empty.")
-    if not msg.text.strip():
-        raise HTTPException(status_code=400, detail="Message text cannot be empty.") 
-    
-    msg.timestamp = datetime.now(UTC)
-    message_board.append(msg)
-
-    return {"message": "Message posted successfully."}
-
-
-@app.get("/get_messages")
-def get_messages(limit: int = 50):    
-    sorted_msgs = sorted(message_board, key=lambda x: x.timestamp, reverse=True)
-    return sorted_msgs[:limit]"""
-
 
