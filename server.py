@@ -140,12 +140,19 @@ def list_rooms():
 @app.post("/end_game")
 def end_game(room_name: str):
     fetched_room = db.get_room(room_name)
-    #game = games.get(room_name)
+    game = games.get(room_name)
+    
     if fetched_room:
         if fetched_room[3] != "playing":
             raise HTTPException(status_code=400, detail="Game is not in progress.")
         db.update_room_status("finished", fetched_room[1])
-        return {"message": f"Game in room '{room_name}' ended successfully."}
+        players_hands = {}
+        for pname, player in game.players.items():
+            players_hands[pname] = [card.to_score_dict() for card in player.cards_in_hand]
+        return {
+            "message": "Game ended",
+            "player_scores": players_hands
+        }
         
     raise HTTPException(status_code=404, detail="Room not found.")
 
@@ -204,22 +211,18 @@ def draw_card(room_name: str, player_name: str):
     player.cards_in_hand.append(card)
     return {"card": card.to_dict()}
 
+
 @app.post("/discard_card")
 def discard_card(room_name: str, player_name: str, card_name: str):
     game = games.get(room_name)
     if not game:
         raise HTTPException(status_code=404, detail="Room not found.")
-    player = game.players.get(player_name)
-    if not player:
-        raise HTTPException(status_code=404, detail="Player not found in game.")
+    try:
+        result = game.discard_card(player_name, card_name)
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    disc_card = next((card for card in player.cards_in_hand if card.name == card_name), None)
-
-    if not disc_card:
-        raise HTTPException(status_code=404, detail="Card not found in discard area.")
-    player.cards_in_hand.remove(disc_card)
-    game.discard_area.discard_area_cards.append(disc_card)
-    return {"message": f"{disc_card.name} discarded successfully"}
 
 
 @app.post("/take_from_discard")
@@ -250,20 +253,15 @@ def end_turn(room_name: str, player_name: str):
     
     if game.current_player_name != player_name:
         raise HTTPException(status_code=403, detail="It is not your turn.")
-    game.end_turn()
+
+    game.end_turn() 
+
     if game.game_over:        
-        db.update_room_status("finished", room_name)
-
-        players_hands = {}
-        for pname, player in game.players.items():
-            players_hands[pname] = [card.to_score_dict() for card in player.cards_in_hand]
-        return {
-            "message": "Game ended",
-            "player_scores": players_hands
+        player_scores = {
+            pname: [card.to_score_dict() for card in player.cards_in_hand]
+            for pname, player in game.players.items()
         }
-        
-        
+        return {"status": "game_over", "player_scores": player_scores}
 
-
-    return {"message": "Turn ended", "next_player": game.get_current_player()}
+    return {"status": "turn_ended", "next_player_name": game.current_player_name}
 
