@@ -1,26 +1,16 @@
-from deck import Deck
-from player import Player
 from discard_area import DiscardArea
-import random
 from constants import SERVER_URL
 import requests
 from card import Card
+from deck import Deck
 
 class LocalMultiplayerGame():
-    def __init__(self, player_names: list[str], mp_game_screen, player_name, room_name):
-        self.image_paths = []               
-        self.deck = Deck()
-        for card in self.deck.cards:
-            self.image_paths.append(card.image)
+    def __init__(self, mp_game_screen, player_name, room_name):        
         self.discard_area = DiscardArea()
-        self.deck.shuffle_deck()
-        self.players: dict[str, Player] = {}
         self.player_name = player_name
         self.room_name = room_name
-        self.server_url = SERVER_URL
+        self.server_url = SERVER_URL        
         
-        self.turn_order = player_names.copy()
-        random.shuffle(self.turn_order)
         self.current_player = None
         self.mp_game_screen = mp_game_screen  
 
@@ -56,23 +46,22 @@ class LocalMultiplayerGame():
                 return None
             
             data = response.json()
+
             
-
-
-            if "message" in data:
-                self.player_hand.remove(card)
-                self.discard_area.discard_area_cards.append(card)
-                card.reset()
-                
-                self.mp_game_screen.display_cards(self.player_hand, "player_hand")
-                self.mp_game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
-                self.card_discarded = True
-                if len(self.discard_area.discard_area_cards) < 10:
-                    self.mp_game_screen.end_turn_btn.configure(fg_color="green", state="normal")            
-                    self.mp_game_screen.status_area_lbl.configure(text="END TURN: Click on the 'End Turn' button")
-                else:
-                    self.mp_game_screen.end_turn_btn.configure(fg_color="green", state="normal", text="End Game")
-                    self.mp_game_screen.status_area_lbl.configure(text="END GAME: Click on the 'End Game' button")
+            self.player_hand.remove(card)
+            
+            self.discard_area.discard_area_cards = [Card.from_dict(c) for c in data["discard_area"]]
+            card.reset()
+            
+            self.mp_game_screen.display_cards(self.player_hand, "player_hand")
+            self.mp_game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
+            self.card_discarded = True
+            if len(self.discard_area.discard_area_cards) < 10:
+                self.mp_game_screen.end_turn_btn.configure(fg_color="green", state="normal")            
+                self.mp_game_screen.status_area_lbl.configure(text="END TURN: Click on the 'End Turn' button")
+            else:
+                self.mp_game_screen.end_turn_btn.configure(fg_color="green", state="normal", text="End Game")
+                self.mp_game_screen.status_area_lbl.configure(text="END GAME: Click on the 'End Game' button")
 
     
 
@@ -84,8 +73,11 @@ class LocalMultiplayerGame():
                 print("Error discarding card:", response.text)
                 return None 
 
-            self.discard_area.discard_area_cards.remove(card)
-            self.player_hand.append(card)        
+            data = response.json()
+            taken_card = Card.from_dict(data["card"])
+            self.player_hand.append(taken_card)
+            self.discard_area.discard_area_cards = [Card.from_dict(c) for c in data["discard_area"]]
+                    
             self.mp_game_screen.display_cards(self.player_hand, "player_hand")
             self.mp_game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
             self.mp_game_screen.status_area_lbl.configure(text="DISCARD PHASE: Double-click on an unwanted card in your hand to discard it.")
@@ -111,9 +103,8 @@ class LocalMultiplayerGame():
         if status == "turn_ended":
             next_player_name = data.get("next_player_name")
             self.current_player = next_player_name
-            """self.mp_game_screen.status_area_lbl.configure(
-                text=f"Turn: {self.current_player}"
-            )"""
+            self.mp_game_screen.current_player_lbl.configure(text=f"Turn: {self.current_player}")
+
         elif status == "game_over":
             player_scores = data.get("player_scores", {})
             #tu ide choice screen

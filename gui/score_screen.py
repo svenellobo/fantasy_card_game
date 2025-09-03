@@ -195,7 +195,7 @@ class ScoreScreen(ctk.CTkFrame):
         button_area = ctk.CTkFrame(self.player_score_area, fg_color="#6D4C41")
         button_area.grid(row=3, column=0, pady=10, padx=10)
         
-        close_button = ctk.CTkButton(button_area, text="Close Game", font=("Verdana Arial", 14, "bold"), command=self.quit_game, height=50, fg_color="#800000")
+        close_button = ctk.CTkButton(button_area, text="Exit Game", font=("Verdana Arial", 14, "bold"), command=self.quit_game, height=50, fg_color="#800000")
         close_button.grid(row=0, column=2, padx=10, pady=10)
         
         play_again_btn = ctk.CTkButton(button_area, text="Play Again", font=("Verdana Arial", 14, "bold"), command=self.play_again, height=50, fg_color="green")

@@ -4,26 +4,30 @@ import sqlite3
 def create_tables():
     with sqlite3.connect("game.db") as conn:
         cursor = conn.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON")
+        
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS rooms (
+                room_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                room_name TEXT UNIQUE,
+                host_player TEXT,
+                status TEXT DEFAULT 'waiting'    
+            )
+            """
+        )
         cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS players (
                 player_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 player_name TEXT,
                 joined_room TEXT,
-                is_host BOOLEAN DEFAULT 0         
+                is_host BOOLEAN DEFAULT 0,
+                FOREIGN KEY (joined_room) REFERENCES rooms(room_name) ON DELETE SET NULL        
             )        
             """
         )
-        cursor.execute(
-            """
-            CREATE TABLE IF NOT EXISTS rooms (
-                room_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                room_name TEXT,
-                host_player TEXT,
-                status TEXT DEFAULT 'waiting'    
-            )
-            """
-        )
+
         conn.commit()
 
 
@@ -71,8 +75,8 @@ def create_room(room_name, host_name):
             (room_name, host_name)
         )
         cursor.execute(
-            "UPDATE players SET is_host = 1 WHERE player_name = ?",
-            (host_name,)
+            "UPDATE players SET is_host = 1, joined_room = ? WHERE player_name = ?",
+            (room_name, host_name)
         )
         conn.commit()
 
@@ -105,35 +109,47 @@ def update_room_host(room_name, host_name):
 
 def get_room(room_name):
     with sqlite3.connect("game.db") as conn:
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute(
             "SELECT * FROM rooms WHERE room_name = ?",
             (room_name,)
         )
-        return cursor.fetchone()
+        row = cursor.fetchone()
+        if row is None:
+            return None
+        return dict(row)
 
 def get_player(player_name):
     with sqlite3.connect("game.db") as conn:
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute(
             "SELECT * FROM players WHERE player_name = ?",
             (player_name,)
         )
-        return cursor.fetchone()
+        row = cursor.fetchone()
+        if row is None:
+            return None
+        return dict(row)
 
 def list_rooms():
     with sqlite3.connect("game.db") as conn:
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute(
             "SELECT * FROM rooms")           
         
-        return cursor.fetchall()
+        rows = cursor.fetchall()
+        return [dict(row) for row in rows]
     
 def list_players_in_room(room_name):
     with sqlite3.connect("game.db") as conn:
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute(
             "SELECT * FROM players WHERE joined_room = ?",
             (room_name,)
         )
-        return cursor.fetchall()
+        rows = cursor.fetchall()
+        return [dict(row) for row in rows]
