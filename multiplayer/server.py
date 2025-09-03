@@ -37,13 +37,7 @@ class Message(BaseModel):
     text: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
-class JoinedRoomRequest(BaseModel):
-    player_name: str
-    room_name: str | None
 
-class ChangeRoomStatus(BaseModel):
-    room_name: str
-    status: str
 
 
 @app.get("/")
@@ -68,7 +62,13 @@ def create_room(req: RoomCreateRequest):
     if not stored_player:
         raise HTTPException(status_code=404, detail="Host player not connected.")
 
-    db.create_room(req.room_name, req.host_player_name)       
+    previous_room = stored_player["joined_room"]
+    db.create_room(req.room_name, req.host_player_name)
+
+    if previous_room and previous_room != req.room_name:
+        prev_players = db.list_players_in_room(previous_room)
+        if len(prev_players) == 0:
+            db.delete_room(previous_room)       
 
     return {"message": f"Room '{req.room_name}' created by {req.host_player_name}."}
 
@@ -78,6 +78,7 @@ def join_room(player_name: str, room_name: str):
     if not stored_player:
         raise HTTPException(status_code=404, detail="Player not connected.")
     
+    previous_room = stored_player["joined_room"]
     fetched_room = db.get_room(room_name)
     if fetched_room:
         if fetched_room["status"] != "waiting":
@@ -92,7 +93,12 @@ def join_room(player_name: str, room_name: str):
 
         db.update_player_joined_room(room_name, stored_player["player_name"])
 
-        return {"message": f"{stored_player["player_name"]} joined room '{room_name}' successfully."}
+        if previous_room and previous_room != room_name:
+            prev_players = db.list_players_in_room(previous_room)
+            if len(prev_players) == 0:
+                db.delete_room(previous_room)
+
+        return {"message": f"{stored_player['player_name']} joined room '{room_name}' successfully."}
     
     else:
         raise HTTPException(status_code=404, detail="Room not found.")
@@ -104,37 +110,41 @@ def leave_room(req: LeaveRoomRequest):
     if not stored_player:
         raise HTTPException(status_code=404, detail="Player not connected.")
     
-    fetched_room = db.get_room(req.room_name)
-    
+    fetched_room = db.get_room(req.room_name)    
     if fetched_room:
-        if stored_player["joined_room"] == fetched_room["room_name"]:
-            db.update_player_joined_room(None, stored_player["player_name"])
-
-            list_players = db.list_players_in_room(fetched_room["room_name"])
-            game = games.get(fetched_room["room_name"])
-            if game:
-                game.players.pop(stored_player["player_name"], None)
-                if len(game.players) <= 1:
-                    result = game.end_game()
-                    games.pop(fetched_room["room_name"], None)
-                    db.delete_room(fetched_room["room_name"])
-                    return {"message": f"Player '{stored_player["player_name"]}' disconnected. Game ended because it had less than 2 players.", "result": result}
-                if game.current_player_name == stored_player["player_name"]:
-                    game.end_turn(stored_player["player_name"])
-
-            
-            if stored_player["player_name"] == fetched_room["host_player"]:
-                db.update_player_is_host(stored_player["player_name"], 0)
-                db.update_player_is_host(list_players[0]["player_name"], 1)            
-                db.update_room_host(fetched_room["room_name"], list_players[0]["player_name"])
-
-                return {"message": f"Host player left. '{list_players[0]["player_name"]}' is the new host."}
-
-            return {"message": f"{stored_player["player_name"]} left room '{fetched_room["room_name"]}' successfully."}
-        else:
+        if not fetched_room:
+            raise HTTPException(status_code=404, detail="Room not found.")
+        
+        if stored_player["joined_room"] != fetched_room["room_name"]:
             raise HTTPException(status_code=404, detail="Player not found in this room.")
+        
+        db.update_player_joined_room(None, stored_player["player_name"])
+        
+        game = games.get(fetched_room["room_name"])
+        if game:
+            game.players.pop(stored_player["player_name"], None)
+            if len(game.players) <= 1:
+                result = game.end_game()
+                games.pop(fetched_room["room_name"], None)
+                db.delete_room(fetched_room["room_name"])
+                return {"message": f"Player '{stored_player['player_name']}' disconnected. Game ended because it had less than 2 players.","result": result} 
 
-    raise HTTPException(status_code=404, detail="Room not found.")
+        if game.current_player_name == stored_player["player_name"]:
+            game.end_turn(stored_player["player_name"])
+
+        list_players = db.list_players_in_room(fetched_room["room_name"])
+        if not list_players:
+            db.delete_room(fetched_room["room_name"])
+            return {"message": f"{stored_player['player_name']} left and room '{fetched_room['room_name']}' was deleted (empty)."}
+
+        if stored_player["player_name"] == fetched_room["host_player"]:
+            new_host = list_players[0]["player_name"]
+            db.update_player_is_host(stored_player["player_name"], 0)
+            db.update_player_is_host(new_host, 1)
+            db.update_room_host(fetched_room["room_name"], new_host)
+            return {"message": f"Host player left. '{new_host}' is the new host."}
+
+    return {"message": f"{stored_player['player_name']} left room '{fetched_room['room_name']}' successfully."}
 
 @app.get("/list_rooms")
 def list_rooms():
@@ -168,28 +178,39 @@ def disconnect(player_name: str):
 
     room_name = stored_player["joined_room"]
     if room_name:
-        fetched_room = db.get_room(room_name)                
+        fetched_room = db.get_room(room_name)
         db.update_player_joined_room(None, player_name)
-        list_players = db.list_players_in_room(room_name)
-        game = games.get(room_name)
 
+        game = games.get(room_name)
         if game:
             game.players.pop(player_name, None)
             if len(game.players) <= 1:
                 result = game.end_game()
                 games.pop(room_name, None)
-                db.delete_room(room_name)
+                db.delete_room(room_name)                
+                db.remove_player(player_name)
                 return {"message": f"Player '{player_name}' disconnected. Game ended because it had less than 2 players.", "result": result}
             if game.current_player_name == player_name:
                 game.end_turn(player_name)
+
         
-        
-        if fetched_room["host_player"] == stored_player["player_name"]:
-            db.update_player_is_host(list_players[0]["player_name"], 1)            
-            db.update_room_host(fetched_room["room_name"], list_players[0]["player_name"])
+        list_players = db.list_players_in_room(room_name)
+        if fetched_room:
+            if fetched_room["host_player"] == player_name:
+                if list_players:
+                    new_host = list_players[0]["player_name"]
+                    db.update_player_is_host(new_host, 1)
+                    db.update_room_host(room_name, new_host)
+                else:
+                    db.delete_room(room_name)
+            else:
+                if not list_players:
+                    db.delete_room(room_name)
+    
+    db.remove_player(player_name)
+    return {"message": f"Player '{player_name}' disconnected successfully."}
             
-    db.remove_player(stored_player["player_name"])
-    return {"message": f"Player '{stored_player["player_name"]}' disconnected successfully."}
+    
 
 
 @app.post("/start_game")
@@ -203,7 +224,7 @@ def start_game(room_name: str):
 
     db.update_room_status("playing", fetched_room["room_name"])
     players = db.list_players_in_room(room_name)
-    player_names = [p[1] for p in players]
+    player_names = [p["player_name"] for p in players]
     game = ServerMultiplayerGame(player_names)
     games[room_name] = game
 
@@ -272,25 +293,6 @@ def list_players_in_room(room_name: str):
 
 
 
-@app.post("/update_joined_room")
-def update_joined_room(req: JoinedRoomRequest):
-    fetched_player = db.get_player(req.player_name)
-    if not fetched_player:
-        raise HTTPException(status_code=404, detail="Player not found.")
-    db.update_player_joined_room(req.room_name, req.player_name)
-    return {"message": f"Player '{req.player_name}' joined room '{req.room_name}'."}
-
-
-
-@app.post("/update_room_status")
-def update_room_status(req: ChangeRoomStatus):
-    fetched_room = db.get_room(req.room_name)
-    if not fetched_room:
-        raise HTTPException(status_code=404, detail="Room not found.")
-    db.update_room_status(req.status, fetched_room["room_name"])
-    return {"message": f"Room '{req.room_name}' changed status to '{req.status}'."}
-
-
 @app.get("/get_room")
 def get_room(room_name: str):
     fetched_room = db.get_room(room_name)
@@ -305,13 +307,4 @@ def get_player(player_name: str):
     if not fetched_player:
         raise HTTPException(status_code=404, detail="Player not found.")    
     return fetched_player
-
-
-@app.get("/delete_room")
-def delete_room(room_name: str):
-    
-
-
-
-
 

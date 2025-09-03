@@ -3,7 +3,7 @@ from tkinter import messagebox as mb
 from tkinter import simpledialog as sd
 from gui.multiplayer_game_screen import MultiplayerGameScreen
 from multiplayer.local_multiplayer_game import LocalMultiplayerGame
-from multiplayer.server import RoomCreateRequest, ChangeRoomStatus, LeaveRoomRequest, create_room
+from multiplayer.server import RoomCreateRequest, LeaveRoomRequest, create_room
 import requests
 from constants import SERVER_URL
 
@@ -82,9 +82,6 @@ class LobbyScreen(ctk.CTkFrame):
             ctk.CTkLabel(self.room_list_frame, text="No rooms available").grid(row=0, column=0, pady=10, padx=10)
             return
         
-        response = requests.get(f"{SERVER_URL}/list_players_in_room", params={"room_name": room_name})
-        players = response.json()
-        nmb_players = len(players)
 
         for index, room in enumerate(rooms):
             room_name = room["room_name"]
@@ -134,26 +131,26 @@ class LobbyScreen(ctk.CTkFrame):
             return
         
         mb.showinfo("Joining Room", f"You are joining: {self.selected_room_name}")
-        requests.post(f"{SERVER_URL}/update_player_joined_room", json={"player_name": self.player_name, "room_name": self.selected_room_name})
+        requests.post(f"{SERVER_URL}/join_room", params={"player_name": self.player_name, "room_name": self.selected_room_name})
 
 
     def start_game(self):
-        change_status = ChangeRoomStatus(self.selected_room_name, "in_progress")
-        requests.post(f"{SERVER_URL}/update_room_status", json={"req": change_status})                      
-        self.grid_forget()
-
         response = requests.get(f"{SERVER_URL}/get_player", params={"player_name": self.player_name})
         player = response.json()        
-        joined_room = player["joined_room"]        
+        joined_room = player["joined_room"]
+        requests.post(f"{SERVER_URL}/start_game", params={"req": joined_room})
+
+        self.grid_forget()
+
+               
         self.mp_game_screen = MultiplayerGameScreen(self.parent, None)
         self.mp_game = LocalMultiplayerGame(self.mp_game_screen, self.player_name, joined_room)
         self.mp_game_screen.mp_game = self.mp_game
         
     
 
-    def leave_lobby(self):
-        leave_room = LeaveRoomRequest()
-        remove_player(self.player_name)
+    def leave_lobby(self):        
+        requests.post(f"{SERVER_URL}/disconnect", params={"player_name": self.player_name})
         self.parent.protocol("WM_DELETE_WINDOW", self.parent.destroy)
 
         self.grid_forget()
@@ -161,7 +158,7 @@ class LobbyScreen(ctk.CTkFrame):
 
     def on_app_close(self):
         try:
-            remove_player(self.player_name)
+            requests.post(f"{SERVER_URL}/disconnect", params={"player_name": self.player_name})
         except Exception as e:
             print("Cleanup failed:", e)
 

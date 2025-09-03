@@ -9,8 +9,6 @@ class LocalMultiplayerGame():
         self.discard_area = DiscardArea()
         self.player_name = player_name
         self.room_name = room_name
-        self.server_url = SERVER_URL        
-        
         self.current_player = None
         self.mp_game_screen = mp_game_screen  
 
@@ -23,7 +21,7 @@ class LocalMultiplayerGame():
 
     def draw_from_deck(self):
         if self.current_player == self.player_name and not self.card_taken:        
-            response = requests.post(f"{self.server_url}/draw_card", params={"room_name": self.room_name, "player_name":self.player_name})
+            response = requests.post(f"{SERVER_URL}/draw_card", params={"room_name": self.room_name, "player_name":self.player_name})
             if response.status_code != 200:
                 print("Error drawing card:", response.text)
                 return None 
@@ -39,7 +37,7 @@ class LocalMultiplayerGame():
 
     def discard_from_hand(self, card: Card):
         if self.card_taken and not self.card_discarded:
-            response = requests.post(f"{self.server_url}/discard_card", params={"room_name": self.room_name, "player_name": self.player_name, "card_name": card.name})
+            response = requests.post(f"{SERVER_URL}/discard_card", params={"room_name": self.room_name, "player_name": self.player_name, "card_name": card.name})
 
             if response.status_code != 200:
                 print("Error discarding card:", response.text)
@@ -67,7 +65,7 @@ class LocalMultiplayerGame():
 
     def take_card_from_discard(self, card):
         if self.current_player == self.player_name and not self.card_taken:
-            response = requests.post(f"{self.server_url}/take_from_discard", params={"room_name": self.room_name, "player_name": self.player_name, "card_name": card.name})
+            response = requests.post(f"{SERVER_URL}/take_from_discard", params={"room_name": self.room_name, "player_name": self.player_name, "card_name": card.name})
 
             if response.status_code != 200:
                 print("Error discarding card:", response.text)
@@ -89,10 +87,7 @@ class LocalMultiplayerGame():
     def end_turn(self):
         self.mp_game_screen.end_turn_btn.configure(state="disabled", fg_color="#800000")
 
-        response = requests.post(
-            f"{self.server_url}/end_turn",
-            params={"room_name": self.room_name, "player_name": self.player_name}
-        )
+        response = requests.post(f"{SERVER_URL}/end_turn", params={"room_name": self.room_name, "player_name": self.player_name})
         if response.status_code != 200:
             print("Error ending turn:", response.text)
             return
@@ -112,10 +107,7 @@ class LocalMultiplayerGame():
               
         
     def end_game(self):
-        response = requests.post(
-            f"{self.server_url}/end_game",
-            params={"room_name": self.room_name}
-        )
+        response = requests.post(f"{SERVER_URL}/end_game", params={"room_name": self.room_name})
         if response.status_code != 200:
             print("Error ending game:", response.text)
             return
@@ -137,7 +129,7 @@ class LocalMultiplayerGame():
     
                 
     
-    def update_game_screen(self):    
+    """def update_game_screen(self):    
         self.game_screen.display_cards(self.player1.cards_in_hand, "player_hand")
         self.game_screen.display_cards(self.player2.cards_in_hand, "opponent_hand")
         self.game_screen.display_cards(self.discard_area.discard_area_cards, "discard_area")
@@ -150,7 +142,7 @@ class LocalMultiplayerGame():
         self.game_screen.status_area_lbl.configure(text="DRAW PHASE: Draw from the deck or double-click a discard area card to take it.")
         self.card_taken = False
         self.card_discarded = False
-    
+    """
 
     
 
