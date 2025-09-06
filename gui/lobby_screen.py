@@ -4,6 +4,7 @@ from tkinter import simpledialog as sd
 from gui.multiplayer_game_screen import MultiplayerGameScreen
 from multiplayer.local_multiplayer_game import LocalMultiplayerGame
 from multiplayer.server import RoomCreateRequest, LeaveRoomRequest, create_room
+import socketio
 import requests
 from constants import SERVER_URL
 
@@ -16,6 +17,14 @@ class LobbyScreen(ctk.CTkFrame):
         self.selected_room_name = None
         self.player_name = player_name
         self.room_buttons = []
+        self.sio = socketio.Client()
+        self.sio.connect("http://localhost:8000/ws")
+
+        @self.sio.on("game_started")
+        def on_game_started(data):
+            if data["room_name"] == self.selected_room_name:
+                self.start_game()
+
         
 
         self.parent.protocol("WM_DELETE_WINDOW", self.on_app_close)
@@ -52,13 +61,13 @@ class LobbyScreen(ctk.CTkFrame):
         self.create_btn = ctk.CTkButton(self.btns_frame, text="Create Room", font=("Verdana Arial", 14, "bold"), height=60, command=self.create_room_button_press, fg_color="green")
         self.create_btn.grid(row=0, column=0, padx=10, pady=10)
 
-        self.join_btn = ctk.CTkButton(self.btns_frame, text="Join Room", font=("Verdana Arial", 14, "bold"), height=60, fg_color="#800000", state="disabled")
+        self.join_btn = ctk.CTkButton(self.btns_frame, text="Join Room", font=("Verdana Arial", 14, "bold"), height=60, fg_color="#800000", state="disabled", command=self.join_selected_room)
         self.join_btn.grid(row=2, column=0, padx=10, pady=10)
 
-        self.refresh_btn = ctk.CTkButton(self.btns_frame, text="Refresh", font=("Verdana Arial", 14, "bold"), height=60, fg_color="green")
+        self.refresh_btn = ctk.CTkButton(self.btns_frame, text="Refresh", font=("Verdana Arial", 14, "bold"), height=60, fg_color="green", command=self.show_rooms)
         self.refresh_btn.grid(row=1, column=0, padx=10, pady=10)        
 
-        self.start_game_btn = ctk.CTkButton(self.btns_frame, text="Start Game", font=("Verdana Arial", 14, "bold"), height=60, fg_color="#800000", state="disabled")
+        self.start_game_btn = ctk.CTkButton(self.btns_frame, text="Start Game", font=("Verdana Arial", 14, "bold"), height=60, fg_color="#800000", state="disabled", command=self.start_game)
         self.start_game_btn.grid(row=3, column=0, padx=10, pady=10)
 
         self.leave_lobby_btn = ctk.CTkButton(self.btns_frame, text="Leave Lobby", command=self.leave_lobby, font=("Verdana Arial", 14, "bold"), height=60, fg_color="green")
@@ -132,6 +141,7 @@ class LobbyScreen(ctk.CTkFrame):
         
         mb.showinfo("Joining Room", f"You are joining: {self.selected_room_name}")
         requests.post(f"{SERVER_URL}/join_room", params={"player_name": self.player_name, "room_name": self.selected_room_name})
+        self.sio.emit("socket_join_room", {"room_name": self.selected_room_name})
 
 
     def start_game(self):
@@ -163,6 +173,10 @@ class LobbyScreen(ctk.CTkFrame):
             print("Cleanup failed:", e)
 
     def exit_game(self):
+        try:
+            requests.post(f"{SERVER_URL}/disconnect", params={"player_name": self.player_name})
+        except Exception as e:
+            print("Cleanup failed:", e)
         self.quit()
 
     def create_room_button_press(self):

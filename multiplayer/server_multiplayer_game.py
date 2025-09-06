@@ -87,12 +87,12 @@ class ServerMultiplayerGame():
     
     def end_game(self):
         self.game_over = True
-        for player in self.players.values():
+        """for player in self.players.values():
             player.penalties_and_conditions(player.cards_in_hand)
             player.calculate_total_points()
         player_scores = {
             pname: [card.to_score_dict() for card in player.cards_in_hand]
             for pname, player in self.players.items()
         }
-        return {"status": "game_over", "player_scores": player_scores}
+        return {"status": "game_over", "player_scores": player_scores}"""
     

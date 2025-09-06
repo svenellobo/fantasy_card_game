@@ -1,11 +1,20 @@
 from fastapi import FastAPI, HTTPException
+import socketio
 from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime, UTC
 import database as db
 from multiplayer.server_multiplayer_game import ServerMultiplayerGame
 
+
 app = FastAPI()
+sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
+app.mount("/ws", socketio.ASGIApp(sio))
+
+@sio.event
+async def socket_join_room(sid, data):
+    room_name = data["room_name"]
+    sio.enter_room(sid, room_name)
 
 db.create_tables()
 
@@ -214,7 +223,7 @@ def disconnect(player_name: str):
 
 
 @app.post("/start_game")
-def start_game(room_name: str):
+async def start_game(room_name: str):
     fetched_room = db.get_room(room_name)
     if not fetched_room:
         raise HTTPException(status_code=404, detail="Room not found.")
@@ -227,6 +236,8 @@ def start_game(room_name: str):
     player_names = [p["player_name"] for p in players]
     game = ServerMultiplayerGame(player_names)
     games[room_name] = game
+
+    await sio.emit("game_started", {"room_name": room_name}, room=room_name)
 
     return {"message": f"Game in room '{room_name}' started successfully.", "players": player_names}
     
@@ -281,6 +292,7 @@ def end_turn(room_name: str, player_name: str):
             if fetched_room and fetched_room["status"] == "playing":
                 db.update_room_status("finished", fetched_room["room_name"])
             games.pop(room_name, None)
+            #TODO nisam siguran za games.pop ovdje
         return result
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
